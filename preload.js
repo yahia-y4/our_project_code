@@ -32,13 +32,36 @@ class DataMC {
 
 
     }
+
+    gave_me_data_from(file_path){
+        try{
+            const data = fs.readFileSync(file_path, 'utf-8')
+            return JSON.parse(data)
+
+        }catch{
+            console.error("خطاء في قراءة الملف ذو المسار المعطاة من قبلك ",file_path)
+
+        }
+    }
+
+    geve_data_toSave_in(file_path , data){
+       try{
+        fs.accessSync(file_path, fs.constants.F_OK);
+        fs.writeFileSync(file_path,JSON.stringify(data), 'utf-8')
+        console.log("تم الحفظ في ", file_path)
+
+       }catch{
+        console.error(" خطاء في عملية الحغظ للمسار " , file_path)
+
+       }
+
+    }
 }
 function main(){
     const Data_M_C = new DataMC()
-
-
-
-
+    
+ 
+   
 
     window.addEventListener('DOMContentLoaded', () => {})
   
