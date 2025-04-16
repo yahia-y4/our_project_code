@@ -4,26 +4,29 @@ const { parse } = require('path/posix');
 
 class DataMC {
     constructor() {
-        this.all_items_in_storage_ary = []
+        this.all_items_in_storage__ary = []
+        this.all_sales_record__ary=[]
+
         this.load_all_files()
 
     }
 
     load_all_files() {
-        this.load_all_items_in_storage_file()
+        this.load_all_items_in_storage__file()
+        this.load_all_sales_record__file()
 
     }
 
-    load_all_items_in_storage_file() {
+    load_all_items_in_storage__file() {
 
         try {
-            this.handel_all_items_ary()
+            this.handel_all_items__ary()
             console.log("تمت القراءة من ملف all_item_in_storage")
         } catch {
             try {
                 let data = []
                 fs.writeFileSync('./Data/all_items_in_storage.json', JSON.stringify(data), 'utf-8')
-                this.handel_all_items_ary()
+                this.handel_all_items__ary()
                 console.log("لم يتم العثور على ملف  all_items_in_storage.json (تم انشاؤه)")
             } catch {
                 console.log("خطا في تحميل الملف all_items_in_storage.json")
@@ -32,19 +35,35 @@ class DataMC {
 
 
     }
-    handel_all_items_ary() { // هذه الدالة تقوم بتحميل البيانات من الملف الى السجل او المتغير الخاص به 
-        this.all_items_in_storage_ary = this.gave_me_data_from('./Data/all_items_in_storage.json')
+    load_all_sales_record__file(){
+        try {
+            this.handel_all_record_sales__ary()
+            console.log("تمت القراءة من ملف all_record_sales")
+        } catch {
+            try {
+                let data = []
+                fs.writeFileSync('./Data/all_record_sales.json', JSON.stringify(data), 'utf-8')
+                this.handel_all_record_sales__ary()
+                console.log("لم يتم العثور على ملف  all_record_sales.json (تم انشاؤه)")
+            } catch {
+                console.log("خطا في تحميل الملف all_record_sales.json")
+            }
+        }
+
+
+    }
+  
+    handel_all_items__ary() { // هذه الدالة تقوم بتحميل البيانات من الملف الى السجل او المتغير الخاص به 
+        this.all_items_in_storage__ary = this.gave_me_data_from('./Data/all_items_in_storage.json')
+    }
+    handel_all_record_sales__ary(){
+        this.all_sales_record__ary = this.gave_me_data_from('./Data/all_record_sales.json')
     }
 
     gave_me_data_from(file_path) {
-        try {
             const data = fs.readFileSync(file_path, 'utf-8')
             return JSON.parse(data)
 
-        } catch {
-            console.error("خطاء في قراءة الملف ذو المسار المعطاة من قبلك ", file_path)
-
-        }
     }
 
     geve_data_toSave_in(file_path, data) {
@@ -86,9 +105,9 @@ class StorageMC {
                                 if ((+profit) >= 0) {
                                     // عند تحقق كل الشروط السابقة تبدأ عملية الاضافة من هنا 
     
-                                    if (Array.isArray(Data_M_C.all_items_in_storage_ary)) {  // التحقق من هل السجل مصفوفة لكي يقبل الاضافة 
+                                    if (Array.isArray(Data_M_C.all_items_in_storage__ary)) {  // التحقق من هل السجل مصفوفة لكي يقبل الاضافة 
     
-                                        Data_M_C.all_items_in_storage_ary.push({
+                                        Data_M_C.all_items_in_storage__ary.push({
                                             // اضافة البيانات الى السجل المؤقت 
     
                                             "name": name,
@@ -106,9 +125,9 @@ class StorageMC {
                                         )
     
                                         // بعد الاضافة الى السجل المؤقت نحفظ السجل في الملف الخاص به 
-                                        Data_M_C.geve_data_toSave_in('./Data/all_items_in_storage.json', Data_M_C.all_items_in_storage_ary)
+                                        Data_M_C.geve_data_toSave_in('./Data/all_items_in_storage.json', Data_M_C.all_items_in_storage__ary)
                                         // بعد الحفظ يجب اعادة تحميل البيانات من الملف الى السجل المؤقت هذا سيسرع التعامل معه لانه يكون محفوظ في الرام 
-                                        Data_M_C.handel_all_items_ary()
+                                        Data_M_C.handel_all_items__ary()
     
                                         console.log("تمت الاضافة بنجاح ")
     
@@ -153,7 +172,7 @@ class StorageMC {
     sell_item_from_storage(){ // بيع عنصر بدون فاتورة 
         let name ="yahia";
         let co_name ="yahia";     // احضار البيانات من صفحة البيع من اوسمة الادخال 
-        let num =1;
+        let num =2;
         let code ="111";
         let finall_price =1.5;
 
@@ -164,26 +183,31 @@ class StorageMC {
                 if(code){
                     if((+num) > 0){
                         if((+finall_price) > 0){
-                            if(Array.isArray(Data_M_C.all_items_in_storage_ary)){
+                            if(Array.isArray(Data_M_C.all_items_in_storage__ary)){
 
 
 
 
                                 // البحث عن العنصر داخل السجل 
-                                for(let i = 0; i< Data_M_C.all_items_in_storage_ary.length;i++){
-                                    if(Data_M_C.all_items_in_storage_ary[i]["name"] == name && Data_M_C.all_items_in_storage_ary[i]["co_name"] == co_name || Data_M_C.all_items_in_storage_ary[i]["code"] == code){
+                                for(let i = 0; i< Data_M_C.all_items_in_storage__ary.length;i++){
+                                    if(Data_M_C.all_items_in_storage__ary[i]["name"] == name && Data_M_C.all_items_in_storage__ary[i]["co_name"] == co_name || Data_M_C.all_items_in_storage__ary[i]["code"] == code){
 
                                         // عند العثور على العنصر المطلوب نفحص عدد القطع الخاصه به 
-                                        if((+ Data_M_C.all_items_in_storage_ary[i]["num"]) >= (+num)){
+                                        if((+ Data_M_C.all_items_in_storage__ary[i]["num"]) >= (+num)){
                                             // هنا ستتم عملية البيع 
 
                                             // انقاص عدد القطع المباعة من السجل 
-                                            (Data_M_C.all_items_in_storage_ary[i]["num"]) -= (+num)
+                                            (Data_M_C.all_items_in_storage__ary[i]["num"]) -= (+num)
 
                                             // حفظ السجل بعد التعديل في الملف الخاص به
-                                            Data_M_C.geve_data_toSave_in('./Data/all_items_in_storage.json', Data_M_C.all_items_in_storage_ary)
-                                            Data_M_C.handel_all_items_ary() // اعادة تحميل بيانات السجل للتاكد من ان البيانات الموجودة في الملف نفسها موجودة في السجل المؤقت
+                                            Data_M_C.geve_data_toSave_in('./Data/all_items_in_storage.json', Data_M_C.all_items_in_storage__ary)
+                                            Data_M_C.handel_all_items__ary() // اعادة تحميل بيانات السجل للتاكد من ان البيانات الموجودة في الملف نفسها موجودة في السجل المؤقت
                                             console.log("تم البيع")
+                                            Record_M_C.add_to_all_sales_record(name,co_name,code,num,
+                                                Data_M_C.all_items_in_storage__ary[i]["class_"],
+                                                Data_M_C.all_items_in_storage__ary[i]["price"],
+                                                Data_M_C.all_items_in_storage__ary[i]["profit"],
+                                                Data_M_C.all_items_in_storage__ary[i]["finall_price"])
                                            
 
                                             // نهاية دالة البيع الفردي 
@@ -196,7 +220,7 @@ class StorageMC {
                                             return
                                         }
 
-                                        break
+                                        return 
                                     }
                                 }
                                 console.log("العنصر غير موجود")
@@ -234,18 +258,51 @@ class StorageMC {
     }
 
 }
+ class RecordMC{
+    constructor(){
+
+    }
+    add_to_all_sales_record(name,co_name,code,num,class_,price,profit,finall_price){
+        if(Array.isArray(Data_M_C.all_sales_record__ary)){
+            Data_M_C.all_sales_record__ary.push({
+                "name":name,
+                "co_name":co_name,
+                "num":num,
+                "price":price,
+                "profit":profit,
+                "code":code,
+                "class_":class_,
+                "finall_price_to_one":finall_price,
+                "finall_price_to_all":(+finall_price)*(+num),
+                "date":"2025/4/16",
+                "day":"الاربعاء",
+                "hour":"12 : 30  pm"
+            })
+
+            Data_M_C.geve_data_toSave_in('./Data/all_record_sales.json',Data_M_C.all_sales_record__ary)
+            Data_M_C.handel_all_record_sales__ary()
+            console.log("تمت اضافة هذ العنصر المباع الى سجل المبعات الكامل ")
+
+
+        }else{
+            console.log("خطاء سجل المبيعات الكامل ليس مصفوفة")
+        }
+
+    }
+ }
 
 // *************************************************//
 
 const Data_M_C = new DataMC()
-
+const Record_M_C=new RecordMC()
 
 window.addEventListener('DOMContentLoaded', () => {  // هذا الحدث يعني كل شيء داخل الاقواس سيتم تنفيذه بعد تحميل صفحة html, 
     // ستكون هنا جميع الكلاسات التي تحوي على دوال لها اتصال مباشر مع صفحة html,
+    
     const Storage_M_C = new StorageMC()
     // Storage_M_C.add_item_to_storage() // سيتم استدعاء دالة الاضافة عن طريق حدث النقر على ايقونة الاضافة وغير متوفرة الى الان بانتظار الفرونت اند .....
 
-    Storage_M_C.sell_item_from_storage() // سيتم استدعاء الدالة عند النقر على ايقونة البيع بعد ملىء حقول البيع 
+    // Storage_M_C.sell_item_from_storage() // سيتم استدعاء الدالة عند النقر على ايقونة البيع بعد ملىء حقول البيع 
 
 
 })
