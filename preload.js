@@ -16,7 +16,9 @@ window.addEventListener('DOMContentLoaded', () => {
             this.all_sales_record__ary=[]
             //fatora
             this.buy_fatora_ary=[]
-            this.num_of_buy_fatora = 0;
+            this.num_of_buy_fatora = -1;
+            this.cuont_items_in_buy_fatora=0
+            this.buy_fatora_is_run = false
             
                 
                 
@@ -28,6 +30,8 @@ window.addEventListener('DOMContentLoaded', () => {
             
             this.load_all_items_in_storage__file()
             this.load_all_sales_record__file()
+            this.load_buy_fatora__file()
+            this.load_num_of_buy_fatora__file()
     
         }
     
@@ -66,12 +70,50 @@ window.addEventListener('DOMContentLoaded', () => {
     
     
         }
+        load_buy_fatora__file(){
+            
+            try {
+                this.handel_buy_fatora__ary()
+                console.log("تمت القراءة من ملف buy_fatora")
+            } catch {
+                try {
+                    let data = []
+                    fs.writeFileSync('./Data/Buy_fatora/buy_fatora.json', JSON.stringify(data), 'utf-8')
+                    this.handel_buy_fatora__ary()
+                    console.log("لم يتم العثور على ملف  buy_fatora (تم انشاؤه)")
+                } catch {
+                    console.log("خطا في تحميل الملف buy_fatora.json")
+                }
+            }
+        }
+        load_num_of_buy_fatora__file(){
+            try {
+                this.handel_num_of_buy_fatora()
+                console.log("تمت القراءة من ملف num_of_buy_fatora")
+            } catch {
+                try {
+                    let data = [-1]
+                    fs.writeFileSync('./Data/Buy_fatora/num_of_buy_fatora.json', JSON.stringify(data), 'utf-8')
+                    this.handel_num_of_buy_fatora()
+                    console.log("لم يتم العثور على ملف  num_of_buy_fatora (تم انشاؤه)")
+                } catch {
+                    console.log("خطا في تحميل الملف num_of_buy_fatora.json")
+                }
+            }
+        }
       
         handel_all_items__ary() { // هذه الدالة تقوم بتحميل البيانات من الملف الى السجل او المتغير الخاص به 
             this.all_items_in_storage__ary = this.gave_me_data_from('./Data/all_items_in_storage.json')
         }
         handel_all_record_sales__ary(){
             this.all_sales_record__ary = this.gave_me_data_from('./Data/all_record_sales.json')
+        }
+        handel_buy_fatora__ary(){
+           
+            this.buy_fatora_ary = this.gave_me_data_from('./Data/Buy_fatora/buy_fatora.json')
+        }
+        handel_num_of_buy_fatora(){
+           this.num_of_buy_fatora=this.gave_me_data_from('./Data/Buy_fatora/num_of_buy_fatora.json')
         }
     
         gave_me_data_from(file_path) {
@@ -98,16 +140,43 @@ window.addEventListener('DOMContentLoaded', () => {
         constructor() {
     
         }
+
+        start_buy_fatora(){
+            if(Data_M_C.buy_fatora_is_run == false){
+                Data_M_C.buy_fatora_is_run = true
+                Data_M_C.num_of_buy_fatora ++
+                Data_M_C.buy_fatora_ary[Data_M_C.num_of_buy_fatora]= {
+        
+                    "info":{
+                        "id":1,
+                        "moarid_name":"",
+                        "boss_name":"",
+                        "num_items":0,
+                        "num_pieces":0,
+                        "total_price":0,
+                        "payment_status":"",
+                        "amount_paid":0,
+                        "date":Date_MC.getCurrentDate()
+                    },
+                    "items":[]
+                        
+                    
+                }
+                 console.log("new fatora : " , Data_M_C.num_of_buy_fatora)
+            }
+     
+    
+           }
     
         add_item_to_buy_fatora() {
             // هذه البيانات يتم احظارها من صفحة html,   عن طريق وسوم ال input 
-            let name =""
-            let co_name = ""
-            let num = ""
-            let price = 1
-            let profit = 0.1
-            let code = "111"
-            let end_date =""
+            let name = document.getElementById('name_item_in_buy_fatora').value
+            let co_name = document.getElementById('co_name_item_in_buy_fatora').value
+            let num = document.getElementById('num_item_in_buy_fatora').value
+            let price = document.getElementById('price_item_in_buy_fatora').value
+            let profit = document.getElementById('profit_item_in_buy_fatora').value
+            let code = document.getElementById('code_item_in_buy_fatora').value
+            let end_date =document.getElementById('end_date_item_in_buy_fatora').value
             
     
             if (name) {
@@ -116,56 +185,68 @@ window.addEventListener('DOMContentLoaded', () => {
                                 if ((+price) > 0) {
                                     if ((+profit) >= 0) {
                                         // عند تحقق كل الشروط السابقة تبدأ عملية الاضافة من هنا 
+                                        let data = {
+                                          
+                                            "name": name,
+                                            "co_name": co_name,
+                                            "num": num,
+                                            "price": price,
+                                            "profit": profit,
+                                            "finall_price": (+price) + ((+price) * (+profit)), 
+                                            "code": code,
+                                            "end_date":end_date,
+                                            "add_date":Date_MC.getCurrentDate()
+    
+                                        }
         
-                                        if (Array.isArray(Data_M_C.all_items_in_storage__ary)) {  // التحقق من هل السجل مصفوفة لكي يقبل الاضافة 
+                                        if (Array.isArray(Data_M_C.all_items_in_storage__ary)) {  
         
-                                            Data_M_C.all_items_in_storage__ary.push({
-                                                // اضافة البيانات الى السجل المؤقت 
-        
-                                                "name": name,
-                                                "co_name": co_name,
-                                                "num": num,
-                                                "price": price,
-                                                "profit": profit,
-                                                "finall_price": (+price) + ((+price) * (+profit)), // هذا هو سعر المبيع يحسب بشكل تلقائي كما نرى
-                                                "class_": class_,
-                                                "code": code,
-                                                "note": note,
-                                                "add_date": "2025/4/15" // لم يتم بناء دالة جلب التاريخ بعد 
-        
-                                            }
-                                            )
-                                            Data_M_C.fatora_ary[0]["items"].push({
-                                                "name": name,
-                                                "co_name": co_name,
-                                                "num": num,
-                                            })
-                                            this.show_in_fatora()
-        
+                                            Data_M_C.all_items_in_storage__ary.push(data)
+                                        
                                             console.log("تمت الاضافة بنجاح ")
         
                                         } else {
                                             console.error("خطاء السجل ليس مصفوفة ")
+                                            return 
+                                        }
+
+                                        if(Array.isArray(Data_M_C.buy_fatora_ary[Data_M_C.num_of_buy_fatora]["items"])){
+
+                                            Data_M_C.buy_fatora_ary[Data_M_C.num_of_buy_fatora]["items"].push(data)
+                                            console.log(Data_M_C.buy_fatora_ary[Data_M_C.num_of_buy_fatora])
+                                            Data_M_C.cuont_items_in_buy_fatora ++ 
+                                            Data_M_C.buy_fatora_ary[Data_M_C.num_of_buy_fatora]["info"]["num_pieces"]+=(+num)
+                                            Data_M_C.buy_fatora_ary[Data_M_C.num_of_buy_fatora]["info"]["total_price"]+=((+price) * num )
+                                            this.show_items_in_buy_fatora()
+
+                                        }else{
+                                            console.log("سجل العناصر لهذه الفاتورة ليس مصفوفة ")
+                                            return
                                         }
         
                                     } else {
                                         console.log("لا يمكن ان تكون نسبة الربح عدد سالب ")
+                                        return
                                     }
         
                                 } else {
                                     console.log("لا يمكن ان يكون السعر قيمة معدومة او سالبة")
+                                    return
                                 }
         
                             } else {
                                 console.log("لا يمكن اضافة عنصر ذو عدد قطع معدومة او سالبة")
+                                return
                             }
     
                 } else {
                     console.log("خانة اسم الشركة فارغة")
+                    return
                 }
     
             } else {
                 console.log("خانة الاسم فارغة ")
+                return
             }
     
         }
@@ -174,26 +255,76 @@ window.addEventListener('DOMContentLoaded', () => {
     
         }
         add_buy_fatora(){
-        let name = document.getElementById('mored').value
-        let date = document.getElementById('date').value
-        Data_M_C.fatora_ary[0].info.name=name
-        Data_M_C.fatora_ary[0].info.date=date
-        document.getElementById('show_f').style.display='block'
-        this.show_fatora()
+            if(Data_M_C.cuont_items_in_buy_fatora > 0){
+
+                let moarid_name = document.getElementById('morid_name').value
+                let boss_name = document.getElementById('boss_name').value
+                let payment_status = document.getElementById('payment_status').value
+                let amount_paid = document.getElementById('amount_paid').value
+
+                if(moarid_name){
+                    if(boss_name){
+                        if(payment_status){
+                            if(amount_paid){
+
+
+                                Data_M_C.buy_fatora_ary[Data_M_C.num_of_buy_fatora]["info"]["moarid_name"] = moarid_name
+                                Data_M_C.buy_fatora_ary[Data_M_C.num_of_buy_fatora]["info"]["boss_name"] = boss_name
+                                Data_M_C.buy_fatora_ary[Data_M_C.num_of_buy_fatora]["info"]["payment_status"] = payment_status
+                                Data_M_C.buy_fatora_ary[Data_M_C.num_of_buy_fatora]["info"]["amount_paid"] = amount_paid
+                                Data_M_C.buy_fatora_ary[Data_M_C.num_of_buy_fatora]["info"]["num_items"] = Data_M_C.cuont_items_in_buy_fatora
+
+
+                                Data_M_C.buy_fatora_is_run = false
+                                // حفظ في الملفات 
+                                try{
+                                    Data_M_C.geve_data_toSave_in('./Data/all_items_in_storage.json',Data_M_C.all_items_in_storage__ary)
+                                    Data_M_C.geve_data_toSave_in('./Data/Buy_fatora/buy_fatora.json',Data_M_C.buy_fatora_ary)
+                                    Data_M_C.geve_data_toSave_in('./Data/Buy_fatora/num_of_buy_fatora.json',Data_M_C.num_of_buy_fatora)
+                                }catch{
+                                    console.error("خطاء في حفظ الملفات ")
+                                }
+                         
+
+
+
+
+                            }else{
+                                console.log("نقص في معلومات الفاتورة - المبلغ المدفوع ")
+                                return
+                            }
+
+                        }else{
+                            console.log("نقص في معلومات الفاتورة - حالة الدفع ")
+                            return
+                        }
+
+                    }else{
+                        console.log("نقص في معلومات الفاتورة - مدير المستودع")
+                        return
+                    }
+
+                }else{
+                    console.log("نقص في معلومات الفاتورة - المورد")
+                    return
+                }
+
+            }else{
+                console.log('لا يمكن اضافة فاتورة خالية من العناصر ')
+            }
+            
+   
 
         }
  
-       start_buy_fatora(){
-    
-    
-       }
+  
        cancel_buy_fatora(){
     
        }
        
     
-    show_in_fatora(){
-    
+    show_items_in_buy_fatora(){
+    document.getElementById('total_price_span').innerText = Data_M_C.buy_fatora_ary[Data_M_C.num_of_buy_fatora]["info"]["total_price"]
     
     }
         
@@ -325,12 +456,60 @@ window.addEventListener('DOMContentLoaded', () => {
     
         }
         set_event(){
+        document.getElementById('add_new_buy_fatora_button').onclick =()=>{
+        document.getElementById('buy_fatora_box').style.display="block"
+        Storage_M_C.start_buy_fatora()}
+
+
+   
+      document.getElementById('add_item_in_buy_fatora_button').onclick=()=>{
+        Storage_M_C.add_item_to_buy_fatora()}
+
+        document.getElementById('add_buy_fatora_button').onclick = ()=>{
+            Storage_M_C.add_buy_fatora()
+        }
+   
+    }
+    
       
+     }
+
+     class DateMC{
+        constructor(){
+
+        }
+
+        getCurrentTime12Hour() {
+            const now = new Date();
+
+            let hours = now.getHours();
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+
+            const period = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12 || 12; // تحويل الساعة إلى تنسيق 12 ساعة
+
+            return `${hours}:${minutes}:${seconds} ${period}`;
+        }
+        getCurrentDate() {
+            const today = new Date();
+            const day = String(today.getDate()).padStart(2, '0'); // اليوم
+            const month = String(today.getMonth() + 1).padStart(2, '0'); // الشهر
+            const year = today.getFullYear(); // السنة
+
+            // يمكنك تعديل التنسيق حسب الحاجة
+            return `${day}/${month}/${year}`;
+        }
+
+        getDayOfWeek() {
+            const daysOfWeek = ['الأحد', 'الاثنين', 'الثلاثاء', 'الاربعاء', 'الخميس', 'الجمعة', 'السبت'];
+            const today = new Date();
+            return daysOfWeek[today.getDay()];
         }
      }
 
      // *************************************************//
-   
+   const Date_MC=new DateMC()
     const Data_M_C = new DataMC()
     const Record_M_C=new RecordMC()
     const Storage_M_C = new StorageMC()
