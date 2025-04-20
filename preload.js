@@ -141,6 +141,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
         }
 
+
+        // -----------(S فاتورة الشراء)--------------
+
         start_buy_fatora() {
             if (Data_M_C.buy_fatora_is_run == false) {
                 Data_M_C.buy_fatora_is_run = true
@@ -262,7 +265,8 @@ window.addEventListener('DOMContentLoaded', () => {
         }
 
         del_item_from_buy_fatora(i) {
-
+        Data_M_C.buy_fatora_ary[Data_M_C.num_of_buy_fatora]['items'].splice(i, 1)
+        this.show_items_in_buy_fatora()
         }
         add_buy_fatora() {
             if (Data_M_C.cuont_items_in_buy_fatora > 0) {
@@ -294,7 +298,7 @@ window.addEventListener('DOMContentLoaded', () => {
                                 } catch {
                                     console.error("خطاء في حفظ الملفات ")
                                 }
-                                 document.getElementById('show_items_in_buy_fatora').innerHTML = ""
+                                 document.getElementById('div_of_shwing_in_buy_fatora').innerHTML = ""
                                   document.getElementById('total_price_span').innerText=""
 
                                 document.getElementById('name_item_in_buy_fatora').value = ""
@@ -343,13 +347,12 @@ window.addEventListener('DOMContentLoaded', () => {
 
         }
 
-
         cancel_buy_fatora() {
             Data_M_C.buy_fatora_is_run = false
             Data_M_C.handel_buy_fatora__ary()
             Data_M_C.handel_num_of_buy_fatora()
             document.getElementById('buy_fatora_box').style.display = "none"
-             document.getElementById('show_items_in_buy_fatora').innerHTML = ""
+             document.getElementById('div_of_shwing_in_buy_fatora').innerHTML = ""
              document.getElementById('total_price_span').innerText=""
 
 
@@ -370,22 +373,21 @@ window.addEventListener('DOMContentLoaded', () => {
 
         }
 
-
         show_items_in_buy_fatora() {
             document.getElementById('total_price_span').innerText = Data_M_C.buy_fatora_ary[Data_M_C.num_of_buy_fatora]["info"]["total_price"]
-            document.getElementById('show_items_in_buy_fatora').innerHTML = ""
+            document.getElementById('div_of_shwing_in_buy_fatora').innerHTML = ""
             let items = Data_M_C.buy_fatora_ary[Data_M_C.num_of_buy_fatora]["items"]
             for (let i = 0; i < items.length; i++) {
-                document.getElementById('show_items_in_buy_fatora').innerHTML += `
+                document.getElementById('div_of_shwing_in_buy_fatora').innerHTML += `
             
            <span>${items[i].name}</span>
-           <span>---</span>
+       
            <span>${items[i].co_name}</span>
-           <span>---</span>
+          
            <span>${items[i].num}</span>
-           <span>---</span>
+         
            <span>${items[i].price}</span>
-           <span>---</span>
+        
            <span>${(+items[i].num) * (+items[i].price)}</span>
            <div class="del_item_from_buy_fatora_button" class = "del_item_from_buy_fatora_button">حذف</div>
             
@@ -396,11 +398,15 @@ window.addEventListener('DOMContentLoaded', () => {
             let but = document.querySelectorAll('.del_item_from_buy_fatora_button')
             but.forEach((but, i) => {
                 but.addEventListener('click', () => {
-                    console.log(i)
+                    this.del_item_from_buy_fatora(i)
                 })
             })
 
         }
+
+         // -----------(E فاتورة الشراء)--------------
+
+
 
         sell_item_from_storage() { // بيع عنصر بدون فاتورة 
             let name = "yahia";
@@ -489,6 +495,13 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
         }
+
+
+        // ------------(S عرض الادوية في صفحة المخزون )---------------
+
+        
+
+        // ------------(E عرض الادوية في صفحة المخزون )---------------
 
     }
     class RecordMC {
