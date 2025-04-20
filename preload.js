@@ -138,6 +138,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     class StorageMC {
         constructor() {
+            this.show_all_items_in_storage()
 
         }
 
@@ -499,7 +500,30 @@ window.addEventListener('DOMContentLoaded', () => {
 
         // ------------(S عرض الادوية في صفحة المخزون )---------------
 
+        show_all_items_in_storage() {
+            Data_M_C.handel_all_items__ary();
+            let data =Data_M_C.all_items_in_storage__ary
+            const container = document.getElementById('show_all_items_div');
+            container.innerHTML = "";
         
+            for (let i = 0; i <data.length; i++) {
+                container.innerHTML += `
+                    <div class="one_item_in_storage_box" data-index="${i}">
+                        <span>${data[i].name}</span>
+                        <span>${data[i].co_name}</span>
+                        <span>${data[i].finall_price} </span>
+                        <span>${data[i].num}</span>
+                    </div>
+                `;
+            }
+        
+            const boxes = document.querySelectorAll('.one_item_in_storage_box');
+            boxes.forEach((box, i) => {
+                box.addEventListener('click', () => {
+                    console.log(i);
+                });
+            });
+        }
 
         // ------------(E عرض الادوية في صفحة المخزون )---------------
 
