@@ -21,9 +21,17 @@ window.addEventListener('DOMContentLoaded', () => {
             this.buy_fatora_is_run = false
 
 
+            // التاكد من وجود المجلدات
+            this.make_dirs('./Data')
+            this.make_dirs('./Data/Buy_fatora')
 
 
+
+            // تحميل الملفات
             this.load_all_files()
+
+
+
         }
 
         load_all_files() {
@@ -33,6 +41,11 @@ window.addEventListener('DOMContentLoaded', () => {
             this.load_buy_fatora__file()
             this.load_num_of_buy_fatora__file()
 
+        }
+        make_dirs(dirPath){
+              if (!fs.existsSync(dirPath)) {
+                fs.mkdirSync(dirPath, { recursive: true }); 
+              }
         }
 
         load_all_items_in_storage__file() {
