@@ -4,10 +4,6 @@ const { parse } = require('path/posix');
 
 
 
-
-
-
-
 window.addEventListener('DOMContentLoaded', () => {
 
     class DataMC {
@@ -732,6 +728,31 @@ window.addEventListener('DOMContentLoaded', () => {
                 return
             }
         }
+        del_moarid_only(i){
+           if(Data_M_C.moarid__ary[i]["debt_on_me"]==0 && Data_M_C.moarid__ary[i]["debt_on_him"]==0){
+            Data_M_C.moarid__ary.splice(i,1)
+            Data_M_C.geve_data_toSave_in('./Data/Moarid/moarid.json',Data_M_C.moarid__ary)
+            console.log('تم حذف المورد رقم ', i)
+           }else{
+            console.log(" لا يمكن حذف هذا المورد بسبب الديون الموجودة .  لزيادة الامان ومنع التلاعب ")
+           }
+        }
+        del_moarid_with_fatora(i){
+            if(Data_M_C.moarid__ary[i]["debt_on_me"]==0 && Data_M_C.moarid__ary[i]["debt_on_him"]==0){
+                let id = Data_M_C.moarid__ary[i]["id"]
+                for(let x = 0;i<Data_M_C.buy_fatora_ary.length;x++){
+                    if(Data_M_C.buy_fatora_ary[x]["info"]["moarid_id"] == id){
+                        Data_M_C.buy_fatora_ary.splice(x,1) 
+                    }
+                }
+                Data_M_C.moarid__ary.splice(i,1)
+                Data_M_C.geve_data_toSave_in('./Data/Moarid/moarid.json',Data_M_C.moarid__ary)
+                Data_M_C.geve_data_toSave_in('./Data/Buy_fatora/buy_fatora.json',Data_M_C.buy_fatora_ary)
+                console.log('تم حذف المورد رقم ', i)
+               }else{
+                console.log(" لا يمكن حذف هذا المورد بسبب الديون الموجودة .  لزيادة الامان ومنع التلاعب ")
+               }
+        }
 
     }
     class CustomersMC{
@@ -857,6 +878,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const Moarid_M_C = new MoaridMC()
     const Customers_M_C=new CustomersMC
     const Events_M_C = new Events()
+
  
 
 
