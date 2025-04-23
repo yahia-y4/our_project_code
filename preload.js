@@ -261,7 +261,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     class StorageMC {
         constructor() {
-            this.show_all_items_in_storage()
+            // this.show_all_items_in_storage()
 
         }
 
@@ -344,7 +344,7 @@ window.addEventListener('DOMContentLoaded', () => {
                                     Data_M_C.cuont_items_in_buy_fatora++
                                     Data_M_C.buy_fatora_ary[Data_M_C.num_of_buy_fatora]["info"]["num_pieces"] += (+num)
                                     Data_M_C.buy_fatora_ary[Data_M_C.num_of_buy_fatora]["info"]["total_price"] += ((+price) * num)
-                                    this.show_items_in_buy_fatora()
+                                    // this.show_items_in_buy_fatora()
 
 
 
