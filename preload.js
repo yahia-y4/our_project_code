@@ -14,29 +14,38 @@ window.addEventListener('DOMContentLoaded', () => {
         constructor() {
             this.all_items_in_storage__ary = []
             this.all_sales_record__ary = []
-            //fatora
+
+
+            //fatora --------------------------------
             this.buy_fatora_ary = []
             this.num_of_buy_fatora = -1;
-            this.buy_fatora_id =0
+            this.buy_fatora_id = 0
             this.cuont_items_in_buy_fatora = 0
             this.buy_fatora_is_run = false
 
 
 
-            // moarid
-            this.moarid__ary=[]
-            this.moarid__id =0
+            // moarid ------------------------------
+            this.moarid__ary = []
+            this.moarid__id = 0
+
+
+            //Customers --------------------------
+            this.customers__ary =[]
+            this.customers__id =0
 
 
 
-            // التاكد من وجود المجلدات
+
+            // التاكد من وجود المجلدات ----------------
             this.make_dirs('./Data')
             this.make_dirs('./Data/Buy_fatora')
             this.make_dirs('./Data/Moarid')
+            this.make_dirs('./Data/Customers')
 
 
 
-            // تحميل الملفات
+            // تحميل الملفات --------------------
             this.load_all_files()
 
 
@@ -44,22 +53,26 @@ window.addEventListener('DOMContentLoaded', () => {
         }
 
         load_all_files() {
-console.log("------- فحص القراءة من الملفات ------------")
+            console.log("------- فحص القراءة من الملفات ------------")
             this.load_all_items_in_storage__file()
             this.load_all_sales_record__file()
             this.load_buy_fatora__file()
             this.load_num_of_buy_fatora__file()
             this.load_moarid__file()
             this.load_moarid_id__file()
-            console.log('----------------------------------')
+            this.load_customers__file()
+            this.load_customers_id__file()
+            console.log('---------------------------------------------')
 
         }
-        make_dirs(dirPath){
-              if (!fs.existsSync(dirPath)) {
-                fs.mkdirSync(dirPath, { recursive: true }); 
-              }
+        make_dirs(dirPath) {
+            if (!fs.existsSync(dirPath)) {
+                fs.mkdirSync(dirPath, { recursive: true });
+            }
         }
 
+
+       // ------------------------------------دوال تحميل الملفات -----------------------------------
         load_all_items_in_storage__file() {
 
             try {
@@ -126,8 +139,7 @@ console.log("------- فحص القراءة من الملفات ------------")
                 }
             }
         }
-
-        load_moarid__file(){
+        load_moarid__file() {
             try {
                 this.handel_moirid__ary()
                 console.log("تمت القراءة من ملف moirid__ary")
@@ -142,7 +154,7 @@ console.log("------- فحص القراءة من الملفات ------------")
                 }
             }
         }
-        load_moarid_id__file(){
+        load_moarid_id__file() {
             try {
                 this.handel_moirid__id()
                 console.log("تمت القراءة من ملف moirid__id")
@@ -157,6 +169,44 @@ console.log("------- فحص القراءة من الملفات ------------")
                 }
             }
         }
+        load_customers__file(){
+            
+            try {
+                this.handel_customers__ary()
+                console.log("تمت القراءة من ملف Customers")
+            } catch {
+                try {
+                    let data = []
+                    fs.writeFileSync('./Data/Customers/customers.json', JSON.stringify(data), 'utf-8')
+                    this.handel_customers__ary()
+                    console.log("لم يتم العثور على ملف  Customers.json (تم انشاؤه)")
+                } catch {
+                    console.log("خطا في تحميل الملف Customers.json")
+                }
+            }
+        }
+        load_customers_id__file(){
+  
+            try {
+                this.handel_customers__id()
+                console.log("تمت القراءة من ملف Customers_id")
+            } catch {
+                try {
+                    let data = [0]
+                    fs.writeFileSync('./Data/Customers/customers_id.json', JSON.stringify(data), 'utf-8')
+                    this.handel_customers__id()
+                    console.log("لم يتم العثور على ملف  Customers_id.json (تم انشاؤه)")
+                } catch {
+                    console.log("خطا في تحميل الملف Customers_id.json")
+                }
+            }
+        }
+        //-----------------------------------------------------------------------------------------------
+
+
+
+
+        //--------------------------دوال تهيئة المتغيرات بقيم الملفات -----------------------------
 
         handel_all_items__ary() { // هذه الدالة تقوم بتحميل البيانات من الملف الى السجل او المتغير الخاص به 
             this.all_items_in_storage__ary = this.gave_me_data_from('./Data/all_items_in_storage.json')
@@ -172,12 +222,22 @@ console.log("------- فحص القراءة من الملفات ------------")
             this.num_of_buy_fatora = this.gave_me_data_from('./Data/Buy_fatora/num_of_buy_fatora.json')
         }
 
-        handel_moirid__ary(){
+        handel_moirid__ary() {
             this.moarid__ary = this.gave_me_data_from('./Data/Moarid/moarid.json')
         }
-        handel_moirid__id(){
+        handel_moirid__id() {
             this.moarid__id = this.gave_me_data_from('./Data/Moarid/moarid_id.json')
         }
+
+        handel_customers__ary(){
+            this.customers__ary=this.gave_me_data_from('./Data/Customers/customers.json')
+        }
+        handel_customers__id(){
+            this.customers__id=this.gave_me_data_from('./Data/Customers/customers_id.json')
+        }
+        //-----------------------------------------------------------------------------------------------
+
+
 
         gave_me_data_from(file_path) {
             const data = fs.readFileSync(file_path, 'utf-8')
@@ -216,7 +276,7 @@ console.log("------- فحص القراءة من الملفات ------------")
 
                     "info": {
                         "id": 1,
-                        "moarid_name": "",
+                        "moarid_id": 12,
                         "boss_name": "",
                         "num_items": 0,
                         "num_pieces": 0,
@@ -329,24 +389,24 @@ console.log("------- فحص القراءة من الملفات ------------")
         }
 
         del_item_from_buy_fatora(i) {
-        Data_M_C.buy_fatora_ary[Data_M_C.num_of_buy_fatora]['items'].splice(i, 1)
-        this.show_items_in_buy_fatora()
+            Data_M_C.buy_fatora_ary[Data_M_C.num_of_buy_fatora]['items'].splice(i, 1)
+            this.show_items_in_buy_fatora()
         }
         add_buy_fatora() {
             if (Data_M_C.cuont_items_in_buy_fatora > 0) {
 
-                let moarid_name = document.getElementById('morid_name').value
+                let moarid_id = 12
                 let boss_name = document.getElementById('boss_name').value
                 let payment_status = document.getElementById('payment_status').value
                 let amount_paid = document.getElementById('amount_paid').value
 
-                if (moarid_name) {
+                if (moarid_id) {
                     if (boss_name) {
                         if (payment_status) {
                             if (amount_paid) {
 
 
-                                Data_M_C.buy_fatora_ary[Data_M_C.num_of_buy_fatora]["info"]["moarid_name"] = moarid_name
+                                Data_M_C.buy_fatora_ary[Data_M_C.num_of_buy_fatora]["info"]["moarid_id"] = moarid_id
                                 Data_M_C.buy_fatora_ary[Data_M_C.num_of_buy_fatora]["info"]["boss_name"] = boss_name
                                 Data_M_C.buy_fatora_ary[Data_M_C.num_of_buy_fatora]["info"]["payment_status"] = payment_status
                                 Data_M_C.buy_fatora_ary[Data_M_C.num_of_buy_fatora]["info"]["amount_paid"] = amount_paid
@@ -362,8 +422,8 @@ console.log("------- فحص القراءة من الملفات ------------")
                                 } catch {
                                     console.error("خطاء في حفظ الملفات ")
                                 }
-                                 document.getElementById('div_of_shwing_in_buy_fatora').innerHTML = ""
-                                  document.getElementById('total_price_span').innerText=""
+                                document.getElementById('div_of_shwing_in_buy_fatora').innerHTML = ""
+                                document.getElementById('total_price_span').innerText = ""
 
                                 document.getElementById('name_item_in_buy_fatora').value = ""
                                 document.getElementById('co_name_item_in_buy_fatora').value = ""
@@ -372,8 +432,8 @@ console.log("------- فحص القراءة من الملفات ------------")
                                 document.getElementById('profit_item_in_buy_fatora').value = ""
                                 document.getElementById('code_item_in_buy_fatora').value = ""
                                 document.getElementById('end_date_item_in_buy_fatora').value = ""
-                    
-                    
+
+
                                 document.getElementById('morid_name').value = ""
                                 document.getElementById('boss_name').value = ""
                                 document.getElementById('payment_status').value = ""
@@ -416,8 +476,8 @@ console.log("------- فحص القراءة من الملفات ------------")
             Data_M_C.handel_buy_fatora__ary()
             Data_M_C.handel_num_of_buy_fatora()
             document.getElementById('buy_fatora_box').style.display = "none"
-             document.getElementById('div_of_shwing_in_buy_fatora').innerHTML = ""
-             document.getElementById('total_price_span').innerText=""
+            document.getElementById('div_of_shwing_in_buy_fatora').innerHTML = ""
+            document.getElementById('total_price_span').innerText = ""
 
 
 
@@ -468,7 +528,7 @@ console.log("------- فحص القراءة من الملفات ------------")
 
         }
 
-         // -----------(E فاتورة الشراء)--------------
+        // -----------(E فاتورة الشراء)--------------
 
 
 
@@ -565,11 +625,11 @@ console.log("------- فحص القراءة من الملفات ------------")
 
         show_all_items_in_storage() {
             Data_M_C.handel_all_items__ary();
-            let data =Data_M_C.all_items_in_storage__ary
+            let data = Data_M_C.all_items_in_storage__ary
             const container = document.getElementById('show_all_items_div');
             container.innerHTML = "";
-        
-            for (let i = 0; i <data.length; i++) {
+
+            for (let i = 0; i < data.length; i++) {
                 container.innerHTML += `
                     <div class="one_item_in_storage_box" data-index="${i}">
                         <span>${data[i].name}</span>
@@ -579,7 +639,7 @@ console.log("------- فحص القراءة من الملفات ------------")
                     </div>
                 `;
             }
-        
+
             const boxes = document.querySelectorAll('.one_item_in_storage_box');
             boxes.forEach((box, i) => {
                 box.addEventListener('click', () => {
@@ -623,56 +683,104 @@ console.log("------- فحص القراءة من الملفات ------------")
 
         }
     }
-    class MoaridMC{
-        constructor(){
+    class MoaridMC {
+        constructor() {
 
         }
-        rice_moarid_id(){
-            
-            Data_M_C.moarid__id ++
-            Data_M_C.geve_data_toSave_in('./Data/Moarid/moarid_id.json',Data_M_C.moarid__id)
-            return  Data_M_C.moarid__id 
+        rice_moarid_id() {
+
+            Data_M_C.moarid__id++
+            Data_M_C.geve_data_toSave_in('./Data/Moarid/moarid_id.json', Data_M_C.moarid__id)
+            return Data_M_C.moarid__id
         }
-        add_moarid(){
-            let name ="yahia"
+        add_moarid() {
+            let name = "yahia"
             let debt_on_me = 0
-            let debt_on_him =0
-            if(name){
-                if(debt_on_me >=0){
-                    if(debt_on_him >=0){
+            let debt_on_him = 0
+            if (name) {
+                if (debt_on_me >= 0) {
+                    if (debt_on_him >= 0) {
 
                         let data = {
-                            "name":name,
-                            "id":this.rice_moarid_id(),
-                            "debt_on_me":debt_on_me,
-                            "debt_on_him":debt_on_him,
-                            "total_money":20000,
-                            "make_date":"20/2/2023"
+                            "name": name,
+                            "id": this.rice_moarid_id(),
+                            "debt_on_me": debt_on_me,
+                            "debt_on_him": debt_on_him,
+                            "total_money": 20000,
+                            "make_date": "20/2/2023"
                         }
-                        if(Array.isArray(Data_M_C.moarid__ary)){
+                        if (Array.isArray(Data_M_C.moarid__ary)) {
                             Data_M_C.moarid__ary.push(data)
                             console.log(Data_M_C.moarid__ary)
-                            Data_M_C.geve_data_toSave_in('./Data/Moarid/moarid.json',Data_M_C.moarid__ary)
-                            
+                            Data_M_C.geve_data_toSave_in('./Data/Moarid/moarid.json', Data_M_C.moarid__ary)
 
-                        }else{
+
+                        } else {
                             console.log(" not arry")
                         }
 
-                    }else{
+                    } else {
                         console.log("e      debt_on_him")
                     }
-                }else{
+                } else {
                     console.log("e   debt_on_me")
                     return
                 }
 
-            }else{
+            } else {
                 console.log("e  name")
                 return
             }
         }
-   
+
+    }
+    class CustomersMC{
+        constructor(){
+
+        }
+        rice_customers_id(){
+            Data_M_C.customers__id ++ 
+            Data_M_C.geve_data_toSave_in('./Data/Customers/customers_id.json',Data_M_C.customers__id)
+            return Data_M_C.customers__id
+            
+        }
+        add_customers(){
+            let name ="yahia";
+            let debt_on_him =0;
+            let debt_on_me =0;
+            if(name){
+                if(debt_on_him >= 0){
+                    if(debt_on_me >= 0){
+
+                        let data = {
+                            "name":name,
+                            "id": this.rice_customers_id(),
+                            "debt_on_him": debt_on_him,
+                            "debt_on_me": debt_on_me
+                        }
+                        if(Array.isArray(Data_M_C.customers__ary)){
+                            Data_M_C.customers__ary.push(data)
+                            Data_M_C.geve_data_toSave_in('./Data/Customers/customers.json',Data_M_C.customers__ary)
+                           
+                        }else{
+                            console.log("not aryy")
+                        }
+
+                    }else{
+                        console.log("e   debt_on_me")
+                        return
+                    }
+                }else{
+                    console.log(" e    debt_on_him")
+                    return
+                }
+            }else{
+                console.log("e    name")
+                return
+            }
+            
+        }
+
     }
 
     class Events {
@@ -740,15 +848,17 @@ console.log("------- فحص القراءة من الملفات ------------")
     }
 
 
-    
-    // *************************************************//
+
+    // ***********************(استدعاء كائنات من الاصناف )**************************//
     const Date_MC = new DateMC()
     const Data_M_C = new DataMC()
     const Record_M_C = new RecordMC()
     const Storage_M_C = new StorageMC()
-    const Moarid_M_C =new MoaridMC()
+    const Moarid_M_C = new MoaridMC()
+    const Customers_M_C=new CustomersMC
     const Events_M_C = new Events()
-  
+ 
+
 
 })
 
