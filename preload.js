@@ -17,13 +17,22 @@ window.addEventListener('DOMContentLoaded', () => {
             //fatora
             this.buy_fatora_ary = []
             this.num_of_buy_fatora = -1;
+            this.buy_fatora_id =0
             this.cuont_items_in_buy_fatora = 0
             this.buy_fatora_is_run = false
+
+
+
+            // moarid
+            this.moarid__ary=[]
+            this.moarid__id =0
+
 
 
             // التاكد من وجود المجلدات
             this.make_dirs('./Data')
             this.make_dirs('./Data/Buy_fatora')
+            this.make_dirs('./Data/Moarid')
 
 
 
@@ -35,11 +44,14 @@ window.addEventListener('DOMContentLoaded', () => {
         }
 
         load_all_files() {
-
+console.log("------- فحص القراءة من الملفات ------------")
             this.load_all_items_in_storage__file()
             this.load_all_sales_record__file()
             this.load_buy_fatora__file()
             this.load_num_of_buy_fatora__file()
+            this.load_moarid__file()
+            this.load_moarid_id__file()
+            console.log('----------------------------------')
 
         }
         make_dirs(dirPath){
@@ -115,6 +127,37 @@ window.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        load_moarid__file(){
+            try {
+                this.handel_moirid__ary()
+                console.log("تمت القراءة من ملف moirid__ary")
+            } catch {
+                try {
+                    let data = []
+                    fs.writeFileSync('./Data/Moarid/moarid.json', JSON.stringify(data), 'utf-8')
+                    this.handel_moirid__ary()
+                    console.log("لم يتم العثور على ملف  moarid.json (تم انشاؤه)")
+                } catch {
+                    console.log("خطا في تحميل الملف moarid.json")
+                }
+            }
+        }
+        load_moarid_id__file(){
+            try {
+                this.handel_moirid__id()
+                console.log("تمت القراءة من ملف moirid__id")
+            } catch {
+                try {
+                    let data = [0]
+                    fs.writeFileSync('./Data/Moarid/moarid_id.json', JSON.stringify(data), 'utf-8')
+                    this.handel_moirid__id()
+                    console.log("لم يتم العثور على ملف  moarid_id.json (تم انشاؤه)")
+                } catch {
+                    console.log("خطا في تحميل الملف moarid_id.json")
+                }
+            }
+        }
+
         handel_all_items__ary() { // هذه الدالة تقوم بتحميل البيانات من الملف الى السجل او المتغير الخاص به 
             this.all_items_in_storage__ary = this.gave_me_data_from('./Data/all_items_in_storage.json')
         }
@@ -127,6 +170,13 @@ window.addEventListener('DOMContentLoaded', () => {
         }
         handel_num_of_buy_fatora() {
             this.num_of_buy_fatora = this.gave_me_data_from('./Data/Buy_fatora/num_of_buy_fatora.json')
+        }
+
+        handel_moirid__ary(){
+            this.moarid__ary = this.gave_me_data_from('./Data/Moarid/moarid.json')
+        }
+        handel_moirid__id(){
+            this.moarid__id = this.gave_me_data_from('./Data/Moarid/moarid_id.json')
         }
 
         gave_me_data_from(file_path) {
@@ -573,6 +623,57 @@ window.addEventListener('DOMContentLoaded', () => {
 
         }
     }
+    class MoaridMC{
+        constructor(){
+
+        }
+        rice_moarid_id(){
+            
+            Data_M_C.moarid__id ++
+            Data_M_C.geve_data_toSave_in('./Data/Moarid/moarid_id.json',Data_M_C.moarid__id)
+            return  Data_M_C.moarid__id 
+        }
+        add_moarid(){
+            let name ="yahia"
+            let debt_on_me = 0
+            let debt_on_him =0
+            if(name){
+                if(debt_on_me >=0){
+                    if(debt_on_him >=0){
+
+                        let data = {
+                            "name":name,
+                            "id":this.rice_moarid_id(),
+                            "debt_on_me":debt_on_me,
+                            "debt_on_him":debt_on_him,
+                            "total_money":20000,
+                            "make_date":"20/2/2023"
+                        }
+                        if(Array.isArray(Data_M_C.moarid__ary)){
+                            Data_M_C.moarid__ary.push(data)
+                            console.log(Data_M_C.moarid__ary)
+                            Data_M_C.geve_data_toSave_in('./Data/Moarid/moarid.json',Data_M_C.moarid__ary)
+                            
+
+                        }else{
+                            console.log(" not arry")
+                        }
+
+                    }else{
+                        console.log("e      debt_on_him")
+                    }
+                }else{
+                    console.log("e   debt_on_me")
+                    return
+                }
+
+            }else{
+                console.log("e  name")
+                return
+            }
+        }
+   
+    }
 
     class Events {
         constructor() {
@@ -638,12 +739,16 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+
+    
     // *************************************************//
     const Date_MC = new DateMC()
     const Data_M_C = new DataMC()
     const Record_M_C = new RecordMC()
     const Storage_M_C = new StorageMC()
+    const Moarid_M_C =new MoaridMC()
     const Events_M_C = new Events()
+  
 
 })
 
