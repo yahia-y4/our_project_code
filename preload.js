@@ -12,12 +12,19 @@ window.addEventListener('DOMContentLoaded', () => {
             this.all_sales_record__ary = []
 
 
-            //fatora --------------------------------
+            //buy_fatora --------------------------------
             this.buy_fatora_ary = []
             this.num_of_buy_fatora = -1;
             this.buy_fatora_id = 0
             this.cuont_items_in_buy_fatora = 0
             this.buy_fatora_is_run = false
+
+
+            // sell_fatora -------------------------------
+            this.sell_fatora__ary = []
+            this.sell_fatora__id = 0
+            this.cuont_items_in_sell_fatora = 0
+            this.sell_fatora_is_run = false
 
 
 
@@ -27,8 +34,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
             //Customers --------------------------
-            this.customers__ary =[]
-            this.customers__id =0
+            this.customers__ary = []
+            this.customers__id = 0
 
 
 
@@ -38,6 +45,7 @@ window.addEventListener('DOMContentLoaded', () => {
             this.make_dirs('./Data/Buy_fatora')
             this.make_dirs('./Data/Moarid')
             this.make_dirs('./Data/Customers')
+            this.make_dirs('./Data/Sell_fatora')
 
 
 
@@ -58,6 +66,8 @@ window.addEventListener('DOMContentLoaded', () => {
             this.load_moarid_id__file()
             this.load_customers__file()
             this.load_customers_id__file()
+            this.load_sell_fatora__file()
+            this.load_sell_fatora_id__file()
             console.log('---------------------------------------------')
 
         }
@@ -68,7 +78,7 @@ window.addEventListener('DOMContentLoaded', () => {
         }
 
 
-       // ------------------------------------دوال تحميل الملفات -----------------------------------
+        // ------------------------------------دوال تحميل الملفات -----------------------------------
         load_all_items_in_storage__file() {
 
             try {
@@ -165,8 +175,8 @@ window.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
-        load_customers__file(){
-            
+        load_customers__file() {
+
             try {
                 this.handel_customers__ary()
                 console.log("تمت القراءة من ملف Customers")
@@ -181,8 +191,8 @@ window.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
-        load_customers_id__file(){
-  
+        load_customers_id__file() {
+
             try {
                 this.handel_customers__id()
                 console.log("تمت القراءة من ملف Customers_id")
@@ -194,6 +204,39 @@ window.addEventListener('DOMContentLoaded', () => {
                     console.log("لم يتم العثور على ملف  Customers_id.json (تم انشاؤه)")
                 } catch {
                     console.log("خطا في تحميل الملف Customers_id.json")
+                }
+            }
+        }
+
+        load_sell_fatora__file() {
+
+            try {
+                this.handel_sell_fatora__ary()
+                console.log("تمت القراءة من ملف sell_fatora.json")
+            } catch {
+                try {
+                    let data = []
+                    fs.writeFileSync('./Data/Sell_fatora/sell_fatora.json', JSON.stringify(data), 'utf-8')
+                    this.handel_sell_fatora__ary()
+                    console.log("لم يتم العثور على ملف  sell_fatora.json (تم انشاؤه)")
+                } catch {
+                    console.log("خطا في تحميل الملف sell_fatora.json")
+                }
+            }
+        }
+
+        load_sell_fatora_id__file() {
+            try {
+                this.handel_sell_fatora__id()
+                console.log("تمت القراءة من ملف sell_fatora_id.json")
+            } catch {
+                try {
+                    let data = [0]
+                    fs.writeFileSync('./Data/Sell_fatora/sell_fatora_id.json', JSON.stringify(data), 'utf-8')
+                    this.handel_sell_fatora__id()
+                    console.log("لم يتم العثور على ملف  sell_fatora_id.json (تم انشاؤه)")
+                } catch {
+                    console.log("خطا في تحميل الملف sell_fatora_id.json")
                 }
             }
         }
@@ -225,11 +268,18 @@ window.addEventListener('DOMContentLoaded', () => {
             this.moarid__id = this.gave_me_data_from('./Data/Moarid/moarid_id.json')
         }
 
-        handel_customers__ary(){
-            this.customers__ary=this.gave_me_data_from('./Data/Customers/customers.json')
+        handel_customers__ary() {
+            this.customers__ary = this.gave_me_data_from('./Data/Customers/customers.json')
         }
-        handel_customers__id(){
-            this.customers__id=this.gave_me_data_from('./Data/Customers/customers_id.json')
+        handel_customers__id() {
+            this.customers__id = this.gave_me_data_from('./Data/Customers/customers_id.json')
+        }
+
+        handel_sell_fatora__ary() {
+            this.sell_fatora__ary = this.gave_me_data_from('./Data/Sell_fatora/sell_fatora.json')
+        }
+        handel_sell_fatora__id() {
+            this.sell_fatora__id = this.gave_me_data_from('./Data/Sell_fatora/sell_fatora_id.json')
         }
         //-----------------------------------------------------------------------------------------------
 
@@ -258,6 +308,8 @@ window.addEventListener('DOMContentLoaded', () => {
     class StorageMC {
         constructor() {
             // this.show_all_items_in_storage()
+            this.t_id_for_add_item_in_sell_fatora = 1
+            this.t_customer_id_for_add_sell_fatora = 1
 
         }
 
@@ -309,7 +361,7 @@ window.addEventListener('DOMContentLoaded', () => {
                             if ((+profit) >= 0) {
                                 // عند تحقق كل الشروط السابقة تبدأ عملية الاضافة من هنا 
                                 let data = {
-
+                                    "id": 1,
                                     "name": name,
                                     "co_name": co_name,
                                     "num": num,
@@ -524,7 +576,192 @@ window.addEventListener('DOMContentLoaded', () => {
 
         }
 
-        // -----------(E فاتورة الشراء)--------------
+        // ----------------------------------------------
+
+
+        // ------------(فاتورة بيع)----------------------
+        rice_sell_fatora_id(){
+            Data_M_C.handel_sell_fatora__id()
+            Data_M_C.sell_fatora__id ++
+            return Data_M_C.sell_fatora__id
+        }
+        start_sell_fatora() {
+            if (Data_M_C.sell_fatora_is_run == false) {
+                Data_M_C.sell_fatora_is_run == true
+                Data_M_C.sell_fatora__ary.push(
+                    {
+                        "id": this.rice_sell_fatora_id(),
+                        "customer_id": 0,
+                        "boss_name": "",
+                        "num_items": 0,
+                        "num_pieces": 0,
+                        "total_price": 0,
+                        "payment_status": "",
+                        "amount_paid": 0,
+                        "date": Date_MC.getCurrentDate()
+                    }
+                )
+
+            }
+
+        }
+        add_item_to_sell_fatora() {
+            let id = this.t_id_for_add_item_in_sell_fatora
+            let sell_fatora_id = (+Data_M_C.sell_fatora__ary[Data_M_C.sell_fatora__ary.length - 1]["id"])
+            let name = "yyy"
+            let co_name = "yyy"
+            let num = 12
+            let sell_price = 200
+            let code = "111"
+
+            if (id > 0) {
+                if (sell_fatora_id > 0) {
+                    if (name) {
+                        if (co_name) {
+                            if ((+num) > 0) {
+                                if ((+sell_price) > 0) {
+                                    if (code) {
+
+
+                                        for (let i = 0; i < Data_M_C.all_items_in_storage__ary.length; i++) {
+                                            if (id == Data_M_C.all_items_in_storage__ary[i]["id"]) {
+
+                                                if ((+Data_M_C.all_items_in_storage__ary[i]["num"]) >= num) {
+
+                                                    Data_M_C.all_items_in_storage__ary[i]["num"] -= num
+                                                    Data_M_C.all_sales_record__ary.push({
+                                                        "id": id,
+                                                        "sell_fatora_id": sell_fatora_id,
+                                                        "name": name,
+                                                        "co_name": co_name,
+                                                        "num": num,
+                                                        "sell_price": sell_price,
+                                                        "code": code,
+                                                        "sell_date": Data_M_C.sell_fatora__ary[Data_M_C.sell_fatora__ary.length - 1]["date"]
+
+
+                                                    })
+                                                    Data_M_C.cuont_items_in_sell_fatora++
+                                                    Data_M_C.sell_fatora__ary[Data_M_C.sell_fatora__ary.length - 1]["total_price"] += sell_price
+                                                    Data_M_C.sell_fatora__ary[Data_M_C.sell_fatora__ary.length - 1]["num_pieces"] += num
+
+
+                                                    return
+
+
+                                                } else {
+                                                    console.log("num not enagh")
+                                                    return
+                                                }
+                                            }
+                                        }
+
+                                        console.log("not find")
+                                        return
+
+
+                                    } else {
+                                        console.log("e   code")
+                                        return
+                                    }
+                                } else {
+                                    console.log("e   sell_price")
+                                    return
+                                }
+                            } else {
+                                console.log("e   num")
+                                return
+                            }
+                        } else {
+                            console.log("e   co_name")
+                            return
+                        }
+                    } else {
+                        console.log("e   name")
+                        return
+                    }
+                } else {
+                    console.log("e      fatora id")
+                    return
+                }
+
+            } else {
+                console.log(" e   id  غير موجود")
+                return
+            }
+
+
+        }
+        add_sell_fatora() {
+            if (Data_M_C.cuont_items_in_sell_fatora > 0) {
+                let customer_id = this.t_customer_id_for_add_sell_fatora
+                let boss_name = "yahia"
+                let payment_status = "تم"
+                let amount_paid = 300
+
+                if (customer_id) {
+
+                    if (amount_paid >= 0) {
+
+                        Data_M_C.sell_fatora__ary[Data_M_C.sell_fatora__ary.length - 1]["customer_id"] = customer_id
+                        Data_M_C.sell_fatora__ary[Data_M_C.sell_fatora__ary.length - 1]["boss_name"] = boss_name
+                        Data_M_C.sell_fatora__ary[Data_M_C.sell_fatora__ary.length - 1]["payment_status"] = payment_status
+                        Data_M_C.sell_fatora__ary[Data_M_C.sell_fatora__ary.length - 1]["amount_paid"] = amount_paid
+                        Data_M_C.sell_fatora__ary[Data_M_C.sell_fatora__ary.length - 1]["num_items"] = Data_M_C.cuont_items_in_sell_fatora
+                        let total = (+Data_M_C.sell_fatora__ary[Data_M_C.sell_fatora__ary.length - 1]["total_price"])
+                       
+
+
+                        if (total > amount_paid) {
+                            for (let i = 0; i < Data_M_C.customers__ary.length; i++) {
+                              
+                                if (Data_M_C.customers__ary[i]["id"] == customer_id) {
+                                    console.log(Data_M_C.customers__ary[i])
+                                    Data_M_C.customers__ary[i]["debt_on_him"] += (total - amount_paid)
+                                    break
+                                }
+                            }
+                        } else if (total < amount_paid) {
+                            for (let i = 0; i < Data_M_C.customers__ary.length; i++) {
+                                if (Data_M_C.customers__ary[i]["id"] == customer_id) {
+                                    Data_M_C.customers__ary[i]["debt_on_me"] += (amount_paid - total)
+                                    break
+                                }
+                            }
+                        }
+
+                        Data_M_C.sell_fatora_is_run = false
+
+                        // حفظ
+                        Data_M_C.geve_data_toSave_in('./Data/Sell_fatora/sell_fatora.json', Data_M_C.sell_fatora__ary)
+                        Data_M_C.geve_data_toSave_in('./Data/Sell_fatora/sell_fatora_id.json', Data_M_C.sell_fatora__id)
+                        Data_M_C.geve_data_toSave_in('./Data/Customers/customers.json', Data_M_C.customers__ary)
+
+
+
+
+                    } else {
+                        console.log("e     amount_paid")
+                    }
+
+                } else {
+                    console.log("e  customer id  غير موجود")
+                    return
+                }
+
+
+
+            } else {
+                console.log(" e empty sell fatora")
+            }
+
+        }
+
+
+
+
+
+        // -----------------------------------------------
 
 
 
@@ -728,78 +965,78 @@ window.addEventListener('DOMContentLoaded', () => {
                 return
             }
         }
-        del_moarid_only(i){
-           if(Data_M_C.moarid__ary[i]["debt_on_me"]==0 && Data_M_C.moarid__ary[i]["debt_on_him"]==0){
-            Data_M_C.moarid__ary.splice(i,1)
-            Data_M_C.geve_data_toSave_in('./Data/Moarid/moarid.json',Data_M_C.moarid__ary)
-            console.log('تم حذف المورد رقم ', i)
-           }else{
-            console.log(" لا يمكن حذف هذا المورد بسبب الديون الموجودة .  لزيادة الامان ومنع التلاعب ")
-           }
+        del_moarid_only(i) {
+            if (Data_M_C.moarid__ary[i]["debt_on_me"] == 0 && Data_M_C.moarid__ary[i]["debt_on_him"] == 0) {
+                Data_M_C.moarid__ary.splice(i, 1)
+                Data_M_C.geve_data_toSave_in('./Data/Moarid/moarid.json', Data_M_C.moarid__ary)
+                console.log('تم حذف المورد رقم ', i)
+            } else {
+                console.log(" لا يمكن حذف هذا المورد بسبب الديون الموجودة .  لزيادة الامان ومنع التلاعب ")
+            }
         }
-        del_moarid_with_fatora(i){
-            if(Data_M_C.moarid__ary[i]["debt_on_me"]==0 && Data_M_C.moarid__ary[i]["debt_on_him"]==0){
+        del_moarid_with_fatora(i) {
+            if (Data_M_C.moarid__ary[i]["debt_on_me"] == 0 && Data_M_C.moarid__ary[i]["debt_on_him"] == 0) {
                 let id = Data_M_C.moarid__ary[i]["id"]
-                for(let x = 0;i<Data_M_C.buy_fatora_ary.length;x++){
-                    if(Data_M_C.buy_fatora_ary[x]["info"]["moarid_id"] == id){
-                        Data_M_C.buy_fatora_ary.splice(x,1) 
+                for (let x = 0; i < Data_M_C.buy_fatora_ary.length; x++) {
+                    if (Data_M_C.buy_fatora_ary[x]["info"]["moarid_id"] == id) {
+                        Data_M_C.buy_fatora_ary.splice(x, 1)
                     }
                 }
-                Data_M_C.moarid__ary.splice(i,1)
-                Data_M_C.geve_data_toSave_in('./Data/Moarid/moarid.json',Data_M_C.moarid__ary)
-                Data_M_C.geve_data_toSave_in('./Data/Buy_fatora/buy_fatora.json',Data_M_C.buy_fatora_ary)
+                Data_M_C.moarid__ary.splice(i, 1)
+                Data_M_C.geve_data_toSave_in('./Data/Moarid/moarid.json', Data_M_C.moarid__ary)
+                Data_M_C.geve_data_toSave_in('./Data/Buy_fatora/buy_fatora.json', Data_M_C.buy_fatora_ary)
                 console.log('تم حذف المورد رقم ', i)
-               }else{
+            } else {
                 console.log(" لا يمكن حذف هذا المورد بسبب الديون الموجودة .  لزيادة الامان ومنع التلاعب ")
-               }
+            }
         }
 
     }
-    class CustomersMC{
-        constructor(){
+    class CustomersMC {
+        constructor() {
 
         }
-        rice_customers_id(){
-            Data_M_C.customers__id ++ 
-            Data_M_C.geve_data_toSave_in('./Data/Customers/customers_id.json',Data_M_C.customers__id)
+        rice_customers_id() {
+            Data_M_C.customers__id++
+            Data_M_C.geve_data_toSave_in('./Data/Customers/customers_id.json', Data_M_C.customers__id)
             return Data_M_C.customers__id
-            
+
         }
-        add_customers(){
-            let name ="yahia";
-            let debt_on_him =0;
-            let debt_on_me =0;
-            if(name){
-                if(debt_on_him >= 0){
-                    if(debt_on_me >= 0){
+        add_customers() {
+            let name = "yahia";
+            let debt_on_him = 50;
+            let debt_on_me = 50;
+            if (name) {
+                if (debt_on_him >= 0) {
+                    if (debt_on_me >= 0) {
 
                         let data = {
-                            "name":name,
+                            "name": name,
                             "id": this.rice_customers_id(),
                             "debt_on_him": debt_on_him,
                             "debt_on_me": debt_on_me
                         }
-                        if(Array.isArray(Data_M_C.customers__ary)){
+                        if (Array.isArray(Data_M_C.customers__ary)) {
                             Data_M_C.customers__ary.push(data)
-                            Data_M_C.geve_data_toSave_in('./Data/Customers/customers.json',Data_M_C.customers__ary)
-                           
-                        }else{
+                            Data_M_C.geve_data_toSave_in('./Data/Customers/customers.json', Data_M_C.customers__ary)
+
+                        } else {
                             console.log("not aryy")
                         }
 
-                    }else{
+                    } else {
                         console.log("e   debt_on_me")
                         return
                     }
-                }else{
+                } else {
                     console.log(" e    debt_on_him")
                     return
                 }
-            }else{
+            } else {
                 console.log("e    name")
                 return
             }
-            
+
         }
 
     }
@@ -876,10 +1113,14 @@ window.addEventListener('DOMContentLoaded', () => {
     const Record_M_C = new RecordMC()
     const Storage_M_C = new StorageMC()
     const Moarid_M_C = new MoaridMC()
-    const Customers_M_C=new CustomersMC
+    const Customers_M_C = new CustomersMC
     const Events_M_C = new Events()
+    // // Customers_M_C.add_customers()
+    // Storage_M_C.start_sell_fatora()
+    // Storage_M_C.add_item_to_sell_fatora()
+    // Storage_M_C.add_sell_fatora()
 
- 
+
 
 
 })
