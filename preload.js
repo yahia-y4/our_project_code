@@ -18,6 +18,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
             //sell_record ---------------------------
             this.all_sales_record__ary = []
+            this.format_record_sales__ary=[]
 
 
             //buy_fatora ----------------------------
@@ -71,6 +72,7 @@ window.addEventListener('DOMContentLoaded', () => {
             this.load_format_items_in_storage__file()
             this.load_format_items_in_storage_id__file()
             this.load_all_sales_record__file()
+            this.load_format_record_sales__file()
             this.load_buy_fatora__file()
             this.load_buy_fatora_id__file()
             this.load_moarid__file()
@@ -143,7 +145,6 @@ window.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
-
         load_all_sales_record__file() {
             try {
                 this.handel_all_record_sales__ary()
@@ -160,6 +161,21 @@ window.addEventListener('DOMContentLoaded', () => {
             }
 
 
+        }
+        load_format_record_sales__file(){
+            try {
+                this.handel_format_record_sales__ary()
+                console.log("تمت القراءة من ملف format_record_sales.json")
+            } catch {
+                try {
+                    let data = []
+                    fs.writeFileSync('./Data/Sales/format_record_sales.json', JSON.stringify(data), 'utf-8')
+                    this.handel_format_record_sales__ary()
+                    console.log("لم يتم العثور على ملف  format_record_sales.json (تم انشاؤه)")
+                } catch {
+                    console.log("خطا في تحميل الملف format_record_sales.json")
+                }
+            }  
         }
         load_buy_fatora__file() {
 
@@ -306,6 +322,9 @@ window.addEventListener('DOMContentLoaded', () => {
         handel_all_record_sales__ary() {
             this.all_sales_record__ary = this.gave_me_data_from('./Data/Sales/all_record_sales.json')
         }
+        handel_format_record_sales__ary(){
+            this.format_record_sales__ary = this.gave_me_data_from('./Data/Sales/format_record_sales.json')
+        }
         handel_buy_fatora__ary() {
 
             this.buy_fatora_ary = this.gave_me_data_from('./Data/Buy_fatora/buy_fatora.json')
@@ -437,7 +456,7 @@ window.addEventListener('DOMContentLoaded', () => {
                                     }
                                     if (!find) { // العنصر غير موجود
                                         console.log("العنصر غير موجود")
-                                        id = 1 // زيادة
+                                        id_item = 1 // زيادة
                                         let data_to_format_items = {
                                             "id": id_item,
                                             "name": name,
@@ -563,6 +582,7 @@ window.addEventListener('DOMContentLoaded', () => {
                                 Data_M_C.geve_data_toSave_in('./Data/Buy_fatora/buy_fatora.json', Data_M_C.buy_fatora_ary)
                                 Data_M_C.geve_data_toSave_in('./Data/Buy_fatora/buy_fatora_id.json', Data_M_C.buy_fatora_id)
                                 Data_M_C.geve_data_toSave_in('./Data/Moarid/moarid.json', Data_M_C.moarid__ary)
+                                Data_M_C.geve_data_toSave_in('./Data/Storage/format_items_in_storage.json',Data_M_C.format_items_in_srorage__ary)
                             } catch {
                                 console.error("خطاء في حفظ الملفات ")
                             }
