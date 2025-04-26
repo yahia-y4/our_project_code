@@ -45,7 +45,8 @@ window.addEventListener('DOMContentLoaded', () => {
             this.customers__ary = []
             this.customers__id = 0
 
-
+            //--------------
+            this.running_out_num=5
 
 
             // التاكد من وجود المجلدات --------------
@@ -1282,9 +1283,51 @@ window.addEventListener('DOMContentLoaded', () => {
              }
              return result
          }
- 
+
+         num_of_items_in_storage(){
+            let num =0
+            for(let i=0;i<Data_M_C.format_items_in_srorage__ary.length;i++){
+                if(Data_M_C.format_items_in_srorage__ary[i]["num"] > 0){
+                    num ++
+                }
+            }
+            return num
+         }
+
+         zero_items_in_storage(){
+            let ids=[]
+            for(let i=0;i<Data_M_C.format_items_in_srorage__ary.length;i++){
+                if( Data_M_C.format_items_in_srorage__ary[i]["num"] == 0){
+                    ids.push(Data_M_C.format_items_in_srorage__ary[i]["id"])
+                    
+                }
+            }
+            return ids
+         }
+         running_out_items_in_storage(){
+        
+            let ids=[]
+            for(let i=0;i<Data_M_C.format_items_in_srorage__ary.length;i++){
+                if(Data_M_C.format_items_in_srorage__ary[i]["num"] <= Data_M_C.running_out_num && Data_M_C.format_items_in_srorage__ary[i]["num"] !=0){
+                    ids.push(Data_M_C.format_items_in_srorage__ary[i]["id"])
+                    
+                }
+            }
+            return ids
+         }
+
+         sort_max_items_sall_by_num(){
+            const sortedSales = [...Data_M_C.format_record_sales__ary].sort((a, b) => b.total_num - a.total_num);
+           return sortedSales
+         }
+
+
+
+
+
 
     }
+
     class Events {
         constructor() {
             this.set_event()
@@ -1352,6 +1395,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
     // ***********************(استدعاء كائنات من الاصناف )**************************//
+    
     const Date_MC = new DateMC()
     const Data_M_C = new DataMC()
     const Record_M_C = new RecordMC()
@@ -1360,7 +1404,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const Customers_M_C = new CustomersMC
     const Events_M_C = new Events()
     const Statistics_M_C=new Statistics()
-//   console.log( Statistics_M_C.min_one_item_sell_by_sales())
+  console.log(Statistics_M_C.sort_max_items_sall_by_num())
     // Customers_M_C.add_customers()
     // Storage_M_C.start_sell_fatora()
     // Storage_M_C.add_item_to_sell_fatora()
@@ -1369,11 +1413,6 @@ window.addEventListener('DOMContentLoaded', () => {
     // Storage_M_C.start_buy_fatora()
     // Storage_M_C.add_item_to_buy_fatora()
     // Storage_M_C.add_buy_fatora()
-
-
-
-
-
 
 })
 
