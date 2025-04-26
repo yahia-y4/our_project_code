@@ -120,7 +120,29 @@
 
             <!-- -----------------------------(S صفحة التخزين)--------------------------- -->
             <div id="storage_page">
+                <div class="conrol">
+                    <div id="conrol-1">لوحة التحكم></div>
+                    <div id="conrol-2">المخزون</div>
+                </div>
 
+                <h2 class="add-2">إدارة المخزون</h2>
+                <div class="inf-box-all-item">
+                    <h3>البحث عن منتج</h3>
+                    <div>
+                        <span class="icon"><img src="icon/serch.svg" alt=""></span>
+                        <input id="search-item-in-box" type="search" placeholder="ادخل اسم المنتج ,الكود ,اسم الشركة">
+                    </div>
+
+                    <div id="filter-tabs">
+                        <span id="all-products-tab">جميع المنتجات</span>
+                        <span id="low-stock-tab">الأقل مبيعاً</span>
+                        <span id="best-sellers-tab">الأكثر مبيعا</span>
+                    </div>
+                    <div class="namber-is-prodact">
+                        <span>عدد القطع الكلي :</span>
+                        <span id="namber-is-prodact">2534</span>
+                    </div>
+                </div>
                 <!-- ------------------------(S عرض الادوية في المخزن)------------------- -->
 
                 <div id="show_all_items_in_storage_box">
@@ -130,131 +152,232 @@
                         <span>الشركة </span>
                         <span>سعر المبيع </span>
                         <span>المتبقي </span>
+                        <span class="icon1"> </span>
                     </div>
 
                     <div id="show_all_items_div">
 
-                        <!-- <div class="one_item_in_storage_box">
+                        <div class="one_item_in_storage_box">
 
-            <span>الاسم </span>
-            <span>الشركة </span>
-            <span>سعر المبيع </span>
-            <span>المتبقي </span>
-          
-        </div> -->
+                            <span>taher </span>
+                            <span>agha </span>
+                            <span> 240 </span>
+                            <span>253 </span>
+                            <span class="icon"><img src="icon/si_more-vert-duotone.svg" alt=""> </span>
+                        </div>
 
                     </div>
-
-
                     <div id="info_of_one_item_box"></div>
                 </div>
+                <!-- ------------------------(ُ E عرض الادوية في المخزن)------------------- -->
+                <!-- تنسيق باقي صفحة المخزون  -->
+                <h2 class="title-Operations">العمليات المتاحة :</h2>
+                <div class="quick-actions">
+                    <span id="add_new_buy_fatora_button"> فاتورة شراء</span>
+                    <span id="quick-action--stock-audit">جرد المخزون</span>
+                    <span id="quick-action--stock-report">تقرير المخزون</span>
+                </div>
+                <h2 class="title-stats-card"> إحصائيات سريعة :</h2>
+                <div class="stats-card">
+                    <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
+                    <div class="stats-item--low-stock">
+                        <span class="icon-low-stock">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"
+                                fill="none">
+                                <path
+                                    d="M15.0001 11.2512V16.2512M15.0001 20.0012H15.0126M12.9539 4.48996L2.82135 21.4075C2.61247 21.7692 2.50194 22.1793 2.50074 22.597C2.49955 23.0147 2.60773 23.4255 2.81454 23.7884C3.02134 24.1513 3.31956 24.4538 3.67953 24.6657C4.0395 24.8776 4.44867 24.9915 4.86635 24.9962H25.1339C25.5514 24.9914 25.9603 24.8774 26.3201 24.6656C26.6799 24.4537 26.978 24.1514 27.1848 23.7887C27.3915 23.426 27.4998 23.0154 27.4988 22.5979C27.4977 22.1804 27.3874 21.7704 27.1789 21.4087L17.0464 4.48871C16.8332 4.13684 16.5329 3.84589 16.1744 3.64396C15.816 3.44203 15.4115 3.33594 15.0001 3.33594C14.5887 3.33594 14.1842 3.44203 13.8258 3.64396C13.4673 3.84589 13.167 4.13684 12.9539 4.48871V4.48996Z"
+                                    stroke="#0194FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </span>
+                        <div class="inf-stats-item--low-stock">
+                            <h3>منخفض في المخزون</h3>
+                            <div class="prodact-nambr">
+                                <span>منتجات : </span><span id="namber-low-stock">20</span>
+                            </div>
+                            <span id="inf--low-stock">بحاجة إلى إعادة طلب منتجات</span>
 
-                <!-- ------------------------(S عرض الادوية في المخزن)------------------- -->
+                        </div>
+                        <div id="bttun-low-stock">عرض المنتجات</div>
+                    </div>
+                    <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
+                    <div class="stats-item--least-selling">
+                        <span class="icon-least-selling">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="31" height="31" viewBox="0 0 31 31"
+                                fill="none">
+                                <path
+                                    d="M8.45953 3.39959C8.71022 3.15028 9.00722 3.0311 9.35052 3.04205C9.69383 3.053 9.98016 3.1738 10.2095 3.40443L16.8787 10.0167C17.3566 10.4972 17.5945 11.0916 17.5926 11.7999C17.5906 12.5082 17.3494 13.1013 16.8689 13.5792L13.61 16.7889L20.0294 23.3067L20.035 21.3067C20.036 20.9525 20.1568 20.6562 20.3974 20.4177C20.6381 20.1792 20.9347 20.06 21.2872 20.0602C21.6397 20.0603 21.936 20.1811 22.1762 20.4226C22.4164 20.6641 22.5355 20.9611 22.5337 21.3136L22.5199 26.3136C22.5189 26.6678 22.3981 26.9645 22.1574 27.2039C21.9167 27.4432 21.6197 27.562 21.2664 27.5601L16.2664 27.5463C15.9123 27.5453 15.6155 27.4245 15.3762 27.1838C15.1369 26.9432 15.0181 26.6462 15.0199 26.2928C15.0217 25.9395 15.1421 25.6432 15.3811 25.4038C15.6201 25.1645 15.9175 25.0453 16.2734 25.0463L18.2734 25.0518L11.8238 18.5652C11.346 18.0847 11.108 17.4903 11.11 16.782C11.1119 16.0736 11.3532 15.4806 11.8337 15.0027L15.0613 11.7929L8.45468 5.14958C8.22615 4.91978 8.11238 4.6278 8.11336 4.27363C8.11434 3.91947 8.22973 3.62812 8.45953 3.39959Z"
+                                    fill="#65676B" />
+                            </svg>
+                        </span>
+                        <div class="inf-least-selling">
+                            <h3> الأقل مبيعاً</h3>
+                            <h4 id="stats-name-least-selling">Ranitidine</h4>
+                            <div class="inf-stats-item--least-selling">
+
+                                <span id="namber-least-selling">20</span>
+                                <span class="na-least-selling">قطع هذا الاسبوع</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
+                    <div class="stats-item--top-selling">
+                        <span class="icon-top-selling">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"
+                                fill="none">
+                                <path
+                                    d="M3.37523 22.03C3.12523 21.78 3.00523 21.4833 3.01523 21.14C3.02523 20.7967 3.14523 20.51 3.37523 20.28L9.96898 13.5925C10.4481 13.1133 11.0419 12.8738 11.7502 12.8738C12.4586 12.8738 13.0523 13.1133 13.5315 13.5925L16.7502 16.8425L23.2502 10.405H21.2502C20.8961 10.405 20.5994 10.285 20.3602 10.045C20.1211 9.805 20.0011 9.50875 20.0002 9.15625C19.9994 8.80375 20.1194 8.50709 20.3602 8.26625C20.6011 8.02542 20.8977 7.90542 21.2502 7.90625H26.2502C26.6044 7.90625 26.9015 8.02625 27.1415 8.26625C27.3815 8.50625 27.5011 8.80292 27.5002 9.15625V14.1563C27.5002 14.5104 27.3802 14.8075 27.1402 15.0475C26.9002 15.2875 26.6036 15.4071 26.2502 15.4063C25.8969 15.4054 25.6002 15.2858 25.3602 15.0475C25.1202 14.8092 25.0002 14.5121 25.0002 14.1563V12.1563L18.5315 18.6238C18.0523 19.1029 17.4586 19.3425 16.7502 19.3425C16.0419 19.3425 15.4481 19.1029 14.969 18.6238L11.7502 15.405L5.12523 22.03C4.89606 22.2592 4.60439 22.3738 4.25023 22.3738C3.89606 22.3738 3.60439 22.2592 3.37523 22.03Z"
+                                    fill="#65676B" />
+                            </svg>
+                        </span>
+                        <div class="inf-least-selling">
+                            <h3> الأكثر مبيعاً</h3>
+                            <h4 id="stats-name-top-selling">Ranitidine</h4>
+                            <div class="inf-stats-item--top-selling">
+
+                                <span id="namber-top-selling">20</span>
+                                <span class="na-top-selling">قطع هذا الاسبوع</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> -->
+                </div>
+
+
+            </div>
 
 
 
-                <!-- ............(S اضافة فاتورة شراء )............ -->
+
+
+            <!-- ............(S اضافة فاتورة شراء )............ -->
+
+            <div id="buy_fatora_box" class="create-inv">
                 <div class="conrol">
                     <div id="conrol-1">لوحة التحكم></div>
                     <div id="conrol-2">المخزون></div>
                     <div id="conrol-3">إضافة فاتورة</div>
                 </div>
-                <div id="add_new_buy_fatora_button">اضافة فاتورة شراء</div>
-                <div id="buy_fatora_box" class="create-inv">
-                    <h1 class="add-2">إضافة فاتورة الشراء </h1>
-                    <div id="buy_fatora_info_inputs_div">
-                        <div class="info-inv">
-                            <div class="aav">
-                                <label for="morid_name">اسم المورد</label>
-                                <input id="morid_name" type="text">
-                            </div>
-                            <div class="aav">
-                                <label for="boss_name">اسم مدير المستودع</label>
-                                <input id="boss_name" type="text">
-                            </div>
-                            <div class="aav">
-                                <label for="payment_status"> حالة الدفع</label>
-                                <input id="payment_status" type="text">
-                            </div>
-                            <div class="aav">
-                                <label for="amount_paid"> المبلغ المدفوع</label>
-                                <input id="amount_paid" type="text">
-                            </div>
 
-
+                <h1 class="add-2">إضافة فاتورة الشراء </h1>
+                <div id="buy_fatora_info_inputs_div">
+                    <div class="info-inv">
+                        <div class="aav">
+                            <label for="morid_name">اسم المورد</label>
+                            <input id="morid_name" type="text" list="morid">
+                            <datalist name="" id="morid">
+                                <option value="ahmad"></option>
+                                <option value="taher"></option>
+                                <option value="ali"></option>
+                                <option value="amer"></option>
+                            </datalist>
                         </div>
-                        <div id="total_price_div">المبلغ الكلي : <span id="total_price_span"></span></div>
+                        <div class="aav">
+                            <label for="boss_name">اسم مدير المستودع</label>
+                            <input id="boss_name" type="text">
+                        </div>
+                        <div class="aav">
+                            <label for="payment_status"> حالة الدفع</label>
+                            <input id="payment_status" type="text">
+                        </div>
+                        <div class="aav">
+                            <label for="amount_paid"> المبلغ المدفوع</label>
+                            <input id="amount_paid" type="text">
+                        </div>
+
 
                     </div>
-                    <div class="text">
-                        <h1> ادخل تفاصيل المنتجات للإضافة إلى المخزون</h1>
-                        <h2>معلومات المنتجات</h2>
+                    <div id="total_price_div">المبلغ الكلي : <span id="total_price_span"></span></div>
+
+                </div>
+                <div class="text">
+                    <h1> ادخل تفاصيل المنتجات للإضافة إلى المخزون</h1>
+                    <h2>معلومات المنتجات</h2>
+                </div>
+                <div id="buy_fatora_items_inputs_div">
+                    <div class="aav">
+                        <label>اسم الدواء</label>
+                        <input id="name_item_in_buy_fatora" type="text" placeholder="اسم الدواء">
                     </div>
-                    <div id="buy_fatora_items_inputs_div">
-                        <div class="aav">
-                            <label>اسم الدواء</label>
-                            <input id="name_item_in_buy_fatora" type="text" placeholder="اسم الدواء">
-                        </div>
-                        <div class="aav">
-                            <label>الشركة المصنعة</label>
-                            <input id="co_name_item_in_buy_fatora" type="text" placeholder="الشركة المصنعة">
-                        </div>
-                        <div class="aav">
-                            <label>كمية</label>
-                            <input id="num_item_in_buy_fatora" type="text" placeholder="الكمية">
-                        </div>
-                        <div class="aav">
-                            <label>سعر الجملة</label>
-                            <input id="price_item_in_buy_fatora" type="number" placeholder="سعر الجملة">
-                        </div>
-                        <div class="aav">
-                            <label>نسبة الربح</label>
-                            <input id="profit_item_in_buy_fatora" type="number" placeholder="نسبة الربح">
-                        </div>
-                        <div class="aav">
-                            <label>باركود</label>
-                            <input id="code_item_in_buy_fatora" type="text" placeholder="باركود">
-                        </div>
-                        <div class="aav">
-                            <label>تاريخ انتهاء الصلاحية</label>
-                            <input id="end_date_item_in_buy_fatora" type="text" placeholder="تاريخ انتهاء الصلاحية">
-                        </div>
+                    <div class="aav">
+                        <label>الشركة المصنعة</label>
+                        <input id="co_name_item_in_buy_fatora" type="text" placeholder="الشركة المصنعة">
                     </div>
-                    <div id="add_item_in_buy_fatora_button">اضافة هذا الدواء</div>
-
-                    <div class="tit"> تفاصيل المنتجات :</div>
-                    <div id="show_items_in_buy_fatora">
-
-                        <div class="inf-boy-fat">
-                            <span>الاسم التجاري </span>
-
-                            <span>الشركة المصنعة</span>
-
-                            <span>الكمية</span>
-
-                            <span>سعر الجملة للقطعة</span>
-
-                            <span>السعر الكلي (جملة)</span>
-                        </div>
-                        <div id="div_of_shwing_in_buy_fatora"></div>
-                        <div class="inf-boy-fat2">
-                            <!-- <span class="del_item_from_buy_fatora_button" class = "del_item_from_buy_fatora_button">حذف</span>  -->
-                        </div>
+                    <div class="aav">
+                        <label>كمية</label>
+                        <input id="num_item_in_buy_fatora" type="text" placeholder="الكمية">
                     </div>
-
-                    <div class="t1">
-                        <div id="add_buy_fatora_button">حفظ الفاتورة</div>
-                        <div id="cancel_buy_fatora_button">الغاء </div>
+                    <div class="aav">
+                        <label>سعر الجملة</label>
+                        <input id="price_item_in_buy_fatora" type="number" placeholder="سعر الجملة">
+                    </div>
+                    <div class="aav">
+                        <label>نسبة الربح</label>
+                        <input id="profit_item_in_buy_fatora" type="number" placeholder="نسبة الربح">
+                    </div>
+                    <div class="aav">
+                        <label>باركود</label>
+                        <input id="code_item_in_buy_fatora" type="text" placeholder="باركود">
+                    </div>
+                    <div class="aav">
+                        <label>تاريخ انتهاء الصلاحية</label>
+                        <input id="end_date_item_in_buy_fatora" type="text" placeholder="تاريخ انتهاء الصلاحية">
                     </div>
                 </div>
-                <!-- ............(E اضافة فاتورة شراء )............ -->
+                <!-- <div class="Notification">
+                        <h3>رسالة تحذير :</h3>
+                        <p>قم بأدخال الأرقام بالخانات بشكل صحيح </p>
+                        <button>حسناً</button>
+                    </div> -->
+                <div id="add_item_in_buy_fatora_button">اضافة هذا الدواء</div>
 
+                <div class="tit"> تفاصيل المنتجات :</div>
+                <div id="show_items_in_buy_fatora">
+
+                    <div class="inf-boy-fat">
+                        <span>الاسم التجاري </span>
+
+                        <span>الشركة المصنعة</span>
+
+                        <span>الكمية</span>
+
+                        <span>سعر الجملة للقطعة</span>
+
+                        <span>السعر الكلي (جملة)</span>
+                        <span>الحذف</span>
+                    </div>
+                    <div id="div_of_shwing_in_buy_fatora">
+                        <div class="inf-boy-fat2">
+                            <span>asdsaf</span>
+                            <span>adsfsf</span>
+                            <span>4546</span>
+                            <span>230</span>
+                            <span>250</span>
+                            <span>الحذف</span>
+                            <!-- <span class="del_item_from_buy_fatora_button" class = "del_item_from_buy_fatora_button">حذف</span>  -->
+                        </div>
+
+                    </div>
+
+
+
+
+
+
+                </div>
+
+                <div class="t1">
+                    <div id="add_buy_fatora_button">حفظ الفاتورة</div>
+                    <div id="cancel_buy_fatora_button">الغاء </div>
+                </div>
             </div>
-            <!-- -----------------------------(E صفحة التخزين)--------------------------- -->
-
-
+            <!-- ............(E اضافة فاتورة شراء )............ -->
 
         </div>
+        <!-- -----------------------------(E صفحة التخزين)--------------------------- -->
+
+
+
+    </div>
 
     </div>
 
