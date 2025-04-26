@@ -706,8 +706,10 @@ window.addEventListener('DOMContentLoaded', () => {
             let name = "yyy"
             let co_name = "yyy"
             let num = 12
-            let sell_price = 200
+            let sell_price = 5
             let code = "111"
+            let profit =0.2
+            let find = false
 
             if (id > 0) {
                 if (sell_fatora_id > 0) {
@@ -718,12 +720,12 @@ window.addEventListener('DOMContentLoaded', () => {
                                     if (code) {
 
 
-                                        for (let i = 0; i < Data_M_C.all_items_in_storage__ary.length; i++) {
-                                            if (id == Data_M_C.all_items_in_storage__ary[i]["id"]) {
+                                        for (let i = 0; i <Data_M_C.format_items_in_srorage__ary.length; i++) {
+                                            if (id == Data_M_C.format_items_in_srorage__ary[i]["id"]) {
 
-                                                if ((+Data_M_C.all_items_in_storage__ary[i]["num"]) >= num) {
+                                                if ((+Data_M_C.format_items_in_srorage__ary[i]["num"]) >= num) {
 
-                                                    Data_M_C.all_items_in_storage__ary[i]["num"] -= num
+                                                    Data_M_C.format_items_in_srorage__ary[i]["num"] -= num
                                                     Data_M_C.all_sales_record__ary.push({
                                                         "id": id,
                                                         "sell_fatora_id": sell_fatora_id,
@@ -731,11 +733,32 @@ window.addEventListener('DOMContentLoaded', () => {
                                                         "co_name": co_name,
                                                         "num": num,
                                                         "sell_price": sell_price,
+                                                        "all_sell_price":num*sell_price,
                                                         "code": code,
                                                         "sell_date": Data_M_C.sell_fatora__ary[Data_M_C.sell_fatora__ary.length - 1]["date"]
-
-
                                                     })
+
+                                                    for(let j = 0;j<Data_M_C.format_record_sales__ary.length;j++){
+
+                                                        if(Data_M_C.format_record_sales__ary[j]["id"] == id){
+                                                            Data_M_C.format_record_sales__ary[j]["total_num"] += num
+                                                            Data_M_C.format_record_sales__ary[j]["total_sell_price"] += (num * sell_price)
+                                                            Data_M_C.format_record_sales__ary[j]["total_profit"] += (num * profit)
+                                                            find =true
+                                                            break
+                                                        }
+                                                    }
+                                                    if(!find){
+                                                        Data_M_C.format_record_sales__ary.push({
+                                                            "id": id,
+                                                            "name": name,
+                                                            "co_name": co_name,
+                                                            "total_num": num,
+                                                            "total_sell_price": (num * sell_price),
+                                                            "total_profit": num * profit,
+                                                            "code": code  
+                                                        })
+                                                    }
                                                     Data_M_C.cuont_items_in_sell_fatora++
                                                     Data_M_C.sell_fatora__ary[Data_M_C.sell_fatora__ary.length - 1]["total_price"] += sell_price
                                                     Data_M_C.sell_fatora__ary[Data_M_C.sell_fatora__ary.length - 1]["num_pieces"] += num
@@ -835,6 +858,8 @@ window.addEventListener('DOMContentLoaded', () => {
                         Data_M_C.geve_data_toSave_in('./Data/Sell_fatora/sell_fatora_id.json', Data_M_C.sell_fatora__id)
                         Data_M_C.geve_data_toSave_in('./Data/Customers/customers.json', Data_M_C.customers__ary)
                         Data_M_C.geve_data_toSave_in('./Data/Sales/all_record_sales.json', Data_M_C.all_sales_record__ary)
+                        Data_M_C.geve_data_toSave_in('./Data/Sales/format_record_sales.json', Data_M_C.format_record_sales__ary)
+                        Data_M_C.geve_data_toSave_in('./Data/Storage/format_items_in_storage.json',Data_M_C.format_items_in_srorage__ary)
 
 
 
@@ -1226,7 +1251,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const Moarid_M_C = new MoaridMC()
     const Customers_M_C = new CustomersMC
     const Events_M_C = new Events()
-    // // Customers_M_C.add_customers()
+    // Customers_M_C.add_customers()
     // Storage_M_C.start_sell_fatora()
     // Storage_M_C.add_item_to_sell_fatora()
     // Storage_M_C.add_sell_fatora()
