@@ -18,7 +18,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
             //sell_record ---------------------------
             this.all_sales_record__ary = []
-            this.format_record_sales__ary=[]
+            this.format_record_sales__ary = []
 
 
             //buy_fatora ----------------------------
@@ -112,8 +112,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
         }
-        load_format_items_in_storage__file(){
-            
+        load_format_items_in_storage__file() {
+
             try {
                 this.handel_format_items__ary()
                 console.log("تمت القراءة من ملف format_items_in_storage")
@@ -129,8 +129,8 @@ window.addEventListener('DOMContentLoaded', () => {
             }
 
         }
-        load_format_items_in_storage_id__file(){
-   
+        load_format_items_in_storage_id__file() {
+
             try {
                 this.handel_format_items__id()
                 console.log("تمت القراءة من ملف format_items_in_storage_id")
@@ -162,7 +162,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
         }
-        load_format_record_sales__file(){
+        load_format_record_sales__file() {
             try {
                 this.handel_format_record_sales__ary()
                 console.log("تمت القراءة من ملف format_record_sales.json")
@@ -175,7 +175,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 } catch {
                     console.log("خطا في تحميل الملف format_record_sales.json")
                 }
-            }  
+            }
         }
         load_buy_fatora__file() {
 
@@ -313,16 +313,16 @@ window.addEventListener('DOMContentLoaded', () => {
         handel_all_items__ary() { // هذه الدالة تقوم بتحميل البيانات من الملف الى السجل او المتغير الخاص به 
             this.all_items_in_storage__ary = this.gave_me_data_from('./Data/Storage/all_items_in_storage.json')
         }
-        handel_format_items__ary(){
+        handel_format_items__ary() {
             this.format_items_in_srorage__ary = this.gave_me_data_from('./Data/Storage/format_items_in_storage.json')
         }
-        handel_format_items__id(){
+        handel_format_items__id() {
             this.format_items_in_srorag__id = this.gave_me_data_from('./Data/Storage/format_items_in_storage_id.json')
         }
         handel_all_record_sales__ary() {
             this.all_sales_record__ary = this.gave_me_data_from('./Data/Sales/all_record_sales.json')
         }
-        handel_format_record_sales__ary(){
+        handel_format_record_sales__ary() {
             this.format_record_sales__ary = this.gave_me_data_from('./Data/Sales/format_record_sales.json')
         }
         handel_buy_fatora__ary() {
@@ -452,7 +452,7 @@ window.addEventListener('DOMContentLoaded', () => {
                                             find = true
                                             break
                                         }
-                                        
+
                                     }
                                     if (!find) { // العنصر غير موجود
                                         console.log("العنصر غير موجود")
@@ -582,7 +582,7 @@ window.addEventListener('DOMContentLoaded', () => {
                                 Data_M_C.geve_data_toSave_in('./Data/Buy_fatora/buy_fatora.json', Data_M_C.buy_fatora_ary)
                                 Data_M_C.geve_data_toSave_in('./Data/Buy_fatora/buy_fatora_id.json', Data_M_C.buy_fatora_id)
                                 Data_M_C.geve_data_toSave_in('./Data/Moarid/moarid.json', Data_M_C.moarid__ary)
-                                Data_M_C.geve_data_toSave_in('./Data/Storage/format_items_in_storage.json',Data_M_C.format_items_in_srorage__ary)
+                                Data_M_C.geve_data_toSave_in('./Data/Storage/format_items_in_storage.json', Data_M_C.format_items_in_srorage__ary)
                             } catch {
                                 console.error("خطاء في حفظ الملفات ")
                             }
@@ -708,7 +708,7 @@ window.addEventListener('DOMContentLoaded', () => {
             let num = 12
             let sell_price = 5
             let code = "111"
-            let profit =0.2
+            let profit = 0.2
             let find = false
 
             if (id > 0) {
@@ -720,7 +720,7 @@ window.addEventListener('DOMContentLoaded', () => {
                                     if (code) {
 
 
-                                        for (let i = 0; i <Data_M_C.format_items_in_srorage__ary.length; i++) {
+                                        for (let i = 0; i < Data_M_C.format_items_in_srorage__ary.length; i++) {
                                             if (id == Data_M_C.format_items_in_srorage__ary[i]["id"]) {
 
                                                 if ((+Data_M_C.format_items_in_srorage__ary[i]["num"]) >= num) {
@@ -733,22 +733,22 @@ window.addEventListener('DOMContentLoaded', () => {
                                                         "co_name": co_name,
                                                         "num": num,
                                                         "sell_price": sell_price,
-                                                        "all_sell_price":num*sell_price,
+                                                        "all_sell_price": num * sell_price,
                                                         "code": code,
                                                         "sell_date": Data_M_C.sell_fatora__ary[Data_M_C.sell_fatora__ary.length - 1]["date"]
                                                     })
 
-                                                    for(let j = 0;j<Data_M_C.format_record_sales__ary.length;j++){
+                                                    for (let j = 0; j < Data_M_C.format_record_sales__ary.length; j++) {
 
-                                                        if(Data_M_C.format_record_sales__ary[j]["id"] == id){
+                                                        if (Data_M_C.format_record_sales__ary[j]["id"] == id) {
                                                             Data_M_C.format_record_sales__ary[j]["total_num"] += num
                                                             Data_M_C.format_record_sales__ary[j]["total_sell_price"] += (num * sell_price)
                                                             Data_M_C.format_record_sales__ary[j]["total_profit"] += (num * profit)
-                                                            find =true
+                                                            find = true
                                                             break
                                                         }
                                                     }
-                                                    if(!find){
+                                                    if (!find) {
                                                         Data_M_C.format_record_sales__ary.push({
                                                             "id": id,
                                                             "name": name,
@@ -756,7 +756,7 @@ window.addEventListener('DOMContentLoaded', () => {
                                                             "total_num": num,
                                                             "total_sell_price": (num * sell_price),
                                                             "total_profit": num * profit,
-                                                            "code": code  
+                                                            "code": code
                                                         })
                                                     }
                                                     Data_M_C.cuont_items_in_sell_fatora++
@@ -859,7 +859,7 @@ window.addEventListener('DOMContentLoaded', () => {
                         Data_M_C.geve_data_toSave_in('./Data/Customers/customers.json', Data_M_C.customers__ary)
                         Data_M_C.geve_data_toSave_in('./Data/Sales/all_record_sales.json', Data_M_C.all_sales_record__ary)
                         Data_M_C.geve_data_toSave_in('./Data/Sales/format_record_sales.json', Data_M_C.format_record_sales__ary)
-                        Data_M_C.geve_data_toSave_in('./Data/Storage/format_items_in_storage.json',Data_M_C.format_items_in_srorage__ary)
+                        Data_M_C.geve_data_toSave_in('./Data/Storage/format_items_in_storage.json', Data_M_C.format_items_in_srorage__ary)
 
 
 
@@ -1176,7 +1176,115 @@ window.addEventListener('DOMContentLoaded', () => {
         }
 
     }
+    class Statistics {
+        constructor() {
 
+        }
+        max_one_item_sell_by_num(){
+           let result={
+             max : -Infinity,
+             id:0,
+             name:"",
+             co_name:""
+
+           } 
+            
+            for(let i =0;i<Data_M_C.format_record_sales__ary.length;i++){
+                if(Data_M_C.format_record_sales__ary[i]["total_num"] >result.max){
+                   result.max = Data_M_C.format_record_sales__ary[i]["total_num"]
+                }
+            }
+            for(let i =0;i<Data_M_C.format_record_sales__ary.length;i++){
+                if(Data_M_C.format_record_sales__ary[i]["total_num"] == result.max){
+                    result.id =Data_M_C.format_record_sales__ary[i]["id"]
+                    result.name =Data_M_C.format_record_sales__ary[i]["name"]
+                    result.co_name =Data_M_C.format_record_sales__ary[i]["co_name"]
+                    break
+
+                }
+            }
+            return result
+        }
+        max_one_item_sell_by_sales(){
+            let result={
+                max : -Infinity,
+                id:0,
+                name:"",
+                co_name:""
+   
+              } 
+               
+               for(let i =0;i<Data_M_C.format_record_sales__ary.length;i++){
+                   if(Data_M_C.format_record_sales__ary[i]["total_sell_price"] >result.max){
+                      result.max = Data_M_C.format_record_sales__ary[i]["total_sell_price"]
+                   }
+               }
+               for(let i =0;i<Data_M_C.format_record_sales__ary.length;i++){
+                   if(Data_M_C.format_record_sales__ary[i]["total_sell_price"] == result.max){
+                       result.id =Data_M_C.format_record_sales__ary[i]["id"]
+                       result.name =Data_M_C.format_record_sales__ary[i]["name"]
+                       result.co_name =Data_M_C.format_record_sales__ary[i]["co_name"]
+                       break
+   
+                   }
+               }
+               return result
+        }
+
+        min_one_item_sell_by_num(){
+            let result={
+              min : Infinity,
+              id:0,
+              name:"",
+              co_name:""
+ 
+            } 
+             
+             for(let i =0;i<Data_M_C.format_record_sales__ary.length;i++){
+                 if(Data_M_C.format_record_sales__ary[i]["total_num"] <result.min){
+                    result.min = Data_M_C.format_record_sales__ary[i]["total_num"]
+                 }
+             }
+             for(let i =0;i<Data_M_C.format_record_sales__ary.length;i++){
+                 if(Data_M_C.format_record_sales__ary[i]["total_num"] == result.min){
+                     result.id =Data_M_C.format_record_sales__ary[i]["id"]
+                     result.name =Data_M_C.format_record_sales__ary[i]["name"]
+                     result.co_name =Data_M_C.format_record_sales__ary[i]["co_name"]
+                     break
+ 
+                 }
+             }
+             return result
+         }
+
+         min_one_item_sell_by_sales(){
+            let result={
+              min : Infinity,
+              id:0,
+              name:"",
+              co_name:""
+ 
+            } 
+             
+             for(let i =0;i<Data_M_C.format_record_sales__ary.length;i++){
+                 if(Data_M_C.format_record_sales__ary[i]["total_sell_price"] <result.min){
+                    result.min = Data_M_C.format_record_sales__ary[i]["total_sell_price"]
+                 }
+             }
+             for(let i =0;i<Data_M_C.format_record_sales__ary.length;i++){
+                 if(Data_M_C.format_record_sales__ary[i]["total_sell_price"] == result.min){
+                     result.id =Data_M_C.format_record_sales__ary[i]["id"]
+                     result.name =Data_M_C.format_record_sales__ary[i]["name"]
+                     result.co_name =Data_M_C.format_record_sales__ary[i]["co_name"]
+                     break
+ 
+                 }
+             }
+             return result
+         }
+ 
+
+    }
     class Events {
         constructor() {
             this.set_event()
@@ -1251,6 +1359,8 @@ window.addEventListener('DOMContentLoaded', () => {
     const Moarid_M_C = new MoaridMC()
     const Customers_M_C = new CustomersMC
     const Events_M_C = new Events()
+    const Statistics_M_C=new Statistics()
+//   console.log( Statistics_M_C.min_one_item_sell_by_sales())
     // Customers_M_C.add_customers()
     // Storage_M_C.start_sell_fatora()
     // Storage_M_C.add_item_to_sell_fatora()
