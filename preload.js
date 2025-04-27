@@ -380,9 +380,12 @@ window.addEventListener('DOMContentLoaded', () => {
 
     class StorageMC {
         constructor() {
-
+            this.show_all_items_in_storage()
             this.t_id_for_add_item_in_sell_fatora = 1
             this.t_customer_id_for_add_sell_fatora = 1
+
+
+            this.start_i_in_buy_fatora = 0
 
         }
 
@@ -395,6 +398,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
         start_buy_fatora() {
             if (Data_M_C.buy_fatora_is_run == false) {
+                this.start_i_in_buy_fatora = Data_M_C.all_items_in_storage__ary.length
                 Data_M_C.buy_fatora_is_run = true
                 Data_M_C.buy_fatora_ary.push(
                     {
@@ -416,20 +420,19 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
         add_item_to_buy_fatora() {
-            let name = "yahia"
-            // document.getElementById('name_item_in_buy_fatora').value
-            let co_name = "yy"
-            // document.getElementById('co_name_item_in_buy_fatora').value
-            let num = 1
-            //  document.getElementById('num_item_in_buy_fatora').value
-            let price = 100
-            // document.getElementById('price_item_in_buy_fatora').value
-            let profit = 0
-            //  document.getElementById('profit_item_in_buy_fatora').value
-            let code = "111"
-            // document.getElementById('code_item_in_buy_fatora').value
-            let end_date = "2/2/2000"
-            // document.getElementById('end_date_item_in_buy_fatora').value
+            let name = document.getElementById('name_item_in_buy_fatora').value
+            
+            let co_name = document.getElementById('co_name_item_in_buy_fatora').value
+            
+            let num = (+  document.getElementById('num_item_in_buy_fatora').value)
+        
+            let price = (+ document.getElementById('price_item_in_buy_fatora').value)
+            
+            let profit = (+  document.getElementById('profit_item_in_buy_fatora').value )
+            
+            let code =document.getElementById('code_item_in_buy_fatora').value
+          
+            let end_date = document.getElementById('end_date_item_in_buy_fatora').value
             let id_item = ''
             let find = false
 
@@ -498,6 +501,8 @@ window.addEventListener('DOMContentLoaded', () => {
                                     Data_M_C.buy_fatora_ary[Data_M_C.buy_fatora_ary.length - 1]["num_pieces"] += (+num)
                                     Data_M_C.buy_fatora_ary[Data_M_C.buy_fatora_ary.length - 1]["total_price"] += ((+price) * num)
 
+                                    this.show_items_in_buy_fatora()
+
 
 
                                 } else {
@@ -538,9 +543,9 @@ window.addEventListener('DOMContentLoaded', () => {
             if (Data_M_C.cuont_items_in_buy_fatora > 0) {
 
                 let moarid_id = 1
-                let boss_name = "yy"
-                let payment_status = ""
-                let amount_paid = 10
+                let boss_name = document.getElementById('boss_name').value
+                let payment_status = document.getElementById('payment_status').value
+                let amount_paid = (+ document.getElementById('amount_paid').value)
 
 
                 if (moarid_id) {
@@ -587,22 +592,22 @@ window.addEventListener('DOMContentLoaded', () => {
                             } catch {
                                 console.error("خطاء في حفظ الملفات ")
                             }
-                            // document.getElementById('div_of_shwing_in_buy_fatora').innerHTML = ""
-                            // document.getElementById('total_price_span').innerText = ""
+                            document.getElementById('div_of_shwing_in_buy_fatora').innerHTML = ""
+                            document.getElementById('total_price_span').innerText = ""
 
-                            // document.getElementById('name_item_in_buy_fatora').value = ""
-                            // document.getElementById('co_name_item_in_buy_fatora').value = ""
-                            // document.getElementById('num_item_in_buy_fatora').value = ""
-                            // document.getElementById('price_item_in_buy_fatora').value = ""
-                            // document.getElementById('profit_item_in_buy_fatora').value = ""
-                            // document.getElementById('code_item_in_buy_fatora').value = ""
-                            // document.getElementById('end_date_item_in_buy_fatora').value = ""
+                            document.getElementById('name_item_in_buy_fatora').value = ""
+                            document.getElementById('co_name_item_in_buy_fatora').value = ""
+                            document.getElementById('num_item_in_buy_fatora').value = ""
+                            document.getElementById('price_item_in_buy_fatora').value = ""
+                            document.getElementById('profit_item_in_buy_fatora').value = ""
+                            document.getElementById('code_item_in_buy_fatora').value = ""
+                            document.getElementById('end_date_item_in_buy_fatora').value = ""
 
 
-                            // document.getElementById('morid_name').value = ""
-                            // document.getElementById('boss_name').value = ""
-                            // document.getElementById('payment_status').value = ""
-                            // document.getElementById('amount_paid').value = ""
+                            document.getElementById('morid_name').value = ""
+                            document.getElementById('boss_name').value = ""
+                            document.getElementById('payment_status').value = ""
+                            document.getElementById('amount_paid').value = ""
 
 
 
@@ -662,6 +667,22 @@ window.addEventListener('DOMContentLoaded', () => {
 
         show_items_in_buy_fatora() {
 
+            const container =document.getElementById("div_of_shwing_in_buy_fatora")
+            container.innerHTML =""
+            let data = Data_M_C.all_items_in_storage__ary
+            for(let i =this.start_i_in_buy_fatora;i<data.length;i++){
+                container.innerHTML +=`
+                 <div class="inf-boy-fat2">
+                            <span>${data[i]["name"]}</span>
+                            <span>${data[i]["co_name"]}</span>
+                            <span>${data[i]["num"]}</span>
+                            <span>${data[i]["price"]}</span>
+                            <span>${data[i]["price"] * data[i]["num"]}</span>
+                            <span>الحذف</span>
+                            <!-- <span class="del_item_from_buy_fatora_button" class = "del_item_from_buy_fatora_button">حذف</span>  -->
+                        </div>
+                `
+            }
 
             // let but = document.querySelectorAll('.del_item_from_buy_fatora_button')
             // but.forEach((but, i) => {
@@ -670,6 +691,16 @@ window.addEventListener('DOMContentLoaded', () => {
             //     })
             // })
 
+        }
+        show_moarid_in_input(){
+            const data =Data_M_C.moarid__ary
+            const container = document.getElementById('morid')
+            container.innerHTML =""
+            for(let i =0;i<data.length;i++){
+                container.innerHTML +=`
+                    <option value="${data[i]["name"]}"></option>
+                `
+            }
         }
 
         // ----------------------------------------------
@@ -994,28 +1025,26 @@ window.addEventListener('DOMContentLoaded', () => {
         // ------------(S عرض الادوية في صفحة المخزون )---------------
 
         show_all_items_in_storage() {
-            Data_M_C.handel_all_items__ary();
-            let data = Data_M_C.all_items_in_storage__ary
+            Data_M_C.handel_format_items__ary;
+            let data = Data_M_C.format_items_in_srorage__ary
             const container = document.getElementById('show_all_items_div');
             container.innerHTML = "";
 
             for (let i = 0; i < data.length; i++) {
                 container.innerHTML += `
-                    <div class="one_item_in_storage_box" data-index="${i}">
-                        <span>${data[i].name}</span>
-                        <span>${data[i].co_name}</span>
-                        <span>${data[i].finall_price} </span>
-                        <span>${data[i].num}</span>
-                    </div>
+                        <div class="one_item_in_storage_box" data-index="${i}">
+
+                            <span>${data[i]["name"]} </span>
+                            <span>${data[i]["co_name"]} </span>
+                            <span> ${data[i]["finall_price"]} </span>
+                            <span>${data[i]["num"]} </span>
+                            <span class="icon"><img src="icon/si_more-vert-duotone.svg" alt=""> </span>
+                            
+                        </div>
                 `;
             }
 
-            const boxes = document.querySelectorAll('.one_item_in_storage_box');
-            boxes.forEach((box, i) => {
-                box.addEventListener('click', () => {
-                    console.log(i);
-                });
-            });
+         
         }
 
         // ------------(E عرض الادوية في صفحة المخزون )---------------
@@ -1334,8 +1363,22 @@ window.addEventListener('DOMContentLoaded', () => {
 
         }
         set_event() {
+         
+            document.getElementById('storage').onclick =()=>{
+                document.getElementById('storage_page').style.display="block"
+                Storage_M_C.cancel_buy_fatora()
+            }
+            
+            // document.getElementById('conrol-2').onclick =()=>{
+            //     document.getElementById('storage_page').style.display="block"
+            //     document.getElementById('buy_fatora_box').style.display="none"
+            //     Storage_M_C.cancel_buy_fatora()
+            // }
+
+
             document.getElementById('add_new_buy_fatora_button').onclick = () => {
-                document.getElementById('buy_fatora_box').style.display = "block"
+               document.getElementById('buy_fatora_box').style.display="block"
+                 document.getElementById('storage_page').style.display="none"
                 Storage_M_C.start_buy_fatora()
             }
 
@@ -1350,8 +1393,8 @@ window.addEventListener('DOMContentLoaded', () => {
             }
             document.getElementById('cancel_buy_fatora_button').onclick = () => {
                 Storage_M_C.cancel_buy_fatora()
+                 document.getElementById('storage_page').style.display="block"
             }
-
 
         }
 
@@ -1404,7 +1447,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const Customers_M_C = new CustomersMC
     const Events_M_C = new Events()
     const Statistics_M_C=new Statistics()
-  console.log(Statistics_M_C.sort_max_items_sall_by_num())
+//   console.log(Statistics_M_C.sort_max_items_sall_by_num())
     // Customers_M_C.add_customers()
     // Storage_M_C.start_sell_fatora()
     // Storage_M_C.add_item_to_sell_fatora()
