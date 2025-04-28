@@ -66,6 +66,9 @@ body {
 
 }
 
+#storage_page{
+    display: none;
+}
 
 
 /* شريط تحكم اين انت  بالنسبة للصفحات  */
