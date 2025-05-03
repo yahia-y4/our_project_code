@@ -46,7 +46,7 @@ window.addEventListener('DOMContentLoaded', () => {
             this.customers__id = 0
 
             //--------------
-            this.running_out_num=5
+            this.running_out_num = 5
 
 
             // التاكد من وجود المجلدات --------------
@@ -380,7 +380,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     class StorageMC {
         constructor() {
-            this.show_all_items_in_storage()
+
             this.t_id_for_add_item_in_sell_fatora = 1
             this.t_customer_id_for_add_sell_fatora = 1
 
@@ -421,17 +421,17 @@ window.addEventListener('DOMContentLoaded', () => {
 
         add_item_to_buy_fatora() {
             let name = document.getElementById('name_item_in_buy_fatora').value
-            
+
             let co_name = document.getElementById('co_name_item_in_buy_fatora').value
-            
+
             let num = (+  document.getElementById('num_item_in_buy_fatora').value)
-        
+
             let price = (+ document.getElementById('price_item_in_buy_fatora').value)
-            
-            let profit = (+  document.getElementById('profit_item_in_buy_fatora').value )
-            
-            let code =document.getElementById('code_item_in_buy_fatora').value
-          
+
+            let profit = (+  document.getElementById('profit_item_in_buy_fatora').value)
+
+            let code = document.getElementById('code_item_in_buy_fatora').value
+
             let end_date = document.getElementById('end_date_item_in_buy_fatora').value
             let id_item = ''
             let find = false
@@ -503,6 +503,14 @@ window.addEventListener('DOMContentLoaded', () => {
 
                                     this.show_items_in_buy_fatora()
 
+                                    document.getElementById('name_item_in_buy_fatora').value = ""
+                                    document.getElementById('co_name_item_in_buy_fatora').value = ""
+                                    document.getElementById('num_item_in_buy_fatora').value = ""
+                                    document.getElementById('price_item_in_buy_fatora').value = ""
+                                    document.getElementById('profit_item_in_buy_fatora').value = ""
+                                    document.getElementById('code_item_in_buy_fatora').value = ""
+                                    document.getElementById('end_date_item_in_buy_fatora').value = ""
+
 
 
                                 } else {
@@ -541,73 +549,86 @@ window.addEventListener('DOMContentLoaded', () => {
         }
         add_buy_fatora() {
             if (Data_M_C.cuont_items_in_buy_fatora > 0) {
-
-                let moarid_id = 1
+                let moarid_name = document.getElementById('morid_name').value.trim().toLowerCase()
+                let moarid_id
                 let boss_name = document.getElementById('boss_name').value
                 let payment_status = document.getElementById('payment_status').value
                 let amount_paid = (+ document.getElementById('amount_paid').value)
+                let find = false
 
 
-                if (moarid_id) {
+                if (moarid_name) {
                     if (boss_name) {
                         if (amount_paid >= 0) {
-
-
-                            Data_M_C.buy_fatora_ary[Data_M_C.buy_fatora_ary.length - 1]["moarid_id"] = moarid_id
-                            Data_M_C.buy_fatora_ary[Data_M_C.buy_fatora_ary.length - 1]["boss_name"] = boss_name
-                            Data_M_C.buy_fatora_ary[Data_M_C.buy_fatora_ary.length - 1]["payment_status"] = payment_status
-                            Data_M_C.buy_fatora_ary[Data_M_C.buy_fatora_ary.length - 1]["amount_paid"] = amount_paid
-                            Data_M_C.buy_fatora_ary[Data_M_C.buy_fatora_ary.length - 1]["num_items"] = Data_M_C.cuont_items_in_buy_fatora
-
-                            let total = Data_M_C.buy_fatora_ary[Data_M_C.buy_fatora_ary.length - 1]["total_price"]
-                            if (total == amount_paid) {
-                                console.log("تم التسديد")
-                            }
-                            else if (total > amount_paid) {
-                                for (let i = 0; i < Data_M_C.moarid__ary.length; i++) {
-                                    if (Data_M_C.moarid__ary[i]["id"] == moarid_id) {
-                                        Data_M_C.moarid__ary[i]["debt_on_him"] += (total - amount_paid)
-                                        break
-                                    }
-                                }
-                            } else if (total < amount_paid) {
-                                for (let i = 0; i < Data_M_C.moarid__ary.length; i++) {
-                                    if (Data_M_C.moarid__ary[i]["id"] == moarid_id) {
-                                        Data_M_C.moarid__ary[i]["debt_on_me"] += (amount_paid - total)
-                                        break
-                                    }
+                            for (let i = 0; i < Data_M_C.moarid__ary.length; i++) {
+                                if (moarid_name == Data_M_C.moarid__ary[i]["name"]) {
+                                    moarid_id = Data_M_C.moarid__ary[i]["id"]
+                                    find = true
+                                    break
                                 }
                             }
+                            if (find) {
+
+                                Data_M_C.buy_fatora_ary[Data_M_C.buy_fatora_ary.length - 1]["moarid_id"] = moarid_id
+                                Data_M_C.buy_fatora_ary[Data_M_C.buy_fatora_ary.length - 1]["boss_name"] = boss_name
+                                Data_M_C.buy_fatora_ary[Data_M_C.buy_fatora_ary.length - 1]["payment_status"] = payment_status
+                                Data_M_C.buy_fatora_ary[Data_M_C.buy_fatora_ary.length - 1]["amount_paid"] = amount_paid
+                                Data_M_C.buy_fatora_ary[Data_M_C.buy_fatora_ary.length - 1]["num_items"] = Data_M_C.cuont_items_in_buy_fatora
+
+                                let total = Data_M_C.buy_fatora_ary[Data_M_C.buy_fatora_ary.length - 1]["total_price"]
+                                if (total == amount_paid) {
+                                    console.log("تم التسديد")
+                                }
+                                else if (total > amount_paid) {
+                                    for (let i = 0; i < Data_M_C.moarid__ary.length; i++) {
+                                        if (Data_M_C.moarid__ary[i]["id"] == moarid_id) {
+                                            Data_M_C.moarid__ary[i]["debt_on_him"] += (total - amount_paid)
+                                            break
+                                        }
+                                    }
+                                } else if (total < amount_paid) {
+                                    for (let i = 0; i < Data_M_C.moarid__ary.length; i++) {
+                                        if (Data_M_C.moarid__ary[i]["id"] == moarid_id) {
+                                            Data_M_C.moarid__ary[i]["debt_on_me"] += (amount_paid - total)
+                                            break
+                                        }
+                                    }
+                                }
 
 
 
-                            Data_M_C.buy_fatora_is_run = false
-                            // حفظ في الملفات 
-                            try {
-                                Data_M_C.geve_data_toSave_in('./Data/Storage/all_items_in_storage.json', Data_M_C.all_items_in_storage__ary)
-                                Data_M_C.geve_data_toSave_in('./Data/Buy_fatora/buy_fatora.json', Data_M_C.buy_fatora_ary)
-                                Data_M_C.geve_data_toSave_in('./Data/Buy_fatora/buy_fatora_id.json', Data_M_C.buy_fatora_id)
-                                Data_M_C.geve_data_toSave_in('./Data/Moarid/moarid.json', Data_M_C.moarid__ary)
-                                Data_M_C.geve_data_toSave_in('./Data/Storage/format_items_in_storage.json', Data_M_C.format_items_in_srorage__ary)
-                            } catch {
-                                console.error("خطاء في حفظ الملفات ")
+                                Data_M_C.buy_fatora_is_run = false
+                                console.log("تمت اضافة فاتورة الشراء من المورد  : ", moarid_name)
+                                // حفظ في الملفات 
+                                try {
+                                    Data_M_C.geve_data_toSave_in('./Data/Storage/all_items_in_storage.json', Data_M_C.all_items_in_storage__ary)
+                                    Data_M_C.geve_data_toSave_in('./Data/Buy_fatora/buy_fatora.json', Data_M_C.buy_fatora_ary)
+                                    Data_M_C.geve_data_toSave_in('./Data/Buy_fatora/buy_fatora_id.json', Data_M_C.buy_fatora_id)
+                                    Data_M_C.geve_data_toSave_in('./Data/Moarid/moarid.json', Data_M_C.moarid__ary)
+                                    Data_M_C.geve_data_toSave_in('./Data/Storage/format_items_in_storage.json', Data_M_C.format_items_in_srorage__ary)
+                                } catch {
+                                    console.error("خطاء في حفظ الملفات ")
+                                }
+                                document.getElementById('div_of_shwing_in_buy_fatora').innerHTML = ""
+                                document.getElementById('total_price_span').innerText = ""
+
+                                document.getElementById('name_item_in_buy_fatora').value = ""
+                                document.getElementById('co_name_item_in_buy_fatora').value = ""
+                                document.getElementById('num_item_in_buy_fatora').value = ""
+                                document.getElementById('price_item_in_buy_fatora').value = ""
+                                document.getElementById('profit_item_in_buy_fatora').value = ""
+                                document.getElementById('code_item_in_buy_fatora').value = ""
+                                document.getElementById('end_date_item_in_buy_fatora').value = ""
+
+
+                                document.getElementById('morid_name').value = ""
+                                document.getElementById('boss_name').value = ""
+                                document.getElementById('payment_status').value = ""
+                                document.getElementById('amount_paid').value = ""
+
+                            } else {
+                                console.log("لم يتم العثور على اسم المورد ")
                             }
-                            document.getElementById('div_of_shwing_in_buy_fatora').innerHTML = ""
-                            document.getElementById('total_price_span').innerText = ""
-
-                            document.getElementById('name_item_in_buy_fatora').value = ""
-                            document.getElementById('co_name_item_in_buy_fatora').value = ""
-                            document.getElementById('num_item_in_buy_fatora').value = ""
-                            document.getElementById('price_item_in_buy_fatora').value = ""
-                            document.getElementById('profit_item_in_buy_fatora').value = ""
-                            document.getElementById('code_item_in_buy_fatora').value = ""
-                            document.getElementById('end_date_item_in_buy_fatora').value = ""
-
-
-                            document.getElementById('morid_name').value = ""
-                            document.getElementById('boss_name').value = ""
-                            document.getElementById('payment_status').value = ""
-                            document.getElementById('amount_paid').value = ""
 
 
 
@@ -658,7 +679,7 @@ window.addEventListener('DOMContentLoaded', () => {
             document.getElementById('end_date_item_in_buy_fatora').value = ""
 
 
-            document.getElementById('morid_name').value = ""
+            // document.getElementById('morid_name').value = ""
             document.getElementById('boss_name').value = ""
             document.getElementById('payment_status').value = ""
             document.getElementById('amount_paid').value = ""
@@ -666,42 +687,35 @@ window.addEventListener('DOMContentLoaded', () => {
         }
 
         show_items_in_buy_fatora() {
-
-            const container =document.getElementById("div_of_shwing_in_buy_fatora")
-            container.innerHTML =""
+            document.getElementById('total_price_span').innerText = Data_M_C.buy_fatora_ary[Data_M_C.buy_fatora_ary.length - 1]["total_price"]
+            const container = document.getElementById("div_of_shwing_in_buy_fatora")
+            container.innerHTML = ""
             let data = Data_M_C.all_items_in_storage__ary
-            for(let i =this.start_i_in_buy_fatora;i<data.length;i++){
-                container.innerHTML +=`
+            for (let i = this.start_i_in_buy_fatora; i < data.length; i++) {
+                container.innerHTML += `
                  <div class="inf-boy-fat2">
                             <span>${data[i]["name"]}</span>
                             <span>${data[i]["co_name"]}</span>
                             <span>${data[i]["num"]}</span>
                             <span>${data[i]["price"]}</span>
                             <span>${data[i]["price"] * data[i]["num"]}</span>
-                            <span>الحذف</span>
-                            <!-- <span class="del_item_from_buy_fatora_button" class = "del_item_from_buy_fatora_button">حذف</span>  -->
+                            
+                           <span class="del_item_from_buy_fatora_button" class = "del_item_from_buy_fatora_button">حذف</span> 
                         </div>
                 `
             }
 
-            // let but = document.querySelectorAll('.del_item_from_buy_fatora_button')
-            // but.forEach((but, i) => {
-            //     but.addEventListener('click', () => {
-            //         this.del_item_from_buy_fatora(i)
-            //     })
-            // })
+            let but = document.querySelectorAll('.del_item_from_buy_fatora_button')
+            but.forEach((but, i) => {
+                but.addEventListener('click', () => {
+                    console.log(i)
+                    this.del_item_from_buy_fatora(i)
+                    this.show_items_in_buy_fatora()
+                })
+            })
 
         }
-        show_moarid_in_input(){
-            const data =Data_M_C.moarid__ary
-            const container = document.getElementById('morid')
-            container.innerHTML =""
-            for(let i =0;i<data.length;i++){
-                container.innerHTML +=`
-                    <option value="${data[i]["name"]}"></option>
-                `
-            }
-        }
+
 
         // ----------------------------------------------
 
@@ -925,10 +939,6 @@ window.addEventListener('DOMContentLoaded', () => {
         }
 
 
-
-
-
-
         // -----------------------------------------------
 
 
@@ -1044,7 +1054,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 `;
             }
 
-         
+
         }
 
         // ------------(E عرض الادوية في صفحة المخزون )---------------
@@ -1084,6 +1094,7 @@ window.addEventListener('DOMContentLoaded', () => {
     }
     class MoaridMC {
         constructor() {
+            this.show_moarid_in_input()
 
         }
         rice_moarid_id() {
@@ -1157,6 +1168,46 @@ window.addEventListener('DOMContentLoaded', () => {
             }
         }
 
+        show_moarid_in_input() {
+            let val = document.getElementById('morid_name').value.trim().toLowerCase()
+
+            const data = Data_M_C.moarid__ary
+            const container = document.getElementById('morid')
+            container.innerHTML = ""
+            if (!val) {
+                const data = Data_M_C.moarid__ary
+
+                for (let i = 0; i < data.length; i++) {
+                    container.innerHTML += `
+                        <span class ="one_moarid_name" >${data[i]["name"]}</span>
+                    `
+                }
+                this.gave_moarid_name_event(data)
+            } else {
+                let result = data.filter(moarid => moarid.name.includes(val))
+                for (let i = 0; i < result.length; i++) {
+                    container.innerHTML += `
+                    <span class ="one_moarid_name">${result[i]["name"]}</span>
+                `
+                }
+                this.gave_moarid_name_event(result)
+            }
+
+        }
+        gave_moarid_name_event(data) {
+
+            let moarid = document.querySelectorAll('.one_moarid_name')
+            moarid.forEach((moarid, i) => {
+                moarid.addEventListener('click', () => {
+                    document.getElementById('morid_name').value = data[i]["name"]
+                    document.getElementById("morid").style.display = "none"
+
+                })
+            })
+        }
+
+
+
     }
     class CustomersMC {
         constructor() {
@@ -1210,145 +1261,145 @@ window.addEventListener('DOMContentLoaded', () => {
         constructor() {
 
         }
-        max_one_item_sell_by_num(){
-           let result={
-             max : -Infinity,
-             id:0,
-             name:"",
-             co_name:""
+        max_one_item_sell_by_num() {
+            let result = {
+                max: -Infinity,
+                id: 0,
+                name: "",
+                co_name: ""
 
-           } 
-            
-            for(let i =0;i<Data_M_C.format_record_sales__ary.length;i++){
-                if(Data_M_C.format_record_sales__ary[i]["total_num"] >result.max){
-                   result.max = Data_M_C.format_record_sales__ary[i]["total_num"]
+            }
+
+            for (let i = 0; i < Data_M_C.format_record_sales__ary.length; i++) {
+                if (Data_M_C.format_record_sales__ary[i]["total_num"] > result.max) {
+                    result.max = Data_M_C.format_record_sales__ary[i]["total_num"]
                 }
             }
-            for(let i =0;i<Data_M_C.format_record_sales__ary.length;i++){
-                if(Data_M_C.format_record_sales__ary[i]["total_num"] == result.max){
-                    result.id =Data_M_C.format_record_sales__ary[i]["id"]
-                    result.name =Data_M_C.format_record_sales__ary[i]["name"]
-                    result.co_name =Data_M_C.format_record_sales__ary[i]["co_name"]
+            for (let i = 0; i < Data_M_C.format_record_sales__ary.length; i++) {
+                if (Data_M_C.format_record_sales__ary[i]["total_num"] == result.max) {
+                    result.id = Data_M_C.format_record_sales__ary[i]["id"]
+                    result.name = Data_M_C.format_record_sales__ary[i]["name"]
+                    result.co_name = Data_M_C.format_record_sales__ary[i]["co_name"]
                     break
 
                 }
             }
             return result
         }
-        max_one_item_sell_by_sales(){
-            let result={
-                max : -Infinity,
-                id:0,
-                name:"",
-                co_name:""
-   
-              } 
-               
-               for(let i =0;i<Data_M_C.format_record_sales__ary.length;i++){
-                   if(Data_M_C.format_record_sales__ary[i]["total_sell_price"] >result.max){
-                      result.max = Data_M_C.format_record_sales__ary[i]["total_sell_price"]
-                   }
-               }
-               for(let i =0;i<Data_M_C.format_record_sales__ary.length;i++){
-                   if(Data_M_C.format_record_sales__ary[i]["total_sell_price"] == result.max){
-                       result.id =Data_M_C.format_record_sales__ary[i]["id"]
-                       result.name =Data_M_C.format_record_sales__ary[i]["name"]
-                       result.co_name =Data_M_C.format_record_sales__ary[i]["co_name"]
-                       break
-   
-                   }
-               }
-               return result
+        max_one_item_sell_by_sales() {
+            let result = {
+                max: -Infinity,
+                id: 0,
+                name: "",
+                co_name: ""
+
+            }
+
+            for (let i = 0; i < Data_M_C.format_record_sales__ary.length; i++) {
+                if (Data_M_C.format_record_sales__ary[i]["total_sell_price"] > result.max) {
+                    result.max = Data_M_C.format_record_sales__ary[i]["total_sell_price"]
+                }
+            }
+            for (let i = 0; i < Data_M_C.format_record_sales__ary.length; i++) {
+                if (Data_M_C.format_record_sales__ary[i]["total_sell_price"] == result.max) {
+                    result.id = Data_M_C.format_record_sales__ary[i]["id"]
+                    result.name = Data_M_C.format_record_sales__ary[i]["name"]
+                    result.co_name = Data_M_C.format_record_sales__ary[i]["co_name"]
+                    break
+
+                }
+            }
+            return result
         }
 
-        min_one_item_sell_by_num(){
-            let result={
-              min : Infinity,
-              id:0,
-              name:"",
-              co_name:""
- 
-            } 
-             
-             for(let i =0;i<Data_M_C.format_record_sales__ary.length;i++){
-                 if(Data_M_C.format_record_sales__ary[i]["total_num"] <result.min){
+        min_one_item_sell_by_num() {
+            let result = {
+                min: Infinity,
+                id: 0,
+                name: "",
+                co_name: ""
+
+            }
+
+            for (let i = 0; i < Data_M_C.format_record_sales__ary.length; i++) {
+                if (Data_M_C.format_record_sales__ary[i]["total_num"] < result.min) {
                     result.min = Data_M_C.format_record_sales__ary[i]["total_num"]
-                 }
-             }
-             for(let i =0;i<Data_M_C.format_record_sales__ary.length;i++){
-                 if(Data_M_C.format_record_sales__ary[i]["total_num"] == result.min){
-                     result.id =Data_M_C.format_record_sales__ary[i]["id"]
-                     result.name =Data_M_C.format_record_sales__ary[i]["name"]
-                     result.co_name =Data_M_C.format_record_sales__ary[i]["co_name"]
-                     break
- 
-                 }
-             }
-             return result
-         }
+                }
+            }
+            for (let i = 0; i < Data_M_C.format_record_sales__ary.length; i++) {
+                if (Data_M_C.format_record_sales__ary[i]["total_num"] == result.min) {
+                    result.id = Data_M_C.format_record_sales__ary[i]["id"]
+                    result.name = Data_M_C.format_record_sales__ary[i]["name"]
+                    result.co_name = Data_M_C.format_record_sales__ary[i]["co_name"]
+                    break
 
-         min_one_item_sell_by_sales(){
-            let result={
-              min : Infinity,
-              id:0,
-              name:"",
-              co_name:""
- 
-            } 
-             
-             for(let i =0;i<Data_M_C.format_record_sales__ary.length;i++){
-                 if(Data_M_C.format_record_sales__ary[i]["total_sell_price"] <result.min){
+                }
+            }
+            return result
+        }
+
+        min_one_item_sell_by_sales() {
+            let result = {
+                min: Infinity,
+                id: 0,
+                name: "",
+                co_name: ""
+
+            }
+
+            for (let i = 0; i < Data_M_C.format_record_sales__ary.length; i++) {
+                if (Data_M_C.format_record_sales__ary[i]["total_sell_price"] < result.min) {
                     result.min = Data_M_C.format_record_sales__ary[i]["total_sell_price"]
-                 }
-             }
-             for(let i =0;i<Data_M_C.format_record_sales__ary.length;i++){
-                 if(Data_M_C.format_record_sales__ary[i]["total_sell_price"] == result.min){
-                     result.id =Data_M_C.format_record_sales__ary[i]["id"]
-                     result.name =Data_M_C.format_record_sales__ary[i]["name"]
-                     result.co_name =Data_M_C.format_record_sales__ary[i]["co_name"]
-                     break
- 
-                 }
-             }
-             return result
-         }
+                }
+            }
+            for (let i = 0; i < Data_M_C.format_record_sales__ary.length; i++) {
+                if (Data_M_C.format_record_sales__ary[i]["total_sell_price"] == result.min) {
+                    result.id = Data_M_C.format_record_sales__ary[i]["id"]
+                    result.name = Data_M_C.format_record_sales__ary[i]["name"]
+                    result.co_name = Data_M_C.format_record_sales__ary[i]["co_name"]
+                    break
 
-         num_of_items_in_storage(){
-            let num =0
-            for(let i=0;i<Data_M_C.format_items_in_srorage__ary.length;i++){
-                if(Data_M_C.format_items_in_srorage__ary[i]["num"] > 0){
-                    num ++
+                }
+            }
+            return result
+        }
+
+        num_of_items_in_storage() {
+            let num = 0
+            for (let i = 0; i < Data_M_C.format_items_in_srorage__ary.length; i++) {
+                if (Data_M_C.format_items_in_srorage__ary[i]["num"] > 0) {
+                    num++
                 }
             }
             return num
-         }
+        }
 
-         zero_items_in_storage(){
-            let ids=[]
-            for(let i=0;i<Data_M_C.format_items_in_srorage__ary.length;i++){
-                if( Data_M_C.format_items_in_srorage__ary[i]["num"] == 0){
+        zero_items_in_storage() {
+            let ids = []
+            for (let i = 0; i < Data_M_C.format_items_in_srorage__ary.length; i++) {
+                if (Data_M_C.format_items_in_srorage__ary[i]["num"] == 0) {
                     ids.push(Data_M_C.format_items_in_srorage__ary[i]["id"])
-                    
+
                 }
             }
             return ids
-         }
-         running_out_items_in_storage(){
-        
-            let ids=[]
-            for(let i=0;i<Data_M_C.format_items_in_srorage__ary.length;i++){
-                if(Data_M_C.format_items_in_srorage__ary[i]["num"] <= Data_M_C.running_out_num && Data_M_C.format_items_in_srorage__ary[i]["num"] !=0){
+        }
+        running_out_items_in_storage() {
+
+            let ids = []
+            for (let i = 0; i < Data_M_C.format_items_in_srorage__ary.length; i++) {
+                if (Data_M_C.format_items_in_srorage__ary[i]["num"] <= Data_M_C.running_out_num && Data_M_C.format_items_in_srorage__ary[i]["num"] != 0) {
                     ids.push(Data_M_C.format_items_in_srorage__ary[i]["id"])
-                    
+
                 }
             }
             return ids
-         }
+        }
 
-         sort_max_items_sall_by_num(){
+        sort_max_items_sall_by_num() {
             const sortedSales = [...Data_M_C.format_record_sales__ary].sort((a, b) => b.total_num - a.total_num);
-           return sortedSales
-         }
+            return sortedSales
+        }
 
 
 
@@ -1363,12 +1414,12 @@ window.addEventListener('DOMContentLoaded', () => {
 
         }
         set_event() {
-         
-            document.getElementById('storage').onclick =()=>{
-                document.getElementById('storage_page').style.display="block"
+
+            document.getElementById('storage').onclick = () => {
+                document.getElementById('storage_page').style.display = "block"
                 Storage_M_C.cancel_buy_fatora()
             }
-            
+
             // document.getElementById('conrol-2').onclick =()=>{
             //     document.getElementById('storage_page').style.display="block"
             //     document.getElementById('buy_fatora_box').style.display="none"
@@ -1377,8 +1428,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
             document.getElementById('add_new_buy_fatora_button').onclick = () => {
-               document.getElementById('buy_fatora_box').style.display="block"
-                 document.getElementById('storage_page').style.display="none"
+                document.getElementById('buy_fatora_box').style.display = "block"
+                document.getElementById('storage_page').style.display = "none"
                 Storage_M_C.start_buy_fatora()
             }
 
@@ -1393,8 +1444,17 @@ window.addEventListener('DOMContentLoaded', () => {
             }
             document.getElementById('cancel_buy_fatora_button').onclick = () => {
                 Storage_M_C.cancel_buy_fatora()
-                 document.getElementById('storage_page').style.display="block"
+                document.getElementById('storage_page').style.display = "block"
             }
+            document.getElementById("morid_name").onclick = () => {
+                document.getElementById("morid").style.display = "flex"
+            }
+
+            document.getElementById("morid_name").oninput = () => {
+                Moarid_M_C.show_moarid_in_input()
+
+            }
+
 
         }
 
@@ -1438,7 +1498,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
     // ***********************(استدعاء كائنات من الاصناف )**************************//
-    
+
     const Date_MC = new DateMC()
     const Data_M_C = new DataMC()
     const Record_M_C = new RecordMC()
@@ -1446,8 +1506,8 @@ window.addEventListener('DOMContentLoaded', () => {
     const Moarid_M_C = new MoaridMC()
     const Customers_M_C = new CustomersMC
     const Events_M_C = new Events()
-    const Statistics_M_C=new Statistics()
-//   console.log(Statistics_M_C.sort_max_items_sall_by_num())
+    const Statistics_M_C = new Statistics()
+    //   console.log(Statistics_M_C.sort_max_items_sall_by_num())
     // Customers_M_C.add_customers()
     // Storage_M_C.start_sell_fatora()
     // Storage_M_C.add_item_to_sell_fatora()

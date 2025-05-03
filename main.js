@@ -3,8 +3,8 @@ const path = require('path');
 
 app.whenReady().then(() => {
     const mainWindow = new BrowserWindow({
-        width: 800,
-        height: 600,
+        minWidth: 1629,
+        minHeight: 869,
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
             contextIsolation: true, 
@@ -13,5 +13,6 @@ app.whenReady().then(() => {
         }
     });
 
+    mainWindow.maximize()
     mainWindow.loadFile('index.html');
 });

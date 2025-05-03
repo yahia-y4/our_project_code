@@ -187,6 +187,8 @@ body {
     background: #001E33;
     border: none;
     font-size: 17px;
+    color: #fff;
+    outline: none;
 
 }
 
@@ -567,6 +569,7 @@ line-height: 22px; /* 137.5% */
     display: flex;
     flex-direction: column;
     margin-bottom: 16px;
+    position: relative;
 }
 
 .aav label {
@@ -588,9 +591,42 @@ line-height: 22px; /* 137.5% */
     border-radius: 13px;
     background-color: #001E33;
     border: none;
+    outline: none; 
 }
 
+#morid{
+    display: none; /* مخفية مبدئيا */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #00365c;
+    border: 1px solid #ccc;
+    margin-top: 5px;
+    padding: 10px;
+    border-radius: 5px;
+    max-height: 150px;
+    overflow-y: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
 
+}
+#morid span{
+    background: #0194FF;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    white-space: nowrap; /* يمنع نزول الكلمة على سطرين */
+    flex-grow: 1;
+    text-align: center;
+    min-width: 80px;
+    color: #000F1A;
+    font-size: 20;
+}
+.morid_name{
+    position: relative;
+}
 
 #total_price_div,
 #total_price_span {
