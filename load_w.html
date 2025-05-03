@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading</title>
+    <style>
+        body {
+            background-color: #000F1A;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        .loading-text {
+          color: #20c0ff;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .progress-container {
+            width: 80%;
+            background-color: #dfecf7;
+            border-radius: 10px;
+            overflow: hidden;
+            height: 20px;
+        }
+        .progress-bar {
+            height: 100%;
+            background-color: #20c0ff;
+            width: 0%;
+            transition: width 0.1s;
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-text" >... تحميل </div>
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <script>
+        // JavaScript لزيادة التقدم في شريط التحميل
+        let progress = 0;
+        const progressBar = document.getElementById('progressBar');
+
+        function updateProgress() {
+            if (progress < 100) {
+                progress += 1; // زيادة التقدم بنسبة 1%
+                progressBar.style.width = progress + '%';
+            }
+        }
+
+        setInterval(updateProgress, 20); // تحديث التقدم كل 50 ملي ثانية
+    </script>
+</body>
+</html>
