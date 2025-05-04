@@ -106,7 +106,7 @@ body {
 
 }
 
-#storage_page{
+#storage_page {
     display: none;
 }
 
@@ -243,6 +243,46 @@ body {
 
 }
 
+.title-TopSellingProducts {
+    color: #FFF;
+
+    font-feature-settings: 'liga' off, 'clig' off;
+
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 35px;
+}
+
+.quick-search {
+    margin-top: 15px;
+    color: #FFF;
+
+    font-feature-settings: 'liga' off, 'clig' off;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 35px;
+}
+
+.notification-popup {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 17px;
+    align-self: stretch;
+}
+#alert-message{
+    width: 100%;
+}
+#one_alert-message {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+   
+}
+
 /* عرض المنتجات الاكثر مبيعا */
 
 
@@ -313,7 +353,7 @@ body {
     margin: 30px 0;
 }
 
-.inf-box-all-item h3 {
+.title_serch {
     color: #FFF;
 
     text-align: right;
@@ -322,18 +362,17 @@ body {
     font-weight: 400;
 }
 
-.inf-box-all-item div {
+.search_input {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 9px;
     margin-top: 10px;
 }
 
-.inf-box-all-item div input {
+.search_input input {
     display: flex;
     width: 70vw;
-    margin-left: 28px;
+    margin-left: 30px;
     height: 50px;
     padding: 20px 20px;
     flex-direction: column;
@@ -349,7 +388,7 @@ body {
 
 }
 
-.inf-box-all-item div .icon {
+.search_input .icon {
     display: flex;
     width: 40px;
     height: 40px;
@@ -363,10 +402,7 @@ body {
     cursor: pointer;
 }
 
-.inf-box-all-item div .icon img {
-    width: 30px;
-    height: 30px;
-}
+
 
 /* الترويسة  */
 .title_in_show_table {
@@ -468,9 +504,7 @@ body {
 
 }
 
-#add_new_buy_fatora_button,
-#quick-action--stock-report,
-#quick-action--stock-audit {
+.button {
     display: flex;
     width: 100px;
     height: 35px;
@@ -493,7 +527,9 @@ body {
     line-height: 22px;
 }
 
-#add_new_buy_fatora_button {
+#add_new_buy_fatora_button,
+#quick-sale__process,
+#add_new_product_button {
     color: #ffff;
     background: #634AFF;
 }
@@ -754,6 +790,7 @@ body {
 }
 
 #morid {
+    width: 80%;
     display: none;
     /* مخفية مبدئيا */
     position: absolute;
@@ -774,6 +811,7 @@ body {
 }
 
 #morid span {
+    display: block;
     background: #0194FF;
     padding: 8px 12px;
     border-radius: 5px;
