@@ -8,6 +8,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
     class DataMC {
         constructor() {
+
             //storage ------------------------------
             this.all_items_in_storage__ary = []
             this.format_items_in_srorage__ary = []
@@ -47,6 +48,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
             //--------------
             this.running_out_num = 5
+            this.zero_number = 0
 
 
             // التاكد من وجود المجلدات --------------
@@ -57,6 +59,10 @@ window.addEventListener('DOMContentLoaded', () => {
             this.make_dirs('./Data/Moarid')
             this.make_dirs('./Data/Customers')
             this.make_dirs('./Data/Sell_fatora')
+
+
+            //حفظ تاريخ بدء استخدام التطبيق---------
+            this.start_use_date()
 
 
 
@@ -90,6 +96,30 @@ window.addEventListener('DOMContentLoaded', () => {
         make_dirs(dirPath) {
             if (!fs.existsSync(dirPath)) {
                 fs.mkdirSync(dirPath, { recursive: true });
+            }
+        }
+
+        start_use_date() {
+            if (!fs.existsSync('./Data/Start_use_date')) {
+                fs.mkdirSync('./Data/Start_use_date', { recursive: true });
+                const now = new Date();
+                const dayNames = ["الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس", "الجمعة", "السبت"];
+                const monthNames = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
+
+                let start_use_data = {
+                    "hour": now.getHours(),
+                    "day_week_name": dayNames[now.getDay()],
+                    "day_week_num": now.getDay() + 1,
+                    "month_name":monthNames[now.getMonth()],
+                    "month_num": now.getMonth() +1,
+                    "day_in_month": now.getDate(),
+                    "year": now.getFullYear()
+                }
+
+                fs.writeFileSync('./Data/Start_use_date/start_use_date.json', JSON.stringify(start_use_data), 'utf-8')
+                console.log("تم انشاء ملف بدء الاستخدام ")
+            }else{
+                console.log("ملف بدء الاستخدام موجود ")
             }
         }
 
@@ -1377,7 +1407,7 @@ window.addEventListener('DOMContentLoaded', () => {
         zero_items_in_storage() {
             let ids = []
             for (let i = 0; i < Data_M_C.format_items_in_srorage__ary.length; i++) {
-                if (Data_M_C.format_items_in_srorage__ary[i]["num"] == 0) {
+                if (Data_M_C.format_items_in_srorage__ary[i]["num"] == Data_M_C.zero_number) {
                     ids.push(Data_M_C.format_items_in_srorage__ary[i]["id"])
 
                 }
@@ -1388,7 +1418,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
             let ids = []
             for (let i = 0; i < Data_M_C.format_items_in_srorage__ary.length; i++) {
-                if (Data_M_C.format_items_in_srorage__ary[i]["num"] <= Data_M_C.running_out_num && Data_M_C.format_items_in_srorage__ary[i]["num"] != 0) {
+                if (Data_M_C.format_items_in_srorage__ary[i]["num"] <= Data_M_C.running_out_num && Data_M_C.format_items_in_srorage__ary[i]["num"] != Data_M_C.zero_number) {
                     ids.push(Data_M_C.format_items_in_srorage__ary[i]["id"])
 
                 }
