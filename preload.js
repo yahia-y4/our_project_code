@@ -1,9 +1,4 @@
 const fs = require('fs');
-const { parse } = require('path/posix');
-
-
-
-
 window.addEventListener('DOMContentLoaded', () => {
 
     class DataMC {
@@ -107,13 +102,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 const monthNames = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
 
                 let start_use_data = {
-                    "hour": now.getHours(),
-                    "day_week_name": dayNames[now.getDay()],
-                    "day_week_num": now.getDay() + 1,
-                    "month_name":monthNames[now.getMonth()],
-                    "month_num": now.getMonth() +1,
-                    "day_in_month": now.getDate(),
-                    "year": now.getFullYear()
+                 "date":Date_MC.getFormattedDateTime()
                 }
 
                 fs.writeFileSync('./Data/Start_use_date/start_use_date.json', JSON.stringify(start_use_data), 'utf-8')
@@ -407,7 +396,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
         }
     }
-
     class StorageMC {
         constructor() {
 
@@ -440,7 +428,7 @@ window.addEventListener('DOMContentLoaded', () => {
                         "total_price": 0,
                         "payment_status": "",
                         "amount_paid": 0,
-                        "date": Date_MC.getCurrentDate()
+                        "date":Date_MC.getFormattedDateTime()
                     })
 
             }
@@ -769,7 +757,7 @@ window.addEventListener('DOMContentLoaded', () => {
                         "total_price": 0,
                         "payment_status": "",
                         "amount_paid": 0,
-                        "date": Date_MC.getCurrentDate()
+                        "date": Date_MC.getFormattedDateTime()
                     }
                 )
 
@@ -1437,7 +1425,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
     }
-
     class Events {
         constructor() {
             this.set_event()
@@ -1490,45 +1477,24 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
     }
-
     class DateMC {
         constructor() {
 
         }
-
-        getCurrentTime12Hour() {
-            const now = new Date();
-
-            let hours = now.getHours();
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-
-            const period = hours >= 12 ? 'PM' : 'AM';
-            hours = hours % 12 || 12; // تحويل الساعة إلى تنسيق 12 ساعة
-
-            return `${hours}:${minutes}:${seconds} ${period}`;
-        }
-        getCurrentDate() {
-            const today = new Date();
-            const day = String(today.getDate()).padStart(2, '0'); // اليوم
-            const month = String(today.getMonth() + 1).padStart(2, '0'); // الشهر
-            const year = today.getFullYear(); // السنة
-
-            // يمكنك تعديل التنسيق حسب الحاجة
-            return `${day}/${month}/${year}`;
-        }
-
-        getDayOfWeek() {
-            const daysOfWeek = ['الأحد', 'الاثنين', 'الثلاثاء', 'الاربعاء', 'الخميس', 'الجمعة', 'السبت'];
-            const today = new Date();
-            return daysOfWeek[today.getDay()];
-        }
+        getFormattedDateTime() {
+            const today = new Date();  // الحصول على تاريخ اليوم مع الوقت
+            const year = today.getFullYear();
+            const month = (today.getMonth() + 1).toString().padStart(2, '0');  // الشهر يبدأ من 0
+            const day = today.getDate().toString().padStart(2, '0');  // إضافة صفر إذا كان اليوم أقل من 10
+            const hours = today.getHours().toString().padStart(2, '0');  // إضافة صفر إذا كانت الساعة أقل من 10
+            const minutes = today.getMinutes().toString().padStart(2, '0');  // إضافة صفر إذا كانت الدقائق أقل من 10
+            const seconds = today.getSeconds().toString().padStart(2, '0');  // إضافة صفر إذا كانت الثواني أقل من 10
+          
+            return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;  // التنسيق "YYYY-MM-DDTHH:MM:SS"
+          }
     }
 
-
-
     // ***********************(استدعاء كائنات من الاصناف )**************************//
-
     const Date_MC = new DateMC()
     const Data_M_C = new DataMC()
     const Record_M_C = new RecordMC()
@@ -1537,16 +1503,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const Customers_M_C = new CustomersMC
     const Events_M_C = new Events()
     const Statistics_M_C = new Statistics()
-    //   console.log(Statistics_M_C.sort_max_items_sall_by_num())
-    // Customers_M_C.add_customers()
-    // Storage_M_C.start_sell_fatora()
-    // Storage_M_C.add_item_to_sell_fatora()
-    // Storage_M_C.add_sell_fatora()
-    // Moarid_M_C.add_moarid()
-    // Storage_M_C.start_buy_fatora()
-    // Storage_M_C.add_item_to_buy_fatora()
-    // Storage_M_C.add_buy_fatora()
-
+ 
 })
 
 
