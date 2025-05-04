@@ -16,43 +16,82 @@ body {
 
 }
 
-/* الصفحة الجانبية  */
+
 .main_page {
+    /* الكتابة من اليمين لليسار  */
     direction: rtl;
+
     display: flex;
     width: 100%;
     height: 100%;
 }
 
+/* *************** S الصفحة الجانبية *********************** */
+/* تنسيق شكل الصفحة الاساسية التي تضم الشريط الجانبي  */
 #main_side_menu {
     background-color: #001E33;
     color: rgb(255, 255, 255);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
     direction: rtl;
-    padding-top: 60px;
+
     flex-shrink: 0;
     /* أو لا تكتبها لأن static هو الوضع الافتراضي */
-    width: 20vw;
+    width: 17vw;
     /* عرض الشاشة */
     height: 100vh;
-    /* ارتفاع الشاشة */
-    max-width: 20vw;
-    /* لا يكبر أكثر من الشاشة */
-    max-height: 100vh;
-
+    overflow: hidden;
 
 }
 
-#main_side_menu div {
-    margin-bottom: 20px;
-    margin-left: 20px;
+.style- {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.style- .title- {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+#main_side_menu header {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+}
+
+#main_side_menu header div {
+    margin-right: 10px;
     padding: 5px;
     border-radius: 10px;
-
+    display: flex;
+    flex-direction: row;
+    height: 35px;
+    align-items: center;
 }
 
-#main_side_menu div:hover {
+#main_side_menu header div:hover {
     background-color: #0194FF;
 }
+
+#main_side_menu div span {
+    color: #FAFAFA;
+
+    font-feature-settings: 'liga' off, 'clig' off;
+
+    font-size: 25px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 35px;
+    padding-right: 10px;
+    /* 140% */
+}
+
+/* *********************** E الشريط الجانبي *********************** E  */
 
 /* left_side_page  */
 .left_side_page {
@@ -62,6 +101,7 @@ body {
     margin-right: 30px;
     overflow-y: auto;
     overflow-x: hidden;
+
 
 
 }
@@ -93,8 +133,123 @@ body {
 
 }
 
+/********************************* صفحة الاساسية S <<<<<<<<<<<<<<<<<<<<< */
+/* cart style <<<S>>> */
+.cart {
+    display: flex;
+    width: 200px;
+    height: 200px;
+    padding: 15px 20px 35px 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    flex-shrink: 0;
+    border-radius: 20px;
+
+}
+
+.SalesCard {
+    background: #0194FF;
+}
+
+.InventoryCard,
+.ProfitCard,
+.AlertCard {
+    background: #001E33;
+}
+
+.icon-cart {
+    display: flex;
+    padding: 11px;
+    align-items: center;
+    gap: 10px;
+    border-radius: 26px;
+
+}
+
+.icon-InventoryCard,
+.icon-ProfitCard,
+.icon-AlertCard {
+    background-color: #000F1A;
+}
+
+.icon-SalesCard {
+    background-color: #FFFFFF;
+}
+
+.title-cart {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 13px;
+    align-self: stretch;
+}
+
+.title-cart h3 {
+    color: #F2F0FF;
+    font-feature-settings: 'liga' off, 'clig' off;
+    /* Title */
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 25px;
+    /* 125% */
+}
+
+.inf-cart {
+    color: var(--color, #484849);
+    font-feature-settings: 'liga' off, 'clig' off;
+    /* Headline */
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+}
+
+.bttun-cart {
+    margin-right: 60px;
+    margin-top: 10px;
+    display: flex;
+    width: 80px;
+    height: 30px;
+    padding: 10px 30px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 15px;
+
+    font-feature-settings: 'liga' off, 'clig' off;
+    /* Headline */
+
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+    cursor: pointer;
+}
+
+#bttun-SalesCard {
+    background: #FFF;
+    color: #0194FF;
+
+}
+
+#bttun-InventoryCard,
+#bttun-ProfitCard,
+#bttun-AlertCard {
+    background: #0194FF;
+    color: var(--color, #FFF);
+
+}
+
+/* عرض المنتجات الاكثر مبيعا */
+
+
+
+
 /* عرض عناصر الفاتورة  */
-#show_all_items_in_storage_box {
+.show_all_items_in_table {
     background-color: #001E33;
     margin-top: 15px;
 
@@ -136,6 +291,8 @@ body {
     border-bottom: 1px solid #2FABCD;
     color: #2FABCD;
 }
+
+
 
 .namber-is-prodact {
     width: fit-content;
@@ -212,7 +369,7 @@ body {
 }
 
 /* الترويسة  */
-#title_in_show_all_items_box {
+.title_in_show_table {
     display: flex;
     background-color: #00365c;
     height: 60px;
@@ -228,7 +385,7 @@ body {
 
 }
 
-#title_in_show_all_items_box span {
+.title_in_show_table span {
     width: 20%;
     border-right: 1px solid rgba(255, 255, 255, 0.52);
     text-align: center;
@@ -237,7 +394,7 @@ body {
 
 }
 
-#title_in_show_all_items_box .icon1 {
+.title_in_show_table .icon1 {
     width: 30px;
     height: 30px;
     display: flex;
@@ -246,7 +403,8 @@ body {
     border: none;
 }
 
-#show_all_items_div {
+/* عرض تفاصيل المنتجات  */
+.show_items_in_table {
     display: flex;
     flex-direction: column;
     direction: rtl;
@@ -263,6 +421,7 @@ body {
     align-items: center;
     border-bottom: 1px solid #000F1A;
     position: relative;
+
 }
 
 .one_item_in_storage_box span {
@@ -297,6 +456,7 @@ body {
     margin-bottom: 10px;
     /* 140% */
 }
+
 
 
 /* تنسيق ازرار العمليات اضافة فاتورة وتقرير وجرد  */
@@ -355,7 +515,7 @@ body {
     display: flex;
 
     padding: 15px 0px;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
 }
 
@@ -364,9 +524,9 @@ body {
 .stats-item--least-selling,
 .stats-item--top-selling {
     display: flex;
-    width: 250px;
-    height: 250px;
-    padding: 33px 20px;
+    width: 200px;
+    height: 200px;
+    padding: 15px 20px 35px 20px;
     flex-direction: column;
     align-items: flex-start;
     gap: 15px;
@@ -378,7 +538,9 @@ body {
     background: #0194FF;
 }
 
-.stats-item--low-stock .icon-low-stock svg {
+.stats-item--low-stock .icon-low-stock svg,
+.icon-top-selling svg,
+.icon-least-selling svg {
     width: 30px;
     height: 30px;
     aspect-ratio: 1/1;
@@ -432,7 +594,7 @@ body {
 }
 
 #inf--low-stock {
-    color: var(--color, #65676B);
+    color: var(--color, #3e4042);
     font-feature-settings: 'liga' off, 'clig' off;
     /* Headline */
 
@@ -472,12 +634,6 @@ body {
     background: #001E33;
 }
 
-.icon-top-selling svg,
-.icon-least-selling svg {
-    width: 30px;
-    height: 30px;
-    aspect-ratio: 1/1;
-}
 
 .icon-least-selling,
 .icon-top-selling {
@@ -522,21 +678,24 @@ body {
     line-height: 22px;
     /* 122.222% */
 }
-.inf-stats-item--top-selling ,.inf-stats-item--least-selling{
-    display: flex;
-justify-content: flex-end;
-align-items: flex-start;
-gap: 10px;
-align-self: stretch;
-/* تنسيق الخط  */
-color: var(--color, #65676B);
-font-feature-settings: 'liga' off, 'clig' off;
-/* Headline */
 
-font-size: 16px;
-font-style: normal;
-font-weight: 400;
-line-height: 22px; /* 137.5% */
+.inf-stats-item--top-selling,
+.inf-stats-item--least-selling {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    gap: 10px;
+    align-self: stretch;
+    /* تنسيق الخط  */
+    color: var(--color, #65676B);
+    font-feature-settings: 'liga' off, 'clig' off;
+    /* Headline */
+
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
+    /* 137.5% */
 }
 
 /* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> */
@@ -591,11 +750,12 @@ line-height: 22px; /* 137.5% */
     border-radius: 13px;
     background-color: #001E33;
     border: none;
-    outline: none; 
+    outline: none;
 }
 
-#morid{
-    display: none; /* مخفية مبدئيا */
+#morid {
+    display: none;
+    /* مخفية مبدئيا */
     position: absolute;
     top: 100%;
     left: 0;
@@ -612,19 +772,22 @@ line-height: 22px; /* 137.5% */
     gap: 8px;
 
 }
-#morid span{
+
+#morid span {
     background: #0194FF;
     padding: 8px 12px;
     border-radius: 5px;
     cursor: pointer;
-    white-space: nowrap; /* يمنع نزول الكلمة على سطرين */
+    white-space: nowrap;
+    /* يمنع نزول الكلمة على سطرين */
     flex-grow: 1;
     text-align: center;
     min-width: 80px;
     color: #000F1A;
     font-size: 20;
 }
-.morid_name{
+
+.morid_name {
     position: relative;
 }
 
@@ -861,7 +1024,9 @@ p {
 
 
 
-
+#storage_page {
+    display: none;
+}
 
 
 
