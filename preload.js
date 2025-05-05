@@ -1,6 +1,4 @@
 const fs = require('fs');
-const path = require('path');
-
 window.addEventListener('DOMContentLoaded', () => {
 
     class DataMC {
@@ -1263,7 +1261,7 @@ window.addEventListener('DOMContentLoaded', () => {
     }
     class Statistics {
         constructor() {
-
+this.ten_max_sall_by_num()
         }
 
         get_items_from_seles_record_by_date(date, period) {
@@ -1438,6 +1436,16 @@ window.addEventListener('DOMContentLoaded', () => {
             const sortedSales = [...Data_M_C.format_record_sales__ary].sort((a, b) => b.total_num - a.total_num);
             return sortedSales
         }
+        ten_max_sall_by_num() {
+            let data = this.sort_max_items_sall_by_num();
+        
+            let top10Ids = data.slice(0, 10).map(item => item.id);
+            let itemMap = new Map(Data_M_C.format_items_in_srorage__ary.map(item => [item.id, item]));
+            let results = top10Ids.map(id => itemMap.get(id));
+        
+          return results
+        }
+        
 
         total_seles_in_last_day() {
             let data = this.get_items_from_seles_record_by_date(Date_MC.getFormattedDateTime(), "day")
@@ -1458,13 +1466,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
             return total
         }
-
-
-
-
-
-
-
 
     }
     class Events {
@@ -1546,12 +1547,12 @@ window.addEventListener('DOMContentLoaded', () => {
             return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;  // التنسيق "YYYY-MM-DDTHH:MM:SS"
         }
     }
-
     class ShowMC{
         constructor(){
             this.show_total_selse_last_day_in_control_page()
             this.show_total_profit_last_day_in_control_page()
             this.show_num_of_items_in_control_page()
+            this.show_max_items_in_control_page()
          
 
 
@@ -1589,6 +1590,36 @@ window.addEventListener('DOMContentLoaded', () => {
         }
         show_num_of_items_in_control_page(){
             document.getElementById('namber-InventoryCard').innerText=Statistics_M_C.num_of_items_in_storage()
+        }
+
+        show_max_items_in_control_page(){
+          let data = Statistics_M_C.ten_max_sall_by_num()
+          let container = document.getElementById("show_TopSellingProducts")
+          container.innerHTML="";
+          for(let i =0;i<data.length;i++){
+            container.innerHTML+=`
+            
+                        <div class="one_item_in_storage_box">
+
+                            <span>${data[i]["name"]} </span>
+                            <span>${data[i]["co_name"]}  </span>
+                            <span> ${data[i]["finall_price"]}  </span>
+                            <span>${data[i]["num"]}  </span>
+                            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                    viewBox="0 0 24 24" fill="none">
+                                    <path
+                                        d="M12 13C12.2652 13 12.5196 12.8946 12.7071 12.7071C12.8946 12.5196 13 12.2652 13 12C13 11.7348 12.8946 11.4804 12.7071 11.2929C12.5196 11.1054 12.2652 11 12 11C11.7348 11 11.4804 11.1054 11.2929 11.2929C11.1054 11.4804 11 11.7348 11 12C11 12.2652 11.1054 12.5196 11.2929 12.7071C11.4804 12.8946 11.7348 13 12 13ZM12 20C12.2652 20 12.5196 19.8946 12.7071 19.7071C12.8946 19.5196 13 19.2652 13 19C13 18.7348 12.8946 18.4804 12.7071 18.2929C12.5196 18.1054 12.2652 18 12 18C11.7348 18 11.4804 18.1054 11.2929 18.2929C11.1054 18.4804 11 18.7348 11 19C11 19.2652 11.1054 19.5196 11.2929 19.7071C11.4804 19.8946 11.7348 20 12 20ZM12 6C12.2652 6 12.5196 5.89464 12.7071 5.70711C12.8946 5.51957 13 5.26522 13 5C13 4.73478 12.8946 4.48043 12.7071 4.29289C12.5196 4.10536 12.2652 4 12 4C11.7348 4 11.4804 4.10536 11.2929 4.29289C11.1054 4.48043 11 4.73478 11 5C11 5.26522 11.1054 5.51957 11.2929 5.70711C11.4804 5.89464 11.7348 6 12 6Z"
+                                        fill="#CCEAFF" />
+                                    <path
+                                        d="M12 13C12.2652 13 12.5196 12.8946 12.7071 12.7071C12.8946 12.5196 13 12.2652 13 12C13 11.7348 12.8946 11.4804 12.7071 11.2929C12.5196 11.1054 12.2652 11 12 11C11.7348 11 11.4804 11.1054 11.2929 11.2929C11.1054 11.4804 11 11.7348 11 12C11 12.2652 11.1054 12.5196 11.2929 12.7071C11.4804 12.8946 11.7348 13 12 13ZM12 20C12.2652 20 12.5196 19.8946 12.7071 19.7071C12.8946 19.5196 13 19.2652 13 19C13 18.7348 12.8946 18.4804 12.7071 18.2929C12.5196 18.1054 12.2652 18 12 18C11.7348 18 11.4804 18.1054 11.2929 18.2929C11.1054 18.4804 11 18.7348 11 19C11 19.2652 11.1054 19.5196 11.2929 19.7071C11.4804 19.8946 11.7348 20 12 20ZM12 6C12.2652 6 12.5196 5.89464 12.7071 5.70711C12.8946 5.51957 13 5.26522 13 5C13 4.73478 12.8946 4.48043 12.7071 4.29289C12.5196 4.10536 12.2652 4 12 4C11.7348 4 11.4804 4.10536 11.2929 4.29289C11.1054 4.48043 11 4.73478 11 5C11 5.26522 11.1054 5.51957 11.2929 5.70711C11.4804 5.89464 11.7348 6 12 6Z"
+                                        fill="#CCEAFF" stroke="#0194FF" stroke-width="1.5" stroke-miterlimit="10" />
+                                </svg> </span>
+
+                        </div>
+            
+            `
+          }
+            
         }
 
     }
