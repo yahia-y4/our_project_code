@@ -1,4 +1,6 @@
 const fs = require('fs');
+const path = require('path');
+
 window.addEventListener('DOMContentLoaded', () => {
 
     class DataMC {
@@ -1503,7 +1505,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const Customers_M_C = new CustomersMC
     const Events_M_C = new Events()
     const Statistics_M_C = new Statistics()
- 
+    
 })
 
 

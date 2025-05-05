@@ -28,7 +28,7 @@ load_win.loadFile('load_w.html')
     backgroundColor: '#000F1A',
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
-      contextIsolation: true,
+      contextIsolation: false,
       nodeIntegration: true,
     }
   });
