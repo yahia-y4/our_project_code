@@ -104,12 +104,12 @@ window.addEventListener('DOMContentLoaded', () => {
                 const monthNames = ["يناير", "فبراير", "مارس", "أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر", "أكتوبر", "نوفمبر", "ديسمبر"];
 
                 let start_use_data = {
-                 "date":Date_MC.getFormattedDateTime()
+                    "date": Date_MC.getFormattedDateTime()
                 }
 
                 fs.writeFileSync('./Data/Start_use_date/start_use_date.json', JSON.stringify(start_use_data), 'utf-8')
                 console.log("تم انشاء ملف بدء الاستخدام ")
-            }else{
+            } else {
                 console.log("ملف بدء الاستخدام موجود ")
             }
         }
@@ -420,6 +420,7 @@ window.addEventListener('DOMContentLoaded', () => {
             if (Data_M_C.buy_fatora_is_run == false) {
                 this.start_i_in_buy_fatora = Data_M_C.all_items_in_storage__ary.length
                 Data_M_C.buy_fatora_is_run = true
+                let date = new Date(Date_MC.getFormattedDateTime())
                 Data_M_C.buy_fatora_ary.push(
                     {
                         "id": this.rice_buy_fatora_id(),
@@ -430,7 +431,7 @@ window.addEventListener('DOMContentLoaded', () => {
                         "total_price": 0,
                         "payment_status": "",
                         "amount_paid": 0,
-                        "date":Date_MC.getFormattedDateTime()
+                        "date":date.getTime()
                     })
 
             }
@@ -749,6 +750,7 @@ window.addEventListener('DOMContentLoaded', () => {
         start_sell_fatora() {
             if (Data_M_C.sell_fatora_is_run == false) {
                 Data_M_C.sell_fatora_is_run = true
+                let date = new Date(Date_MC.getFormattedDateTime())
                 Data_M_C.sell_fatora__ary.push(
                     {
                         "id": this.rice_sell_fatora_id(),
@@ -759,7 +761,7 @@ window.addEventListener('DOMContentLoaded', () => {
                         "total_price": 0,
                         "payment_status": "",
                         "amount_paid": 0,
-                        "date": Date_MC.getFormattedDateTime()
+                        "date":date.getTime()
                     }
                 )
 
@@ -1281,6 +1283,40 @@ window.addEventListener('DOMContentLoaded', () => {
         constructor() {
 
         }
+
+        get_items_from_seles_record_by_date(date, period) {
+            const data1 = new Date(date);
+            const stop_date = new Date(data1);
+        
+            if (period === "day") {
+                stop_date.setDate(data1.getDate() - 1);
+            } else if (period === "week") {
+                stop_date.setDate(data1.getDate() - 7);
+            } else if (period === "month") {
+                stop_date.setMonth(data1.getMonth() - 1);
+            } else if (period === "year") {
+                stop_date.setFullYear(data1.getFullYear() - 1);
+            } else {
+                console.log("خطأ: فترة غير معروفة");
+                return;
+            }
+        let items_in_date=[];
+            const targetDate = data1.getTime();
+            const stopDateTime = stop_date.getTime();
+            for (let i = Data_M_C.all_sales_record__ary.length - 1; i >= 0; i--) {
+             
+                if (Data_M_C.all_sales_record__ary[i]["sell_date"] <= targetDate && Data_M_C.all_sales_record__ary[i]["sell_date"] > stopDateTime) {
+                 items_in_date.push(Data_M_C.all_sales_record__ary[i]);
+                }else if(Data_M_C.all_sales_record__ary[i]["sell_date"] <= stopDateTime){
+                    console.log("stop")
+                    break
+                }
+                 
+            }
+            return items_in_date
+        }
+        
+
         max_one_item_sell_by_num() {
             let result = {
                 max: -Infinity,
@@ -1434,9 +1470,18 @@ window.addEventListener('DOMContentLoaded', () => {
         }
         set_event() {
 
+
+
             document.getElementById('storage').onclick = () => {
                 document.getElementById('storage_page').style.display = "block"
-                Storage_M_C.cancel_buy_fatora()
+                document.getElementById('Control_panel_page').style.display = "none"
+
+            }
+
+            document.getElementById('Control_panel').onclick = () => {
+                document.getElementById('storage_page').style.display = "none"
+                document.getElementById('Control_panel_page').style.display = "block"
+
             }
 
             // document.getElementById('conrol-2').onclick =()=>{
@@ -1483,6 +1528,8 @@ window.addEventListener('DOMContentLoaded', () => {
         constructor() {
 
         }
+
+
         getFormattedDateTime() {
             const today = new Date();  // الحصول على تاريخ اليوم مع الوقت
             const year = today.getFullYear();
@@ -1491,9 +1538,9 @@ window.addEventListener('DOMContentLoaded', () => {
             const hours = today.getHours().toString().padStart(2, '0');  // إضافة صفر إذا كانت الساعة أقل من 10
             const minutes = today.getMinutes().toString().padStart(2, '0');  // إضافة صفر إذا كانت الدقائق أقل من 10
             const seconds = today.getSeconds().toString().padStart(2, '0');  // إضافة صفر إذا كانت الثواني أقل من 10
-          
+
             return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;  // التنسيق "YYYY-MM-DDTHH:MM:SS"
-          }
+        }
     }
 
     // ***********************(استدعاء كائنات من الاصناف )**************************//
@@ -1505,7 +1552,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const Customers_M_C = new CustomersMC
     const Events_M_C = new Events()
     const Statistics_M_C = new Statistics()
-    
+
 })
 
 
