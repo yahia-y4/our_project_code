@@ -407,6 +407,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
             this.start_i_in_buy_fatora = 0
 
+
         }
 
 
@@ -431,7 +432,7 @@ window.addEventListener('DOMContentLoaded', () => {
                         "total_price": 0,
                         "payment_status": "",
                         "amount_paid": 0,
-                        "date":date.getTime()
+                        "date": date.getTime()
                     })
 
             }
@@ -761,7 +762,7 @@ window.addEventListener('DOMContentLoaded', () => {
                         "total_price": 0,
                         "payment_status": "",
                         "amount_paid": 0,
-                        "date":date.getTime()
+                        "date": date.getTime()
                     }
                 )
 
@@ -776,14 +777,14 @@ window.addEventListener('DOMContentLoaded', () => {
             let num = 12
             let sell_price = 5
             let code = "111"
-            let profit = 0.2
+            let profit 
             let find = false
 
             if (id > 0) {
                 if (sell_fatora_id > 0) {
                     if (name) {
                         if (co_name) {
-                            if ((+num) > 0) {
+                            if ((+num) > Data_M_C.zero_number) {
                                 if ((+sell_price) > 0) {
                                     if (code) {
 
@@ -792,8 +793,9 @@ window.addEventListener('DOMContentLoaded', () => {
                                             if (id == Data_M_C.format_items_in_srorage__ary[i]["id"]) {
 
                                                 if ((+Data_M_C.format_items_in_srorage__ary[i]["num"]) >= num) {
-
                                                     Data_M_C.format_items_in_srorage__ary[i]["num"] -= num
+
+                                                    profit = Data_M_C.format_items_in_srorage__ary[i]["profit"]
                                                     Data_M_C.all_sales_record__ary.push({
                                                         "id": id,
                                                         "sell_fatora_id": sell_fatora_id,
@@ -801,6 +803,8 @@ window.addEventListener('DOMContentLoaded', () => {
                                                         "co_name": co_name,
                                                         "num": num,
                                                         "sell_price": sell_price,
+                                                        "profit":profit,
+                                                        "all_profit":num * profit,
                                                         "all_sell_price": num * sell_price,
                                                         "code": code,
                                                         "sell_date": Data_M_C.sell_fatora__ary[Data_M_C.sell_fatora__ary.length - 1]["date"]
@@ -1053,33 +1057,11 @@ window.addEventListener('DOMContentLoaded', () => {
 
         }
 
+               
 
-        // ------------(S عرض الادوية في صفحة المخزون )---------------
+     
 
-        show_all_items_in_storage() {
-            Data_M_C.handel_format_items__ary;
-            let data = Data_M_C.format_items_in_srorage__ary
-            const container = document.getElementById('show_all_items_div');
-            container.innerHTML = "";
-
-            for (let i = 0; i < data.length; i++) {
-                container.innerHTML += `
-                        <div class="one_item_in_storage_box" data-index="${i}">
-
-                            <span>${data[i]["name"]} </span>
-                            <span>${data[i]["co_name"]} </span>
-                            <span> ${data[i]["finall_price"]} </span>
-                            <span>${data[i]["num"]} </span>
-                            <span class="icon"><img src="icon/si_more-vert-duotone.svg" alt=""> </span>
-                            
-                        </div>
-                `;
-            }
-
-
-        }
-
-        // ------------(E عرض الادوية في صفحة المخزون )---------------
+       
 
     }
     class RecordMC {
@@ -1287,7 +1269,7 @@ window.addEventListener('DOMContentLoaded', () => {
         get_items_from_seles_record_by_date(date, period) {
             const data1 = new Date(date);
             const stop_date = new Date(data1);
-        
+
             if (period === "day") {
                 stop_date.setDate(data1.getDate() - 1);
             } else if (period === "week") {
@@ -1300,22 +1282,22 @@ window.addEventListener('DOMContentLoaded', () => {
                 console.log("خطأ: فترة غير معروفة");
                 return;
             }
-        let items_in_date=[];
+            let items_in_date = [];
             const targetDate = data1.getTime();
             const stopDateTime = stop_date.getTime();
             for (let i = Data_M_C.all_sales_record__ary.length - 1; i >= 0; i--) {
-             
+
                 if (Data_M_C.all_sales_record__ary[i]["sell_date"] <= targetDate && Data_M_C.all_sales_record__ary[i]["sell_date"] > stopDateTime) {
-                 items_in_date.push(Data_M_C.all_sales_record__ary[i]);
-                }else if(Data_M_C.all_sales_record__ary[i]["sell_date"] <= stopDateTime){
-                    console.log("stop")
+                    items_in_date.push(Data_M_C.all_sales_record__ary[i]);
+                } else if (Data_M_C.all_sales_record__ary[i]["sell_date"] <= stopDateTime) {
+                
                     break
                 }
-                 
+
             }
             return items_in_date
         }
-        
+
 
         max_one_item_sell_by_num() {
             let result = {
@@ -1423,7 +1405,7 @@ window.addEventListener('DOMContentLoaded', () => {
         num_of_items_in_storage() {
             let num = 0
             for (let i = 0; i < Data_M_C.format_items_in_srorage__ary.length; i++) {
-                if (Data_M_C.format_items_in_srorage__ary[i]["num"] > 0) {
+                if (Data_M_C.format_items_in_srorage__ary[i]["num"] > Data_M_C.zero_number) {
                     num++
                 }
             }
@@ -1456,6 +1438,28 @@ window.addEventListener('DOMContentLoaded', () => {
             const sortedSales = [...Data_M_C.format_record_sales__ary].sort((a, b) => b.total_num - a.total_num);
             return sortedSales
         }
+
+        total_seles_in_last_day() {
+            let data = this.get_items_from_seles_record_by_date(Date_MC.getFormattedDateTime(), "day")
+            let total = 0;
+            for (let i = 0; i < data.length; i++) {
+                total += data[i]["all_sell_price"]
+            }
+
+            return total
+
+        }
+        total_profit_in_last_day(){
+            let data = this.get_items_from_seles_record_by_date(Date_MC.getFormattedDateTime(), "day")
+            let total = 0;
+            for (let i = 0; i < data.length; i++) {
+                total += data[i]["all_profit"]
+            }
+
+            return total
+        }
+
+
 
 
 
@@ -1543,6 +1547,52 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    class ShowMC{
+        constructor(){
+            this.show_total_selse_last_day_in_control_page()
+            this.show_total_profit_last_day_in_control_page()
+            this.show_num_of_items_in_control_page()
+         
+
+
+
+        }
+
+        show_all_items_in_storage() {
+            Data_M_C.handel_format_items__ary;
+            let data = Data_M_C.format_items_in_srorage__ary
+            const container = document.getElementById('show_all_items_div');
+            container.innerHTML = "";
+
+            for (let i = 0; i < data.length; i++) {
+                container.innerHTML += `
+                        <div class="one_item_in_storage_box" data-index="${i}">
+
+                            <span>${data[i]["name"]} </span>
+                            <span>${data[i]["co_name"]} </span>
+                            <span> ${data[i]["finall_price"]} </span>
+                            <span>${data[i]["num"]} </span>
+                          
+                            
+                        </div>
+                `;
+            }
+
+
+        }
+            // عرض مبيعات هذا الييوم في صفحة التحكم 
+        show_total_selse_last_day_in_control_page(){
+        document.getElementById('namber-SalesCard').innerText = Statistics_M_C.total_seles_in_last_day()
+        }
+        show_total_profit_last_day_in_control_page(){
+        document.getElementById('namber-ProfitCard').innerText = Statistics_M_C.total_profit_in_last_day()
+        }
+        show_num_of_items_in_control_page(){
+            document.getElementById('namber-InventoryCard').innerText=Statistics_M_C.num_of_items_in_storage()
+        }
+
+    }
+
     // ***********************(استدعاء كائنات من الاصناف )**************************//
     const Date_MC = new DateMC()
     const Data_M_C = new DataMC()
@@ -1552,6 +1602,7 @@ window.addEventListener('DOMContentLoaded', () => {
     const Customers_M_C = new CustomersMC
     const Events_M_C = new Events()
     const Statistics_M_C = new Statistics()
+    const Show_M_C = new ShowMC()
 
 })
 
