@@ -405,7 +405,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
             this.start_i_in_buy_fatora = 0
 
-
         }
 
 
@@ -1055,11 +1054,21 @@ window.addEventListener('DOMContentLoaded', () => {
 
         }
 
-               
 
-     
-
-       
+        //--------------------------------------------
+        search_in_storage(value){
+            let data = Data_M_C.format_items_in_srorage__ary
+            value = value.replace(/\s+/g,'').toLowerCase();
+            let result
+            for(let i =0;i<data.length;i++){
+                
+               if(value == (data[i]["name"]+data[i]["co_name"]) || value == data[i]["code"]){
+                return data[i]
+                
+               }
+            }
+        }
+   
 
     }
     class RecordMC {
@@ -1261,7 +1270,7 @@ window.addEventListener('DOMContentLoaded', () => {
     }
     class Statistics {
         constructor() {
-this.ten_max_sall_by_num()
+
         }
 
         get_items_from_seles_record_by_date(date, period) {
