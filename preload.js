@@ -41,6 +41,9 @@ window.addEventListener('DOMContentLoaded', () => {
             this.customers__ary = []
             this.customers__id = 0
 
+            //Notifications---------------------------
+            this.Notifications__ary = []
+
             //--------------
             this.running_out_num = 5
             this.zero_number = 0
@@ -54,6 +57,7 @@ window.addEventListener('DOMContentLoaded', () => {
             this.make_dirs('./Data/Moarid')
             this.make_dirs('./Data/Customers')
             this.make_dirs('./Data/Sell_fatora')
+            this.make_dirs('./Data/Notifications')
 
 
             //حفظ تاريخ بدء استخدام التطبيق---------
@@ -83,6 +87,7 @@ window.addEventListener('DOMContentLoaded', () => {
             this.load_customers_id__file()
             this.load_sell_fatora__file()
             this.load_sell_fatora_id__file()
+            this.load_Notifications__file()
             console.log('---------------------------------------------')
 
         }
@@ -290,7 +295,6 @@ window.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
-
         load_sell_fatora__file() {
 
             try {
@@ -323,6 +327,22 @@ window.addEventListener('DOMContentLoaded', () => {
                 }
             }
         }
+
+        load_Notifications__file() {
+            try {
+                this.handel_Notifications__ary()
+                console.log("تمت القراءة من ملف notifications.json")
+            } catch {
+                try {
+                    let data = []
+                    fs.writeFileSync('./Data/Notifications/notifications.json', JSON.stringify(data), 'utf-8')
+                    this.handel_Notifications__ary()
+                    console.log("لم يتم العثور على ملف  notifications.json (تم انشاؤه)")
+                } catch {
+                    console.log("خطا في تحميل الملف notifications.json")
+                }
+            }
+        }
         //-----------------------------------------------------------------------------------------------
 
 
@@ -352,26 +372,26 @@ window.addEventListener('DOMContentLoaded', () => {
         handel_buy_fatora_id() {
             this.buy_fatora_id = this.gave_me_data_from('./Data/Buy_fatora/buy_fatora_id.json')
         }
-
         handel_moirid__ary() {
             this.moarid__ary = this.gave_me_data_from('./Data/Moarid/moarid.json')
         }
         handel_moirid__id() {
             this.moarid__id = this.gave_me_data_from('./Data/Moarid/moarid_id.json')
         }
-
         handel_customers__ary() {
             this.customers__ary = this.gave_me_data_from('./Data/Customers/customers.json')
         }
         handel_customers__id() {
             this.customers__id = this.gave_me_data_from('./Data/Customers/customers_id.json')
         }
-
         handel_sell_fatora__ary() {
             this.sell_fatora__ary = this.gave_me_data_from('./Data/Sell_fatora/sell_fatora.json')
         }
         handel_sell_fatora__id() {
             this.sell_fatora__id = this.gave_me_data_from('./Data/Sell_fatora/sell_fatora_id.json')
+        }
+        handel_Notifications__ary() {
+            this.Notifications__ary = this.gave_me_data_from('./Data/Notifications/notifications.json')
         }
         //-----------------------------------------------------------------------------------------------
 
@@ -401,7 +421,6 @@ window.addEventListener('DOMContentLoaded', () => {
 
             this.t_id_for_add_item_in_sell_fatora = 1
             this.t_customer_id_for_add_sell_fatora = 1
-
 
             this.start_i_in_buy_fatora = 0
 
@@ -467,11 +486,16 @@ window.addEventListener('DOMContentLoaded', () => {
                                     for (let i = 0; i < Data_M_C.format_items_in_srorage__ary.length; i++) {
 
                                         if (Data_M_C.format_items_in_srorage__ary[i]["code"] == code) {
+                                            console.log("العنصر موجود في المخزن مسبقا ")
+                                            if (Data_M_C.format_items_in_srorage__ary[i]["num"] > 0) {
+                                                console.log("بما ان سجل الدواء موجود سيتم تحديث تاريخ انتهاء صلاحية الدواء ولكن يوجد قطع موجودة سابقا يفضل مراجعتها والتاكد منها بشكل يدوي")
+                                            }
                                             Data_M_C.format_items_in_srorage__ary[i]["num"] += num
                                             Data_M_C.format_items_in_srorage__ary[i]["price"] = price
                                             Data_M_C.format_items_in_srorage__ary[i]["profit"] = profit
+                                            Data_M_C.format_items_in_srorage__ary[i]["end_date"] = end_date
                                             id_item = Data_M_C.format_items_in_srorage__ary[i]["id"]
-                                            console.log("العنصر موجود في المخزن مسبقا ")
+
                                             find = true
                                             break
                                         }
@@ -529,6 +553,8 @@ window.addEventListener('DOMContentLoaded', () => {
                                     document.getElementById('profit_item_in_buy_fatora').value = ""
                                     document.getElementById('code_item_in_buy_fatora').value = ""
                                     document.getElementById('end_date_item_in_buy_fatora').value = ""
+
+
 
 
 
@@ -769,19 +795,19 @@ window.addEventListener('DOMContentLoaded', () => {
         add_item_to_sell_fatora() {
             let id = this.t_id_for_add_item_in_sell_fatora
             let sell_fatora_id = (+Data_M_C.sell_fatora__ary[Data_M_C.sell_fatora__ary.length - 1]["id"])
-            let name = "yyy"
-            let co_name = "yyy"
-            let num = 12
+            let name = "name"
+            let co_name = "co_name"
+            let num = 7
             let sell_price = 5
             let code = "111"
-            let profit 
+            let profit
             let find = false
 
             if (id > 0) {
                 if (sell_fatora_id > 0) {
                     if (name) {
                         if (co_name) {
-                            if ((+num) > Data_M_C.zero_number) {
+                            if ((+num) > 0) {
                                 if ((+sell_price) > 0) {
                                     if (code) {
 
@@ -789,9 +815,10 @@ window.addEventListener('DOMContentLoaded', () => {
                                         for (let i = 0; i < Data_M_C.format_items_in_srorage__ary.length; i++) {
                                             if (id == Data_M_C.format_items_in_srorage__ary[i]["id"]) {
 
-                                                if ((+Data_M_C.format_items_in_srorage__ary[i]["num"]) >= num) {
-                                                    Data_M_C.format_items_in_srorage__ary[i]["num"] -= num
+                                                if ((+Data_M_C.format_items_in_srorage__ary[i]["num"] - num) >= Data_M_C.zero_number) {
 
+
+                                                    Data_M_C.format_items_in_srorage__ary[i]["num"] -= num
                                                     profit = Data_M_C.format_items_in_srorage__ary[i]["profit"]
                                                     Data_M_C.all_sales_record__ary.push({
                                                         "id": id,
@@ -800,8 +827,8 @@ window.addEventListener('DOMContentLoaded', () => {
                                                         "co_name": co_name,
                                                         "num": num,
                                                         "sell_price": sell_price,
-                                                        "profit":profit,
-                                                        "all_profit":num * profit,
+                                                        "profit": profit,
+                                                        "all_profit": num * profit,
                                                         "all_sell_price": num * sell_price,
                                                         "code": code,
                                                         "sell_date": Data_M_C.sell_fatora__ary[Data_M_C.sell_fatora__ary.length - 1]["date"]
@@ -833,11 +860,17 @@ window.addEventListener('DOMContentLoaded', () => {
                                                     Data_M_C.sell_fatora__ary[Data_M_C.sell_fatora__ary.length - 1]["num_pieces"] += num
 
 
+
+                                                    // فحص الاشعارات 
+                                                    Notifications_M_C.Notificat_when_empty_item(Data_M_C.format_items_in_srorage__ary[i])
+                                                    Notifications_M_C.Notifications_when_running_out_item(Data_M_C.format_items_in_srorage__ary[i])
+
+
                                                     return
 
 
                                                 } else {
-                                                    console.log("num not enagh")
+                                                    console.log("num n ot enagh")
                                                     return
                                                 }
                                             }
@@ -929,6 +962,7 @@ window.addEventListener('DOMContentLoaded', () => {
                         Data_M_C.geve_data_toSave_in('./Data/Sales/all_record_sales.json', Data_M_C.all_sales_record__ary)
                         Data_M_C.geve_data_toSave_in('./Data/Sales/format_record_sales.json', Data_M_C.format_record_sales__ary)
                         Data_M_C.geve_data_toSave_in('./Data/Storage/format_items_in_storage.json', Data_M_C.format_items_in_srorage__ary)
+                        Data_M_C.geve_data_toSave_in('./Data/Notifications/notifications.json', Data_M_C.Notifications__ary)
 
 
 
@@ -1056,19 +1090,19 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
         //--------------------------------------------
-        search_in_storage(value){
+        search_in_storage(value) {
             let data = Data_M_C.format_items_in_srorage__ary
-            value = value.replace(/\s+/g,'').toLowerCase();
+            value = value.replace(/\s+/g, '').toLowerCase();
             let result
-            for(let i =0;i<data.length;i++){
-                
-               if(value == (data[i]["name"]+data[i]["co_name"]) || value == data[i]["code"]){
-                return data[i]
-                
-               }
+            for (let i = 0; i < data.length; i++) {
+
+                if (value == (data[i]["name"] + data[i]["co_name"]) || value == data[i]["code"]) {
+                    return data[i]
+
+                }
             }
         }
-   
+
 
     }
     class RecordMC {
@@ -1297,7 +1331,7 @@ window.addEventListener('DOMContentLoaded', () => {
                 if (Data_M_C.all_sales_record__ary[i]["sell_date"] <= targetDate && Data_M_C.all_sales_record__ary[i]["sell_date"] > stopDateTime) {
                     items_in_date.push(Data_M_C.all_sales_record__ary[i]);
                 } else if (Data_M_C.all_sales_record__ary[i]["sell_date"] <= stopDateTime) {
-                
+
                     break
                 }
 
@@ -1447,14 +1481,14 @@ window.addEventListener('DOMContentLoaded', () => {
         }
         ten_max_sall_by_num() {
             let data = this.sort_max_items_sall_by_num();
-        
+
             let top10Ids = data.slice(0, 10).map(item => item.id);
             let itemMap = new Map(Data_M_C.format_items_in_srorage__ary.map(item => [item.id, item]));
             let results = top10Ids.map(id => itemMap.get(id));
-        
-          return results
+
+            return results
         }
-        
+
 
         total_seles_in_last_day() {
             let data = this.get_items_from_seles_record_by_date(Date_MC.getFormattedDateTime(), "day")
@@ -1466,7 +1500,7 @@ window.addEventListener('DOMContentLoaded', () => {
             return total
 
         }
-        total_profit_in_last_day(){
+        total_profit_in_last_day() {
             let data = this.get_items_from_seles_record_by_date(Date_MC.getFormattedDateTime(), "day")
             let total = 0;
             for (let i = 0; i < data.length; i++) {
@@ -1556,13 +1590,13 @@ window.addEventListener('DOMContentLoaded', () => {
             return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}`;  // التنسيق "YYYY-MM-DDTHH:MM:SS"
         }
     }
-    class ShowMC{
-        constructor(){
+    class ShowMC {
+        constructor() {
             this.show_total_selse_last_day_in_control_page()
             this.show_total_profit_last_day_in_control_page()
             this.show_num_of_items_in_control_page()
             this.show_max_items_in_control_page()
-         
+
 
 
 
@@ -1590,23 +1624,27 @@ window.addEventListener('DOMContentLoaded', () => {
 
 
         }
-            // عرض مبيعات هذا الييوم في صفحة التحكم 
-        show_total_selse_last_day_in_control_page(){
-        document.getElementById('namber-SalesCard').innerText = Statistics_M_C.total_seles_in_last_day()
+        // عرض مبيعات هذا الييوم في صفحة التحكم 
+        show_total_selse_last_day_in_control_page() {
+            document.getElementById('namber-SalesCard').innerText = Statistics_M_C.total_seles_in_last_day()
         }
-        show_total_profit_last_day_in_control_page(){
-        document.getElementById('namber-ProfitCard').innerText = Statistics_M_C.total_profit_in_last_day()
+        show_total_profit_last_day_in_control_page() {
+            document.getElementById('namber-ProfitCard').innerText = Statistics_M_C.total_profit_in_last_day()
         }
-        show_num_of_items_in_control_page(){
-            document.getElementById('namber-InventoryCard').innerText=Statistics_M_C.num_of_items_in_storage()
+        show_num_of_items_in_control_page() {
+            document.getElementById('namber-InventoryCard').innerText = Statistics_M_C.num_of_items_in_storage()
         }
 
-        show_max_items_in_control_page(){
-          let data = Statistics_M_C.ten_max_sall_by_num()
-          let container = document.getElementById("show_TopSellingProducts")
-          container.innerHTML="";
-          for(let i =0;i<data.length;i++){
-            container.innerHTML+=`
+        show_max_items_in_control_page() {
+            let data = Statistics_M_C.ten_max_sall_by_num()
+            let container = document.getElementById("show_TopSellingProducts")
+
+            container.innerHTML = "";
+            for (let i = 0; i < data.length; i++) {
+                if (data[i] == undefined) {
+                    continue
+                }
+                container.innerHTML += `
             
                         <div class="one_item_in_storage_box">
 
@@ -1627,15 +1665,80 @@ window.addEventListener('DOMContentLoaded', () => {
                         </div>
             
             `
-          }
-            
+            }
+
         }
+
+    }
+    class NotificationsMC {
+        constructor() {
+            this.Notifications_when_end_date_item()
+
+        }
+        Notificat_when_empty_item(item) {
+            if (item["num"] <= Data_M_C.zero_number) {
+                let id = item["id"]
+                let text = "نفدت كمية هذا العنصر " + item["name"] + " " + item["co_name"] + "."
+                let type = "empty";
+                let date = new Date(Date_MC.getFormattedDateTime())
+                Data_M_C.Notifications__ary.push({
+                    "item_id": id,
+                    "text": text,
+                    "type": type,
+                    "date": date.getTime()
+                })
+
+            }
+
+        }
+        Notifications_when_running_out_item(item) {
+            if (item["num"] <= Data_M_C.running_out_num) {
+                let id = item["id"]
+                let text = "اقتربت كمية هذا العنصر على النفاد " + item["name"] + " " + item["co_name"] + "."
+                let type = "running_out";
+                let date = new Date(Date_MC.getFormattedDateTime())
+                Data_M_C.Notifications__ary.push({
+                    "item_id": id,
+                    "text": text,
+                    "type": type,
+                    "date": date.getTime()
+                })
+
+            }
+        }
+        Notifications_when_end_date_item() {
+            let date = new Date(Date_MC.getFormattedDateTime()).getTime()
+            let data = Data_M_C.format_items_in_srorage__ary
+            let find = false;
+            for (let i = 0; i < data.length; i++) {
+                if (date >= data[i]["end_date"]) {
+                    find = true;
+                    Data_M_C.Notifications__ary.push({
+                        "item_id": data[i]["id"],
+                        "text": "انتهت صلاحية الدواء " + data["name"] + " " + data["co_name"] + ".",
+                        "type": "end_date",
+                        "date": date
+                    })
+                }
+            }
+            if(find){
+                Data_M_C.geve_data_toSave_in('./Data/Notifications/notifications.json',Data_M_C.Notifications__ary)
+            }
+
+        }
+        Notifications_using(text) {
+            console.log(text)
+        }
+
+
+
 
     }
 
     // ***********************(استدعاء كائنات من الاصناف )**************************//
     const Date_MC = new DateMC()
     const Data_M_C = new DataMC()
+    const Notifications_M_C = new NotificationsMC()
     const Record_M_C = new RecordMC()
     const Storage_M_C = new StorageMC()
     const Moarid_M_C = new MoaridMC()
@@ -1645,6 +1748,3 @@ window.addEventListener('DOMContentLoaded', () => {
     const Show_M_C = new ShowMC()
 
 })
-
-
-
