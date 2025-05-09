@@ -1264,20 +1264,21 @@ p {
 
 
 
-
+/* صفحة فاتورة المبيعات  */
 #sale_fatora_box {
     display: none;
 }
-
+/* صفحة الاساسية  */
 #Control_panel_page{
     display: none;
 }
+/* صفحة التخزين  */
 #storage_page {
     display: none;
 }
 
 
-
+/* صفحة فاتورة شراء  */
 #buy_fatora_box {
     display: none;
 }
