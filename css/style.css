@@ -272,15 +272,69 @@ body {
     gap: 17px;
     align-self: stretch;
 }
-#alert-message{
+
+#alert-message {
     width: 100%;
 }
+
 #one_alert-message {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-   
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(114, 114, 114, 0.18);
+padding-bottom: 5px;
+}
+
+.one_alert-message1 {
+    display: flex;
+    align-items: flex-start;
+    gap: 19px;
+}
+
+.icon_aleter {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    width: 40px;
+    height: 40px;
+    padding: 11px 13px;
+    align-items: center;
+    gap: 10px;
+    border-radius: 15px;
+    background: #001E33;
+}
+
+.text_notification {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 2px;
+}
+
+.info_notification {
+    color: #FFF;
+
+    font-feature-settings: 'liga' off, 'clig' off;
+    /* Title */
+
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 25px;
+}
+
+.info_notification_prodact {
+    color: var(--color, #65676B);
+    font-feature-settings: 'liga' off, 'clig' off;
+    /* Headline */
+ 
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 22px;
 }
 
 /* عرض المنتجات الاكثر مبيعا */
@@ -478,6 +532,85 @@ body {
     right: 10px;
     border: none;
     cursor: pointer;
+    align-items: center;
+    justify-content: center;
+}
+
+.one_item_in_storage_box .icon:active {
+    background-color: #00365c;
+
+}
+
+.card_toggle_button {
+    display: flex;
+    width: 199px;
+    padding: 40px 15px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    border-radius: 20px;
+    background: rgba(1, 148, 255, 0.50);
+    backdrop-filter: blur(15px);
+    position: absolute;
+    z-index: 10;
+    left: 50px;
+}
+
+.card_toggle_button div {
+    width: 90%;
+    display: flex;
+    height: 35px;
+    align-items: flex-start;
+    gap: 6px;
+    color: #FFF;
+    align-items: center;
+
+    font-feature-settings: 'liga' off, 'clig' off;
+    /* Subhead 1 */
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 25px;
+    /* 125% */
+}
+
+.details_box {
+    display: flex;
+    width: 299px;
+    padding: 20px 11px 20px 11px;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+    border-radius: 20px;
+    background: rgba(1, 148, 255, 0.10);
+    backdrop-filter: blur(15px);
+    position: absolute;
+    z-index: 10;
+    left: 300px;
+}
+
+.details_box div {
+    display: flex;
+    padding-bottom: 5px;
+    justify-content: space-between;
+    align-items: flex-start;
+    align-self: stretch;
+
+}
+
+.details_box div span {
+    border: none;
+    width: fit-content;
+}
+
+.card_toggle_button div:active {
+    border-radius: 10px;
+    background: var(--body, #000F1A);
+}
+
+.active {
+    border-radius: 10px;
+    background: var(--body, #000F1A);
 }
 
 .title-Operations {
@@ -789,10 +922,10 @@ body {
     outline: none;
 }
 
-#morid {
+/* #morid {
     width: 80%;
     display: none;
-    /* مخفية مبدئيا */
+    مخفية مبدئيا
     position: absolute;
     top: 100%;
     left: 0;
@@ -808,22 +941,24 @@ body {
     flex-wrap: wrap;
     gap: 8px;
 
-}
+} */
 
-#morid span {
+/* #morid span {
+    font-size: large;
+    width: 90%;
     display: block;
     background: #0194FF;
     padding: 8px 12px;
     border-radius: 5px;
     cursor: pointer;
     white-space: nowrap;
-    /* يمنع نزول الكلمة على سطرين */
+    يمنع نزول الكلمة على سطرين
     flex-grow: 1;
     text-align: center;
     min-width: 80px;
     color: #000F1A;
     font-size: 20;
-}
+} */
 
 .morid_name {
     position: relative;
@@ -912,7 +1047,7 @@ p {
 }
 
 
-#add_item_in_buy_fatora_button {
+.add_item_in_fatora_button {
     color: white;
     padding: 10px;
     height: 30px;
@@ -923,9 +1058,10 @@ p {
     background-color: #0194FF;
     border-radius: 10px;
     transition: 0.3s;
+    margin-bottom: 30px;
 }
 
-#add_item_in_buy_fatora_button:hover {
+.add_item_in_fatora_button:hover {
     padding: 10px;
     background-color: #00508a;
     border-radius: 15px;
@@ -947,7 +1083,7 @@ p {
 }
 
 /* عرض عناصر الفاتورة  */
-#show_items_in_buy_fatora {
+.show_items_in_fatora {
     background-color: #001E33;
     margin-top: 15px;
     width: 75VW;
@@ -963,7 +1099,7 @@ p {
 
 }
 
-#show_items_in_buy_fatora .inf-boy-fat {
+.show_items_in_fatora .inf-fat {
     display: flex;
     background-color: #001E33;
     height: 60px;
@@ -977,7 +1113,7 @@ p {
     top: 0;
 }
 
-#show_items_in_buy_fatora .inf-boy-fat span {
+.show_items_in_fatora .inf-fat span {
     width: 17%;
     border-left: 1px solid rgba(255, 255, 255, 0.52);
     text-align: center;
@@ -985,7 +1121,8 @@ p {
     font-weight: 600;
 }
 
-.inf-boy-fat2 {
+
+.inf-fat2 {
     display: flex;
 
     height: 60px;
@@ -997,7 +1134,7 @@ p {
     border-bottom: 1px solid #000F1A;
 }
 
-.inf-boy-fat2 span {
+.inf-fat2 span {
     width: 17%;
     border-left: 1px solid rgba(255, 255, 255, 0.52);
     text-align: center;
@@ -1012,12 +1149,20 @@ p {
     gap: 54px;
 }
 
+.delete_button {
+
+    width: 50px;
+    cursor: pointer;
+}
+
 /* الازرار حفظ والالغاء  */
-#add_buy_fatora_button,
-#cancel_buy_fatora_button {
-    margin-top: 20px;
+.add_fatora_button,
+.cancel_fatora_button {
+
+    margin-top: 30px;
+    margin-bottom: 30px;
     display: flex;
-    width: 100px;
+    width: 200px;
     padding: 10px;
     height: 40px;
     padding: 5px;
@@ -1032,17 +1177,83 @@ p {
     cursor: pointer;
 }
 
-#add_buy_fatora_button {
+.add_fatora_button {
     background: #634AFF;
     color: #FFF;
 }
 
-#cancel_buy_fatora_button {
+.cancel_fatora_button {
 
     color: #634AFF;
     background: #CCEAFF;
 }
 
+/* تنسيف فاتورة البيع  */
+.invoice_customer_info {
+    display: flex;
+    align-items: center;
+    gap: 61px;
+    align-self: stretch;
+}
+
+.invoice_customer_info div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 7px;
+    flex: 1 0 0;
+}
+
+.info input {
+    width: 250px;
+}
+
+.client_supplier_dropdown {
+    width: 80%;
+    display: none;
+    /* مخفية مبدئيا */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #00365c;
+    border: 1px solid #ccc;
+    margin-top: 5px;
+    padding: 10px;
+    border-radius: 5px;
+    max-height: 150px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 10;
+}
+
+.client_supplier_dropdown span {
+    font-size: large;
+    width: 90%;
+    display: block;
+    background: #0194FF;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    white-space: nowrap;
+    /* يمنع نزول الكلمة على سطرين */
+    flex-grow: 1;
+    text-align: center;
+    min-width: 80px;
+    color: #000F1A;
+    font-size: 20;
+}
+
+.payment_info {
+    display: flex;
+    gap: 50px;
+}
+
+.payment_info div {
+    margin-bottom: 0;
+}
 
 
 
@@ -1054,14 +1265,13 @@ p {
 
 
 
+#sale_fatora_box {
+    display: none;
+}
 
-
-
-
-
-
-
-
+#Control_panel_page{
+    display: none;
+}
 #storage_page {
     display: none;
 }
