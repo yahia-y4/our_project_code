@@ -78,6 +78,7 @@ body {
     background-color: #0194FF;
 }
 
+
 #main_side_menu div span {
     color: #FAFAFA;
 
@@ -243,12 +244,12 @@ body {
 
 }
 
-.title-TopSellingProducts {
+.title-all{
     color: #FFF;
 
     font-feature-settings: 'liga' off, 'clig' off;
 
-    font-size: 25px;
+    font-size: 22px;
     font-style: normal;
     font-weight: 700;
     line-height: 35px;
@@ -284,7 +285,7 @@ body {
     align-items: center;
     margin-bottom: 10px;
     border-bottom: 1px solid rgba(114, 114, 114, 0.18);
-padding-bottom: 5px;
+    padding-bottom: 5px;
 }
 
 .one_alert-message1 {
@@ -330,7 +331,7 @@ padding-bottom: 5px;
     color: var(--color, #65676B);
     font-feature-settings: 'liga' off, 'clig' off;
     /* Headline */
- 
+
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -536,10 +537,7 @@ padding-bottom: 5px;
     justify-content: center;
 }
 
-.one_item_in_storage_box .icon:active {
-    background-color: #00365c;
 
-}
 
 .card_toggle_button {
     display: flex;
@@ -552,7 +550,7 @@ padding-bottom: 5px;
     background: rgba(1, 148, 255, 0.50);
     backdrop-filter: blur(15px);
     position: absolute;
-    z-index: 10;
+    z-index: 1;
     left: 50px;
 }
 
@@ -585,7 +583,7 @@ padding-bottom: 5px;
     background: rgba(1, 148, 255, 0.10);
     backdrop-filter: blur(15px);
     position: absolute;
-    z-index: 10;
+    z-index: 1;
     left: 300px;
 }
 
@@ -603,10 +601,7 @@ padding-bottom: 5px;
     width: fit-content;
 }
 
-.card_toggle_button div:active {
-    border-radius: 10px;
-    background: var(--body, #000F1A);
-}
+
 
 .active {
     border-radius: 10px;
@@ -1255,6 +1250,32 @@ p {
     margin-bottom: 0;
 }
 
+/* <!-- تاكيد الفاتورة S   --> */
+.title-invoice__confirm {
+color:  #FF4D4F;
+    font-size: 25px;
+    font-weight: 600;
+    line-height: 40px;
+    margin-bottom: 20px;
+}
+.title_confirm--active{
+    color: #FFF;
+text-align: right;
+    font-weight: 400;
+line-height: 35px;
+font-size: 30px;
+margin-top: 30px;
+}
+#add-more-qty-btn{
+background: #634AFF;
+color: #fff;
+}
+#return-to-stock-btn ,#add-more-qty-btn{
+    width: fit-content;
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+/* <!-- تاكيد الفاتورة E  --> */
 
 
 
@@ -1262,16 +1283,20 @@ p {
 
 
 
-
-
+/* تاكيد الفاتورة  */
+#invoice__confirm--active{
+     /* display: none; */
+}
 /* صفحة فاتورة المبيعات  */
 #sale_fatora_box {
     display: none;
 }
+
 /* صفحة الاساسية  */
-#Control_panel_page{
+#Control_panel_page {
     display: none;
 }
+
 /* صفحة التخزين  */
 #storage_page {
     display: none;
